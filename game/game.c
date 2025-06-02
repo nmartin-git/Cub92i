@@ -6,8 +6,13 @@
 /*   By: nmartin <nmartin@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/02 11:45:56 by nmartin           #+#    #+#             */
-/*   Updated: 2025/06/02 11:45:57 by nmartin          ###   ########.fr       */
+/*   Updated: 2025/06/02 15:00:10 by nmartin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-//game
+#include "game.h"
+
+void	game(t_data **data)
+{
+	
+}

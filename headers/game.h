@@ -1,20 +1,28 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   cub.h                                              :+:      :+:    :+:   */
+/*   game.h                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: nmartin <nmartin@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/06/02 11:47:13 by nmartin           #+#    #+#             */
-/*   Updated: 2025/06/02 15:20:26 by nmartin          ###   ########.fr       */
+/*   Created: 2025/06/02 14:55:19 by nmartin           #+#    #+#             */
+/*   Updated: 2025/06/02 14:58:19 by nmartin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef CUB_H
-# define CUB_H
+#ifndef GAME_H
+# define GAME_H
 
-# include "libft.h"
-# include "game.h"
-# include <stdlib.h>
+typedef struct s_data
+{
+	void	*display;
+	void	*window;
+	void	*image;
+	char	*adress;
+	int		bpp;
+	int		l_len;
+	int		x;
+	int		y;
+}	t_data;
 
 #endif
