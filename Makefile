@@ -6,7 +6,7 @@
 #    By: nmartin <nmartin@student.42.fr>            +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2025/02/05 15:41:03 by nmartin           #+#    #+#              #
-#    Updated: 2025/06/02 11:44:02 by nmartin          ###   ########.fr        #
+#    Updated: 2025/06/02 13:53:02 by nmartin          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -18,6 +18,7 @@ RESET = \033[0m
 
 CC = cc
 CFLAGS = -g -Wall -Werror -Wextra -MMD -MP
+MLXFLAGS = -Lminilibx-linux -lmlx_Linux -lX11 -lXext -lm
 NAME = cub3d
 CUB_PATH = ./cub/
 CUB_FILES = cub.c
@@ -51,10 +52,10 @@ bonus : all
 #	@printf "\r\033[K"
 #	@printf "$(GREEN)$(NAME) created successfully\n$(RESET)"
 
-# $(NAME) : $(LIBFT) $(OBJ)
-# 	@printf "$(PUPLE)Creating $(NAME)...$(RESET)"
-# 	@$(CC) $(CFLAGS) $(OBJ) $(LIBFT) -o $(NAME) -lreadline
-# 	@printf "\r\033[K"
+$(NAME) : $(LIBFT) $(OBJ)
+	@printf "$(PUPLE)Creating $(NAME)...$(RESET)"
+	@$(CC) $(CFLAGS) $(OBJ) $(LIBFT) -o $(NAME) -lreadline $(MLXFLAGS)
+	@printf "\r\033[K"
 # 	@printf "$(GREEN)$(NAME) created successfully\n$(RESET)"
 # 	@echo "$(PURPLE)▀█████████▄   ▄██████▄    ▄▄▄▄███▄▄▄▄   ▀█████████▄   ▄██████▄     ▄████████    ▄█    █▄       ▄████████  ▄█        ▄█       $(RESET)"
 # 	@echo "$(PURPLE)  ███    ███ ███    ███ ▄██▀▀▀███▀▀▀██▄   ███    ███ ███    ███   ███    ███   ███    ███     ███    ███ ███       ███       $(RESET)"
