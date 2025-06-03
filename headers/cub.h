@@ -6,12 +6,15 @@
 /*   By: nmartin <nmartin@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/02 11:47:13 by nmartin           #+#    #+#             */
-/*   Updated: 2025/06/02 11:47:42 by nmartin          ###   ########.fr       */
+/*   Updated: 2025/06/02 17:59:10 by nmartin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef CUB_H
-
 # define CUB_H
+
+# include "libft.h"
+# include "game.h"
+# include <stdlib.h>
 
 #endif

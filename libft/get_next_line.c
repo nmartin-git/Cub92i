@@ -6,7 +6,7 @@
 /*   By: nmartin <nmartin@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/16 20:00:41 by nmartin           #+#    #+#             */
-/*   Updated: 2025/01/05 12:43:54 by nmartin          ###   ########.fr       */
+/*   Updated: 2025/06/03 14:05:18 by nmartin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -68,14 +68,18 @@ void	keep_line(char *buffer, int *free_buf)
 			buffer[y++] = 0;
 }
 
-t_list	*read_file(int fd, char *buffer, int *free_buf)
+t_list	*read_file(int fd, char *buffer, int *free_buf, int *is_empty)
 {
 	t_list		*first;
 	t_list		*lst;
+	int			err;
 
 	if (buffer[0] == 0)
 	{
-		if (read(fd, buffer, BUFFER_SIZE) <= 0)
+		err = read(fd, buffer, BUFFER_SIZE);
+		if (err == 0)
+			return (*is_empty = 1, *free_buf = 1, NULL);
+		else if (err == -1)
 			return (*free_buf = 1, NULL);
 	}
 	first = gnl_lstnew(buffer);
@@ -93,16 +97,17 @@ t_list	*read_file(int fd, char *buffer, int *free_buf)
 	return (keep_line(buffer, free_buf), first);
 }
 
-char	*get_next_line(int fd)
+char	*get_next_line(int fd, int *is_empty)
 {
 	t_list		*first;
 	static char	buffer[BUFFER_SIZE + 1];
 	int			free_buf;
 
 	free_buf = 0;
+	*is_empty = 0;
 	if (fd < 0 || BUFFER_SIZE < 1)
 		return (NULL);
-	first = read_file(fd, buffer, &free_buf);
+	first = read_file(fd, buffer, &free_buf, is_empty);
 	if (free_buf)
 		gnl_bzero(buffer, BUFFER_SIZE + 1);
 	if (!first || !first->content)
