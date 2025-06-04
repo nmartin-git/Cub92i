@@ -6,7 +6,7 @@
 /*   By: igrousso <igrousso@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/02 11:45:35 by nmartin           #+#    #+#             */
-/*   Updated: 2025/06/04 11:49:47 by igrousso         ###   ########.fr       */
+/*   Updated: 2025/06/04 11:57:26 by igrousso         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -55,14 +55,14 @@ void close_void(int fd)
 
 void free_infos(t_map *map)
 {
-    if (map->N_t)
-        free(map->N_t);
-    if (map->S_t)
-        free(map->S_t);
-    if (map->E_t)
-        free(map->E_t);
-    if (map->W_t)
-        free(map->W_t);
+    if (map->n_t)
+        free(map->n_t);
+    if (map->s_t)
+        free(map->s_t);
+    if (map->e_t)
+        free(map->e_t);
+    if (map->w_t)
+        free(map->w_t);
 }
 
 void free_map(t_map *map)
@@ -83,13 +83,13 @@ int	fill_t(char *line, t_map *map, char c1, char c2)
         return (write(2, "Error\nIncorrect texture syntax\n", 31));
     texture = NULL;
     if (c1 == 'N')
-        texture = &map->N_t;
+        texture = &map->n_t;
     else if (c1 == 'S')
-        texture = &map->S_t;
+        texture = &map->s_t;
     else if (c1 == 'E')
-        texture = &map->E_t;
+        texture = &map->e_t;
     else if (c1 == 'W')
-        texture = &map->W_t;
+        texture = &map->w_t;
     else
         return (write(2, "Error\nUnknown texture code\n", 29));
     *texture = ft_substr(line, 0, (ft_strlen(line) - 1));
@@ -115,34 +115,34 @@ int fill_colors(char *line, t_map *map, char c)
     g = ft_atoi(str[1]);
     b = ft_atoi(str[2]);
     if (c == 'F')
-        map->F_rgb = encode_rgb(r, g, b);
+        map->f_rgb = encode_rgb(r, g, b);
     if (c == 'C')
-        map->C_rgb = encode_rgb(r, g, b);
+        map->c_rgb = encode_rgb(r, g, b);
     ft_free_tab(str);
     return (0);
 }
 
 int	fill_textures(char *line, t_map *map, int *count)
 {
-	if (line[0] == 'N' && !map->N_t)
+	if (line[0] == 'N' && !map->n_t)
     {
         (*count)--;
 		if (fill_t(line, map, 'N', 'O'))
 			return (1);
     }
-    if (line[0] == 'S' && !map->S_t)
+    if (line[0] == 'S' && !map->s_t)
 	{
         (*count)--;
     	if (fill_t(line, map, 'S', 'O'))
 			return (1);
     }
-    if (line[0] == 'F' && map->F_rgb == -1)
+    if (line[0] == 'F' && map->f_rgb == -1)
     {
         (*count)--;
         if (fill_colors(line, map, 'F'))
             return (1);
     }
-    if (line[0] == 'W' && !map->W_t)
+    if (line[0] == 'W' && !map->w_t)
 	{
         (*count)--;
         if (fill_t(line, map, 'W', 'E'))
@@ -153,13 +153,13 @@ int	fill_textures(char *line, t_map *map, int *count)
 
 int fill_EC(char *line, t_map *map, int *count)
 {
-    if (line[0] == 'E' && !map->E_t)
+    if (line[0] == 'E' && !map->e_t)
 	{
         (*count)--;
         if (fill_t(line, map, 'E', 'A'))
 			return (1);
     }
-    if (line[0] == 'C' && map->C_rgb == -1)
+    if (line[0] == 'C' && map->c_rgb == -1)
     {
         (*count)--;
         if (fill_colors(line, map, 'C'))
@@ -185,17 +185,17 @@ int gateway_textures(char *line, t_map *map, int *count)
 
 int check_infos(t_map *map)
 {
-    if (!map->N_t)
+    if (!map->n_t)
         return (write(2, "Error\nMissing information for north\n", 36));
-    if (!map->S_t)
+    if (!map->s_t)
         return (write(2, "Error\nMissing information for south\n", 36));
-    if (!map->E_t)
+    if (!map->e_t)
         return (write(2, "Error\nMissing information for east\n", 35));
-    if (!map->W_t)
+    if (!map->w_t)
         return (write(2, "Error\nMissing information for weast\n", 36));
-    if (!map->F_rgb)
+    if (!map->f_rgb)
         return (write(2, "Error\nMissing information for floor\n", 40));
-    if (!map->C_rgb)
+    if (!map->c_rgb)
         return (write(2, "Error\nMissing information for ceiling\n", 38));
     return (0);
 }
@@ -426,12 +426,12 @@ int	check_av(char *av, int *fd)
 void pre_init(t_map *map)
 {
     map->map = NULL;
-    map->C_rgb = -1;
-    map->F_rgb = -1;
-    map->N_t = NULL;
-    map->S_t = NULL;
-    map->E_t = NULL;
-    map->W_t = NULL;
+    map->c_rgb = -1;
+    map->f_rgb = -1;
+    map->n_t = NULL;
+    map->s_t = NULL;
+    map->e_t = NULL;
+    map->w_t = NULL;
     map->row = -1;
     map->col = -1;
 }
@@ -500,14 +500,14 @@ int	parsing(char *av)
         printf("\n");
     }
     printf("%d, %d\n", map.row, map.col);
-    printf("%s\n", map.N_t);
-    printf("%s\n", map.S_t);
-    printf("%s\n", map.E_t);
-    printf("%s\n", map.W_t);
-    printf("%d\n", map.F_rgb);
-    printf("%d\n", map.C_rgb);
-    printf("r %d, g %d, b %d\n", decode_r(map.F_rgb), decode_g(map.F_rgb), decode_b(map.F_rgb));
-    printf("r %d, g %d, b %d\n", decode_r(map.C_rgb), decode_g(map.C_rgb), decode_b(map.C_rgb));
+    printf("%s\n", map.n_t);
+    printf("%s\n", map.s_t);
+    printf("%s\n", map.e_t);
+    printf("%s\n", map.w_t);
+    printf("%d\n", map.f_rgb);
+    printf("%d\n", map.c_rgb);
+    printf("r %d, g %d, b %d\n", decode_r(map.f_rgb), decode_g(map.f_rgb), decode_b(map.f_rgb));
+    printf("r %d, g %d, b %d\n", decode_r(map.c_rgb), decode_g(map.c_rgb), decode_b(map.c_rgb));
     free_map(&map);
     return (0);
 }
