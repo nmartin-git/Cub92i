@@ -6,7 +6,7 @@
 /*   By: igrousso <igrousso@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/02 11:45:35 by nmartin           #+#    #+#             */
-/*   Updated: 2025/06/04 09:26:53 by igrousso         ###   ########.fr       */
+/*   Updated: 2025/06/04 11:49:47 by igrousso         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,11 +45,30 @@ void ft_free_tab_int(int **tab)
     while (tab[i])
         free(tab[i++]);
     free(tab);
+    tab = NULL;
 }
 
 void close_void(int fd)
 {
     close(fd);
+}
+
+void free_infos(t_map *map)
+{
+    if (map->N_t)
+        free(map->N_t);
+    if (map->S_t)
+        free(map->S_t);
+    if (map->E_t)
+        free(map->E_t);
+    if (map->W_t)
+        free(map->W_t);
+}
+
+void free_map(t_map *map)
+{
+    free_infos(map);
+    ft_free_tab_int(map->map);    
 }
 
 int	fill_t(char *line, t_map *map, char c1, char c2)
@@ -73,7 +92,7 @@ int	fill_t(char *line, t_map *map, char c1, char c2)
         texture = &map->W_t;
     else
         return (write(2, "Error\nUnknown texture code\n", 29));
-    *texture = ft_strdup(line);
+    *texture = ft_substr(line, 0, (ft_strlen(line) - 1));
     if (!*texture)
         return (write(2, "Error\nft_strdup fail\n", 21));
     return (0);
@@ -246,39 +265,56 @@ int count_size(int fd, int *col)
         if ((*col) < ft_strlen(line))
             (*col) = ft_strlen(line);
     }
-    return (count);
+    (*col)--;
+    return (count - 1);
 }
 
-int ctoi(char c)
+int ctoi(char c, int *count)
 {
     if (c >= '0' && c <= '9')
         return (c - '0');
     else if (c == 'N')
+    {
+        (*count)--;
         return (2);
+    }
     else if (c == 'S')
+    {
+        (*count)--;
         return (3);
+    }
     else if (c == 'E')
+    {
+        (*count)--;
         return (4);
+    }
     else if (c == 'W')
+    {
+        (*count)--;
         return (5);
+    }
     else if (c == ' ' || c == '\n')
         return (8);
     return (ft_putstr_fd("Error\nIncorect character\n", 2), -2);
 }
 
-int fill_row(int **row, char *line, int col, int len)
+int fill_row(int **row, char *line, int col, int *count_spawn)
 {
     int i;
+    int len;
 
+    len = ft_strlen(line);
     i = 1;
     (*row)[0] = 8;
-    while (i < col)
+    while (i < (col + 2))
     {
-        if (i < len)
+        if (i <= len)
         {
-            (*row)[i] = ctoi(line[i]);
+            (*row)[i] = ctoi(line[i - 1], count_spawn);
             if ((*row)[i] == -2)
                 return (free(line), 1);
+            if (count_spawn < 0)
+                return (free(line), write(2, "Error\nMap contains duplicates\n", 30));
         }
         else
             (*row)[i] = 8;
@@ -296,17 +332,17 @@ int init_map(t_map *map, int fd, char *av)
     map->row = count_size(fd, &map->col);
     if (map->row < 1)
         return (1);
-    map->map = malloc((map->row + 2) * sizeof(int *));
+    map->map = ft_calloc((map->row + 3), sizeof(int *));
     if (!(map->map))
         return (write(2, "Error\nMalloc map fail\n", 22));
     close(fd);
     fd = open(av, O_RDONLY);
     if (fd < 0)
         return (free(map->map), write(2, "Error\nOpen fill_tabmap fail\n", 28));
-    map->map[0] = malloc(((map->col + 1) * sizeof(int)));
+    map->map[0] = ft_calloc((map->col + 3), sizeof(int));
     if (!(map->map[0]))
         return (ft_free_tab_int(map->map), write(2, "Error\nMalloc map fail\n", 22));
-    while (++i < map->col)
+    while (++i < (map->col + 2))
         map->map[0][i] = 8;
     map->map[0][i] = 9;
     return (0);
@@ -317,50 +353,55 @@ int last_row(int **row, int col)
     int i;
 
     i = -1;
-    (*row) = malloc((col + 1) * sizeof(int));
+    (*row) = ft_calloc((col + 3), sizeof(int));
     if (!(*row))
         return (write(2, "Error\nMalloc map fail\n", 22));
-    while (++i < col)
+    while (++i < (col + 2))
         (*row)[i] = 8;
     (*row)[i] = 9;
     return (0);
 }
 
-int fill_tabmap(int fd, t_map *map, char *av)
+int fill_tabmap(int fd, t_map *map, char *av, int *i)
 {
-    int i;
     char *line;
     int is_empty;
+    int count_spawn;
 
-    i = 1;
+    count_spawn = 1;
     if (init_map(map, fd, av))
         return (1);
     if (start_of_map(fd, &line))
         return (1);
-    while (i < map->row)
+    while ((*i) < (map->row + 1))
     {
-        map->map[i] = malloc((map->col + 1) * sizeof(int));
-        if (!(map->map[i]))
+        map->map[(*i)] = ft_calloc((map->col + 3), sizeof(int));
+        if (!(map->map[(*i)]))
             return (ft_free_tab_int(map->map), free(line), write(2, "Error\nMalloc map fail\n", 22));
-        if (fill_row(&(map->map[i]), line, map->col, ft_strlen(line)))
+        if (fill_row(&(map->map[(*i)]), line, map->col, &count_spawn))
             return (ft_free_tab_int(map->map), 1);
         line = get_next_line(fd, &is_empty);
         if (!line && !is_empty)
             return (ft_free_tab_int(map->map), write(2, "Error\nget_next_line fill_tabmap error\n", 38));
-        i++;
+        (*i)++;
     }
-    if (last_row(&(map->map[i]), map->col))
-        return (ft_free_tab_int(map->map), 1);
-    map->map[++i] = 0;
+    if (count_spawn)
+        return (ft_free_tab_int(map->map), write(2, "Error\nMissing spawn point\n", 26));
     return (0);
 }       
 
 int	fill_map(int fd, t_map *map, char *av)
 {
+    int i;
+
 	if (fill_infos(fd, map))
 		return (1);
-    if (fill_tabmap(fd, map, av))
-        return (1);
+    i = 1;
+    if (fill_tabmap(fd, map, av, &i))
+        return (free_infos(map), 1);
+    if (last_row(&(map->map[i]), map->col))
+        return (ft_free_tab_int(map->map), 1);
+    map->map[++i] = 0;
     close(fd);
     return (0);
 }
@@ -395,13 +436,49 @@ void pre_init(t_map *map)
     map->col = -1;
 }
 
-void free_map(t_map *map)
+int check_neighbors(t_map *map, int x, int y)
 {
-    free(map->N_t);
-    free(map->S_t);
-    free(map->E_t);
-    free(map->W_t);
-    ft_free_tab_int(map->map);
+    if (y - 1 >= 0 && x - 1 >= 0 && map->map[y - 1][x - 1] != 8 && map->map[y - 1][x - 1] != 1)
+        return (write(2, "Error\nInvalid map\n", 18));
+    if (y + 1 <= map->row && x - 1 >= 0 && map->map[y + 1][x - 1] != 8 && map->map[y + 1][x - 1] != 1)
+        return (write(2, "Error\nInvalid map\n", 18));
+    if (y - 1 >= 0 && x + 1 < map->col && map->map[y - 1][x + 1] != 8 && map->map[y - 1][x + 1] != 1)
+        return (write(2, "Error\nInvalid map\n", 18));
+    if (y + 1 <= map->row && x + 1 < map->col && map->map[y + 1][x + 1] != 8 && map->map[y + 1][x + 1] != 1)
+        return (write(2, "Error\nInvalid map\n", 18));
+    if (y - 1 >= 0 && map->map[y - 1][x] != 8 && map->map[y - 1][x] != 1)
+        return (write(2, "Error\nInvalid map\n", 18));
+    if (y + 1 <= map->row && map->map[y + 1][x] != 8 && map->map[y + 1][x] != 1)
+        return (write(2, "Error\nInvalid map\n", 18));
+    if (x - 1 >= 0 && map->map[y][x - 1] != 8 && map->map[y][x - 1] != 1)
+        return (write(2, "Error\nInvalid map\n", 18));
+    if (x + 1 < map->col && map->map[y][x + 1] != 8 && map->map[y][x + 1] != 1)
+        return (write(2, "Error\nInvalid map\n", 18));
+    return (0);
+}
+
+int check_map(t_map *map)
+{
+    int x;
+    int y;
+
+    y = 0;
+    while (map->map[y])
+    {
+        x = 0;
+        while (map->map[y][x] != 9)
+        {
+            if (map->map[y][x] == 8)
+            {
+                if (map->map[y][x] == 8)
+                    if (check_neighbors(map, x, y))
+                        return (1);
+            }
+            x++;
+        }
+        y++;
+    }    
+    return (0);
 }
 
 int	parsing(char *av)
@@ -414,12 +491,23 @@ int	parsing(char *av)
 		return (1);
 	if (fill_map(fd_map, &map, av))
 		return (close_void(fd_map), 1);
+    if (check_map(&map))
+        return (free_map(&map), 1);
     for (size_t i = 0; map.map[i] != 0; i++)
     {
         for (size_t j = 0; map.map[i][j] != 9; j++)
-            printf("%d ", map.map[i][j]);
+            printf("%d", map.map[i][j]);
         printf("\n");
     }
+    printf("%d, %d\n", map.row, map.col);
+    printf("%s\n", map.N_t);
+    printf("%s\n", map.S_t);
+    printf("%s\n", map.E_t);
+    printf("%s\n", map.W_t);
+    printf("%d\n", map.F_rgb);
+    printf("%d\n", map.C_rgb);
+    printf("r %d, g %d, b %d\n", decode_r(map.F_rgb), decode_g(map.F_rgb), decode_b(map.F_rgb));
+    printf("r %d, g %d, b %d\n", decode_r(map.C_rgb), decode_g(map.C_rgb), decode_b(map.C_rgb));
     free_map(&map);
     return (0);
 }
