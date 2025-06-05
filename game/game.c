@@ -6,7 +6,7 @@
 /*   By: nmartin <nmartin@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/02 11:45:56 by nmartin           #+#    #+#             */
-/*   Updated: 2025/06/05 14:37:58 by nmartin          ###   ########.fr       */
+/*   Updated: 2025/06/05 16:07:35 by nmartin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,6 +31,7 @@ void	set_data(t_data *data, t_map *map)
 	int		l_len;
 	int		end;
 
+	data->minimap = NULL;
 	data->map = map;
 	data->display = mlx_init();
 	if (!data->display)
@@ -48,11 +49,22 @@ void	set_data(t_data *data, t_map *map)
 	data->l_len = l_len;
 }
 
+int	minimap(t_data *data)
+{
+	data->minimap = malloc(sizeof(t_minimap));
+	//if (!data->minimap)//TODO gerer lerreur
+	minimapData(data->minimap, data->display, data->map->col, data->map->row);
+	minimapCreate(data->minimap, data->map->map);
+	return (0);
+}
+
 void	game(t_data *data, t_map *map)
 {
 	//set map, x et y
 	set_data(data, map);
+	minimap(data);
 	mlx_put_image_to_window(data->display, data->window, data->image, 0, 0);
+	mlx_put_image_to_window(data->display, data->window, data->minimap->image, 0, 0);
 	mlx_key_hook(data->window, key_handler, data);
 	mlx_hook(data->window, 17, 1L >> 0, close_window, data);
 	mlx_loop(data->display);

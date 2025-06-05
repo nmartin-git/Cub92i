@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   map_utils.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: igrousso <igrousso@student.42.fr>          +#+  +:+       +#+        */
+/*   By: nmartin <nmartin@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/04 12:43:53 by igrousso          #+#    #+#             */
-/*   Updated: 2025/06/04 12:50:02 by igrousso         ###   ########.fr       */
+/*   Updated: 2025/06/05 15:48:32 by nmartin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,7 +48,7 @@ int	count_size(int fd, int *col)
 		if (!line && !is_empty)
 			return (write(2, "Error\nget_next_line count_row error\n", 36));
 		count++;
-		if ((*col) < ft_strlen(line))
+		if ((*col) < (int)ft_strlen(line))
 			(*col) = ft_strlen(line);
 	}
 	(*col)--;
