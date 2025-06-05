@@ -8,3 +8,4 @@
 - - boss paqueta avec musique plus fort quand il se rapproche
 - - el mordjene pour les pv
 - - minimap qui change de couleurs a chaque puff
+- - pouvoir mettre la map en gros (changer MINIMAP_SIZE)

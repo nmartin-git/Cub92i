@@ -6,7 +6,7 @@
 /*   By: nmartin <nmartin@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/05 14:23:31 by nmartin           #+#    #+#             */
-/*   Updated: 2025/06/05 16:20:24 by nmartin          ###   ########.fr       */
+/*   Updated: 2025/06/05 18:52:17 by nmartin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,8 +38,16 @@ void	minimapData(t_minimap *minimap, void *display, int x, int y)
 	int		end;
 
 	setMinimapColor(minimap);
+	minimap->x = x;
+	minimap->y = y;
+	if (minimap->x > minimap->y)
+		minimap->squareSize = MINIMAP_SIZE / minimap->x;
+	else
+		minimap->squareSize = MINIMAP_SIZE / minimap->y;
+	minimap->tab_x = minimap->squareSize * (x + 2);//TODO tej les +2
+	minimap->tab_y = minimap->squareSize * (y + 2);//TODO tej les +2
 	minimap->display = display;
-	minimap->image = mlx_new_image(minimap->display, MINIMAP_SIZE, MINIMAP_SIZE);
+	minimap->image = mlx_new_image(minimap->display, minimap->tab_x , minimap->tab_y);
 	// if (!minimap->image)
 	// 	cub_exit(1, "Image initialization failed", data);//TODO gerer les leaks en cas derreurs
 	minimap->adress = mlx_get_data_addr(minimap->image, &bpp, &l_len, &end);
@@ -47,12 +55,6 @@ void	minimapData(t_minimap *minimap, void *display, int x, int y)
 	// 	cub_exit(1, "Adress initialization failed", data);//TODO gerer les leaks en cas derreurs
 	minimap->bpp = bpp;
 	minimap->l_len = l_len;
-	minimap->x = x;
-	minimap->y = y;
-	if (minimap->x > minimap->y)
-		minimap->squareSize = MINIMAP_SIZE / minimap->x;
-	else
-		minimap->squareSize = MINIMAP_SIZE / minimap->y;
 }
 
 void	pixelPutSquare(t_minimap *minimap, t_pos pixel, int color)
@@ -75,8 +77,8 @@ void	pixelPutSquare(t_minimap *minimap, t_pos pixel, int color)
 		pixel.x = x;
 		while (i < minimap->squareSize)
 		{
-			if (pixel.x >= 0 && pixel.x <= MINIMAP_SIZE
-				&& pixel.y >= 0 && pixel.y <= MINIMAP_SIZE)
+			if (pixel.x >= 0 && pixel.x <= minimap->tab_x
+				&& pixel.y >= 0 && pixel.y <= minimap->tab_y)
 			{
 				pxl = minimap->adress + (pixel.y * l + pixel.x * (b / 8));
 				*(unsigned int *)pxl = color;

@@ -6,7 +6,7 @@
 /*   By: nmartin <nmartin@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/05 14:23:42 by nmartin           #+#    #+#             */
-/*   Updated: 2025/06/05 16:08:42 by nmartin          ###   ########.fr       */
+/*   Updated: 2025/06/05 18:53:15 by nmartin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,7 +15,7 @@
 
 # include "../minilibx-linux/mlx.h"
 # include <X11/keysym.h>
-# define MINIMAP_SIZE 1000
+# define MINIMAP_SIZE 400
 # define WALL 1
 # define FLOOR 0
 # define EMPTY 8
@@ -34,6 +34,8 @@ typedef struct s_minimap
 	int		b_color;
 	int		x;
 	int		y;
+	int		tab_x;
+	int		tab_y;
 }	t_minimap;
 
 typedef struct s_pos

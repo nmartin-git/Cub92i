@@ -6,7 +6,7 @@
 /*   By: nmartin <nmartin@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/02 18:33:29 by nmartin           #+#    #+#             */
-/*   Updated: 2025/06/05 14:35:14 by nmartin          ###   ########.fr       */
+/*   Updated: 2025/06/05 18:36:22 by nmartin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,6 +14,8 @@
 
 void	free_data(t_data *data)
 {
+	if (data->minimap && data->minimap->image)
+		mlx_destroy_image(data->display, data->minimap->image);
 	if (data->image && data->image)
 		mlx_destroy_image(data->display, data->image);
 	if (data->display && data->window)
@@ -25,6 +27,8 @@ void	free_data(t_data *data)
 	}
 	if (data->map)
 		free_map(data->map);
+	if (data->minimap)
+		free(data->minimap);
 }
 
 void	cub_exit(int err, char *str, t_data *data)
