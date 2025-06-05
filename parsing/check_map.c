@@ -6,11 +6,11 @@
 /*   By: igrousso <igrousso@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/04 12:31:38 by igrousso          #+#    #+#             */
-/*   Updated: 2025/06/04 12:52:28 by igrousso         ###   ########.fr       */
+/*   Updated: 2025/06/05 14:54:46 by igrousso         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "parsing.h"
+#include "../headers/parsing.h"
 
 int	check_neighbors(t_map *map, int x, int y)
 {

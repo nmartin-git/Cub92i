@@ -6,11 +6,11 @@
 /*   By: igrousso <igrousso@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/04 12:42:56 by igrousso          #+#    #+#             */
-/*   Updated: 2025/06/04 13:03:44 by igrousso         ###   ########.fr       */
+/*   Updated: 2025/06/05 14:54:20 by igrousso         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "parsing.h"
+#include "../headers/parsing.h"
 
 int	fill_row(int **row, char *line, int col, int *count_spawn)
 {

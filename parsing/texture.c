@@ -6,11 +6,11 @@
 /*   By: igrousso <igrousso@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/04 12:40:24 by igrousso          #+#    #+#             */
-/*   Updated: 2025/06/04 12:49:37 by igrousso         ###   ########.fr       */
+/*   Updated: 2025/06/05 14:54:17 by igrousso         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "parsing.h"
+#include "../headers/parsing.h"
 
 int	fill_t(char *line, t_map *map, char c1, char c2)
 {

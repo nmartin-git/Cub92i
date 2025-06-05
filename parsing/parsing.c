@@ -3,17 +3,14 @@
 /*                                                        :::      ::::::::   */
 /*   parsing.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: nmartin <nmartin@student.42.fr>            +#+  +:+       +#+        */
+/*   By: igrousso <igrousso@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/02 11:45:35 by nmartin           #+#    #+#             */
-/*   Updated: 2025/06/05 14:27:03 by nmartin          ###   ########.fr       */
+/*   Updated: 2025/06/05 16:07:07 by igrousso         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../libft/libft.h"
-#include "parsing.h"
-
-// #include "../headers/game.h"
+#include "../headers/parsing.h"
 
 int	decode_r(int rgb)
 {
@@ -87,6 +84,34 @@ void	pre_init(t_map *map)
 	map->col = -1;
 }
 
+int	resize_map(t_map *map)
+{
+	int	pre_empty_col;
+	int	post_empty_col;
+	int	**newmap;
+	int	i;
+
+	pre_empty_col = count_pre_col(map->map);
+	post_empty_col = count_post_col(map->map, map->col + 2);
+	map->col = map->col + 4 - post_empty_col - pre_empty_col;
+	newmap = ft_calloc((map->row + 3), sizeof(int *));
+	if (!newmap)
+		return (ft_free_tab_int(map->map), \
+					write(2, "Error\nMalloc map fail\n", 22));
+	i = 0;
+	while (i <= (map->row + 1))
+	{
+		if (resize_line(map->map[i], &newmap[i], pre_empty_col, map->col))
+			return (ft_free_tab_int(map->map), ft_free_tab_int(newmap), \
+						write(2, "Error\nMalloc map fail\n", 22));
+		i++;
+	}
+	ft_free_tab_int(map->map);
+	map->map = newmap;
+	map->row += 2;
+	return (0);
+}
+
 int	parsing(char *av, t_map *map)
 {
 	int		fd_map;
@@ -98,22 +123,35 @@ int	parsing(char *av, t_map *map)
 		return (close_void(fd_map), 1);
 	if (check_map(map))
 		return (free_map(map), 1);
-	for (size_t i = 0; map->map[i] != 0; i++)
-	{
-		for (size_t j = 0; map->map[i][j] != 9; j++)
-			printf("%d", map->map[i][j]);
-		printf("\n");
-	}
-	printf("%d, %d\n", map->row, map->col);
-	printf("%s\n", map->n_t);
-	printf("%s\n", map->s_t);
-	printf("%s\n", map->e_t);
-	printf("%s\n", map->w_t);
-	printf("%d\n", map->f_rgb);
-	printf("%d\n", map->c_rgb);
-	printf("r %d, g %d, b %d\n", decode_r(map->f_rgb), decode_g(map->f_rgb),
-		decode_b(map->f_rgb));
-	printf("r %d, g %d, b %d\n", decode_r(map->c_rgb), decode_g(map->c_rgb),
-		decode_b(map->c_rgb));
+	if (resize_map(map))
+		return (free_infos(map), 1);
 	return (0);
 }
+
+// int main(int ac, char **av)
+// {
+// 	t_map map;
+// 	(void)ac;
+// 	if (parsing(av[1], &map))
+// 		return 1;
+// 	printf("\n");
+// 	for (size_t i = 0; map.map[i] != 0; i++)
+// 	{
+// 		for (size_t j = 0; map.map[i][j] != 9; j++)
+// 			printf("%d", map.map[i][j]);
+// 		printf("\n");
+// 	}
+// 	printf("%d, %d\n", map.row, map.col);
+	// printf("%s\n", map.n_t);
+	// printf("%s\n", map.s_t);
+	// printf("%s\n", map.e_t);
+	// printf("%s\n", map.w_t);
+	// printf("%d\n", map.f_rgb);
+	// printf("%d\n", map.c_rgb);
+	// printf("r %d, g %d, b %d\n", decode_r(map.f_rgb), decode_g(map.f_rgb),
+	// 	decode_b(map.f_rgb));
+	// printf("r %d, g %d, b %d\n", decode_r(map.c_rgb), decode_g(map.c_rgb),
+	// 	decode_b(map.c_rgb));
+// 	free_map(&map);
+// 	return (0);
+// }

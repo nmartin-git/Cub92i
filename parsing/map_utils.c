@@ -6,11 +6,11 @@
 /*   By: igrousso <igrousso@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/04 12:43:53 by igrousso          #+#    #+#             */
-/*   Updated: 2025/06/04 12:50:02 by igrousso         ###   ########.fr       */
+/*   Updated: 2025/06/05 14:54:27 by igrousso         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "parsing.h"
+#include "../headers/parsing.h"
 
 int	start_of_map(int fd, char **line)
 {

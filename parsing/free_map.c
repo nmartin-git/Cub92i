@@ -3,14 +3,14 @@
 /*                                                        :::      ::::::::   */
 /*   free_map.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: nmartin <nmartin@student.42.fr>            +#+  +:+       +#+        */
+/*   By: igrousso <igrousso@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/04 12:37:25 by igrousso          #+#    #+#             */
-/*   Updated: 2025/06/05 14:34:30 by nmartin          ###   ########.fr       */
+/*   Updated: 2025/06/05 14:54:23 by igrousso         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "parsing.h"
+#include "../headers/parsing.h"
 
 void	ft_free_tab_int(int **tab)
 {
