@@ -6,7 +6,7 @@
 /*   By: igrousso <igrousso@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/02 11:45:35 by nmartin           #+#    #+#             */
-/*   Updated: 2025/06/04 13:03:52 by igrousso         ###   ########.fr       */
+/*   Updated: 2025/06/05 13:59:59 by nmartin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -118,9 +118,4 @@ int	parsing(char *av)
 		decode_b(map.c_rgb));
 	free_map(&map);
 	return (0);
-}
-
-int	main(int ac, char **av)
-{
-	parsing(av[1]);
 }
