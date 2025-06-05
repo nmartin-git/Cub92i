@@ -6,7 +6,7 @@
 /*   By: nmartin <nmartin@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/11 18:00:14 by nmartin           #+#    #+#             */
-/*   Updated: 2025/04/10 21:25:43 by nmartin          ###   ########.fr       */
+/*   Updated: 2025/06/03 14:05:32 by nmartin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -117,7 +117,7 @@ void	ftp_percent(t_list **rlst);
 
 /*--GNL--*/
 
-char	*get_next_line(int fd);
+char	*get_next_line(int fd, int *is_empty);
 void	*gnl_calloc(size_t nmemb, size_t size);
 void	gnl_bzero(void *s, size_t n);
 t_list	*gnl_lstnew(char *content);
