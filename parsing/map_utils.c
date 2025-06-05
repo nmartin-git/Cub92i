@@ -6,7 +6,7 @@
 /*   By: igrousso <igrousso@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/04 12:43:53 by igrousso          #+#    #+#             */
-/*   Updated: 2025/06/05 14:54:27 by igrousso         ###   ########.fr       */
+/*   Updated: 2025/06/05 20:06:56 by igrousso         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -87,4 +87,19 @@ int	ctoi(char c, int *count)
 int	encode_rgb(int r, int g, int b)
 {
 	return (r << 16 | g << 8 | b);
+}
+
+void	fill_rgb(char **str, t_map *map, char c)
+{
+	int	r;
+	int	g;
+	int	b;
+
+	r = ft_atoi(str[0]);
+	g = ft_atoi(str[1]);
+	b = ft_atoi(str[2]);
+	if (c == 'F')
+		map->f_rgb = encode_rgb(r, g, b);
+	if (c == 'C')
+		map->c_rgb = encode_rgb(r, g, b);
 }

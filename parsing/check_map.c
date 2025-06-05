@@ -6,7 +6,7 @@
 /*   By: igrousso <igrousso@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/04 12:31:38 by igrousso          #+#    #+#             */
-/*   Updated: 2025/06/05 14:54:46 by igrousso         ###   ########.fr       */
+/*   Updated: 2025/06/05 20:01:23 by igrousso         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -92,5 +92,24 @@ int	check_infos(t_map *map)
 		return (write(2, "Error\nMissing information for floor\n", 40));
 	if (!map->c_rgb)
 		return (write(2, "Error\nMissing information for ceiling\n", 38));
+	return (0);
+}
+
+int	check_colors(char **str)
+{
+	int i;
+	int j;
+
+	i = 0;
+	while (str[i])
+	{
+		j = 0;
+		while (str[i][j])
+		{
+			if (!ft_isdigit(str[i][j++]))
+				return (1);
+		}
+		i++;
+	}
 	return (0);
 }

@@ -6,7 +6,7 @@
 /*   By: igrousso <igrousso@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/02 11:45:35 by nmartin           #+#    #+#             */
-/*   Updated: 2025/06/05 16:07:07 by igrousso         ###   ########.fr       */
+/*   Updated: 2025/06/05 20:02:21 by igrousso         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,10 +42,11 @@ int	fill_infos(int fd, t_map *map)
 		if (ft_strchr("NSFWEC", line[0]))
 		{
 			if (gateway_textures(line, map, &count))
-				return (1);
+				return (free_infos(map), 1);
 		}
 		else if (line[0] != '\n')
-			return (free(line), write(2, "Error\nIncorrect syntax\n", 23));
+			return (free_infos(map), free(line), \
+						write(2, "Error\nIncorrect syntax\n", 23));
 		free(line);
 	}
 	if (check_infos(map))
@@ -128,30 +129,29 @@ int	parsing(char *av, t_map *map)
 	return (0);
 }
 
-// int main(int ac, char **av)
-// {
-// 	t_map map;
-// 	(void)ac;
-// 	if (parsing(av[1], &map))
-// 		return 1;
-// 	printf("\n");
-// 	for (size_t i = 0; map.map[i] != 0; i++)
-// 	{
-// 		for (size_t j = 0; map.map[i][j] != 9; j++)
-// 			printf("%d", map.map[i][j]);
-// 		printf("\n");
-// 	}
-// 	printf("%d, %d\n", map.row, map.col);
-	// printf("%s\n", map.n_t);
-	// printf("%s\n", map.s_t);
-	// printf("%s\n", map.e_t);
-	// printf("%s\n", map.w_t);
-	// printf("%d\n", map.f_rgb);
-	// printf("%d\n", map.c_rgb);
-	// printf("r %d, g %d, b %d\n", decode_r(map.f_rgb), decode_g(map.f_rgb),
-	// 	decode_b(map.f_rgb));
-	// printf("r %d, g %d, b %d\n", decode_r(map.c_rgb), decode_g(map.c_rgb),
-	// 	decode_b(map.c_rgb));
-// 	free_map(&map);
-// 	return (0);
-// }
+int main(int ac, char **av)
+{
+	t_map map;
+	(void)ac;
+	if (parsing(av[1], &map))
+		return 1;
+	for (size_t i = 0; map.map[i] != 0; i++)
+	{
+		for (size_t j = 0; map.map[i][j] != 9; j++)
+			printf("%d", map.map[i][j]);
+		printf("\n");
+	}
+	printf("%d, %d\n", map.row, map.col);
+	printf("%s\n", map.n_t);
+	printf("%s\n", map.s_t);
+	printf("%s\n", map.e_t);
+	printf("%s\n", map.w_t);
+	printf("%d\n", map.f_rgb);
+	printf("%d\n", map.c_rgb);
+	printf("r %d, g %d, b %d\n", decode_r(map.f_rgb), decode_g(map.f_rgb),
+		decode_b(map.f_rgb));
+	printf("r %d, g %d, b %d\n", decode_r(map.c_rgb), decode_g(map.c_rgb),
+		decode_b(map.c_rgb));
+	free_map(&map);
+	return (0);
+}

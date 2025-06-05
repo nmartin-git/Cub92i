@@ -6,7 +6,7 @@
 /*   By: igrousso <igrousso@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/03 08:20:44 by igrousso          #+#    #+#             */
-/*   Updated: 2025/06/05 16:06:00 by igrousso         ###   ########.fr       */
+/*   Updated: 2025/06/05 20:06:46 by igrousso         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,6 +37,7 @@ int			check_neighbors(t_map *map, int x, int y);
 int			check_map(t_map *map);
 int			check_av(char *av, int *fd);
 int			check_infos(t_map *map);
+int			check_colors(char **str);
 
 /* free_map */
 
@@ -48,9 +49,9 @@ void		free_map(t_map *map);
 /* texture */
 
 int			fill_t(char *line, t_map *map, char c1, char c2);
-int			fill_colors(char *line, t_map *map, char c);
-int			fill_textures(char *line, t_map *map, int *count);
-int			fill_ec(char *line, t_map *map, int *count);
+int			fill_colors(char *line, t_map *map, char c, char *tmp);
+int			fill_textures(char *line, t_map *map, int *count, char *tmp);
+int			fill_ec(char *line, t_map *map, int *count, char *tmp);
 int			gateway_textures(char *line, t_map *map, int *count);
 
 /* map_utils */
@@ -59,6 +60,7 @@ int			start_of_map(int fd, char **line);
 int			count_size(int fd, int *col);
 int			ctoi(char c, int *count);
 int			encode_rgb(int r, int g, int b);
+void		fill_rgb(char **str, t_map *map, char c);
 
 /* map */
 
