@@ -6,7 +6,7 @@
 /*   By: nmartin <nmartin@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/02 11:45:35 by nmartin           #+#    #+#             */
-/*   Updated: 2025/06/05 13:59:59 by nmartin          ###   ########.fr       */
+/*   Updated: 2025/06/05 14:27:03 by nmartin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -87,35 +87,33 @@ void	pre_init(t_map *map)
 	map->col = -1;
 }
 
-int	parsing(char *av)
+int	parsing(char *av, t_map *map)
 {
 	int		fd_map;
-	t_map	map;
 
-	pre_init(&map);
+	pre_init(map);
 	if (check_av(av, &fd_map))
 		return (1);
-	if (fill_map(fd_map, &map, av))
+	if (fill_map(fd_map, map, av))
 		return (close_void(fd_map), 1);
-	if (check_map(&map))
-		return (free_map(&map), 1);
-	for (size_t i = 0; map.map[i] != 0; i++)
+	if (check_map(map))
+		return (free_map(map), 1);
+	for (size_t i = 0; map->map[i] != 0; i++)
 	{
-		for (size_t j = 0; map.map[i][j] != 9; j++)
-			printf("%d", map.map[i][j]);
+		for (size_t j = 0; map->map[i][j] != 9; j++)
+			printf("%d", map->map[i][j]);
 		printf("\n");
 	}
-	printf("%d, %d\n", map.row, map.col);
-	printf("%s\n", map.n_t);
-	printf("%s\n", map.s_t);
-	printf("%s\n", map.e_t);
-	printf("%s\n", map.w_t);
-	printf("%d\n", map.f_rgb);
-	printf("%d\n", map.c_rgb);
-	printf("r %d, g %d, b %d\n", decode_r(map.f_rgb), decode_g(map.f_rgb),
-		decode_b(map.f_rgb));
-	printf("r %d, g %d, b %d\n", decode_r(map.c_rgb), decode_g(map.c_rgb),
-		decode_b(map.c_rgb));
-	free_map(&map);
+	printf("%d, %d\n", map->row, map->col);
+	printf("%s\n", map->n_t);
+	printf("%s\n", map->s_t);
+	printf("%s\n", map->e_t);
+	printf("%s\n", map->w_t);
+	printf("%d\n", map->f_rgb);
+	printf("%d\n", map->c_rgb);
+	printf("r %d, g %d, b %d\n", decode_r(map->f_rgb), decode_g(map->f_rgb),
+		decode_b(map->f_rgb));
+	printf("r %d, g %d, b %d\n", decode_r(map->c_rgb), decode_g(map->c_rgb),
+		decode_b(map->c_rgb));
 	return (0);
 }
