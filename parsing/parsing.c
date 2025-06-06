@@ -6,26 +6,11 @@
 /*   By: igrousso <igrousso@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/02 11:45:35 by nmartin           #+#    #+#             */
-/*   Updated: 2025/06/06 16:00:21 by igrousso         ###   ########.fr       */
+/*   Updated: 2025/06/06 16:52:26 by igrousso         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../headers/parsing.h"
-
-// int	decode_r(int rgb)
-// {
-// 	return ((rgb >> 16) & 255);
-// }
-
-// int	decode_g(int rgb)
-// {
-// 	return ((rgb >> 8) & 255);
-// }
-
-// int	decode_b(int rgb)
-// {
-// 	return (rgb & 255);
-// }
 
 /*
 va remplir les informations utiles à la map
