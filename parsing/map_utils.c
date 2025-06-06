@@ -6,11 +6,15 @@
 /*   By: igrousso <igrousso@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/04 12:43:53 by igrousso          #+#    #+#             */
-/*   Updated: 2025/06/05 20:06:56 by igrousso         ###   ########.fr       */
+/*   Updated: 2025/06/06 16:11:43 by igrousso         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../headers/parsing.h"
+
+/*
+avance dans le fichier jusqu'à arriver sur la map
+*/
 
 int	start_of_map(int fd, char **line)
 {
@@ -28,6 +32,10 @@ int	start_of_map(int fd, char **line)
 	}
 	return (0);
 }
+
+/*
+compte la taille de la map et renvoie le nombre de lignes
+*/
 
 int	count_size(int fd, int *col)
 {
@@ -54,6 +62,10 @@ int	count_size(int fd, int *col)
 	(*col)--;
 	return (count - 1);
 }
+
+/*
+char to int avec les spécificités de la map
+*/
 
 int	ctoi(char c, int *count)
 {
@@ -84,10 +96,18 @@ int	ctoi(char c, int *count)
 	return (ft_putstr_fd("Error\nIncorect character\n", 2), -2);
 }
 
+/*
+encode les couleur rgb en un seul int
+*/
+
 int	encode_rgb(int r, int g, int b)
 {
 	return (r << 16 | g << 8 | b);
 }
+
+/*
+sauvegarde la couleur du sol et du plafond dans la structure t_map
+*/
 
 void	fill_rgb(char **str, t_map *map, char c)
 {
