@@ -3,9 +3,10 @@
 - - Bonus
 
 - - puff change differentes couleurs
-- - puff bonus puff malus (plus vite, en noir et blanc etc)
+- - puff bonus puff malus (plus vite, en noir et blanc, devenir tout petit (grandir les murs autour), qui cache la minimap etc)
 - - boss 92i qui lance des attaques pieds vernis blanc
 - - boss paqueta avec musique plus fort quand il se rapproche
 - - el mordjene pour les pv
 - - minimap qui change de couleurs a chaque puff
 - - pouvoir mettre la map en gros (changer MINIMAP_SIZE)
+- - ajouter fleche de direction au curseur

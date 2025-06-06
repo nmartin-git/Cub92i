@@ -6,7 +6,7 @@
 /*   By: nmartin <nmartin@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/02 11:45:56 by nmartin           #+#    #+#             */
-/*   Updated: 2025/06/05 18:40:20 by nmartin          ###   ########.fr       */
+/*   Updated: 2025/06/06 18:01:50 by nmartin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,15 +22,19 @@ int	key_handler(int key, t_data *data)
 {
 	if (key == XK_Escape)
 		cub_exit(0, "Window closed successfully", data);
+	if (key == XK_Right)
+		write (1, "right\n", 6);
+	if (key == XK_Left)
+		write (1, "left\n", 5);
+	if (key == XK_Up)
+		write (1, "up\n", 3);
+	if (key == XK_Down)
+		write (1, "down\n", 5);
 	return (0);
 }
 
 void	set_data(t_data *data, t_map *map)
 {
-	int		bpp;
-	int		l_len;
-	int		end;
-
 	data->minimap = NULL;
 	data->map = map;
 	data->display = mlx_init();
@@ -39,16 +43,9 @@ void	set_data(t_data *data, t_map *map)
 	data->window = mlx_new_window(data->display, TAB_X, TAB_Y, "cub");
 	if (!data->window)
 		cub_exit(1, "Window initialization failed", data);
-	data->image = mlx_new_image(data->display, TAB_X, TAB_Y);
-	if (!data->image)
-		cub_exit(1, "Image initialization failed", data);
-	data->adress = mlx_get_data_addr(data->image, &bpp, &l_len, &end);
-	if (!data->adress)
-		cub_exit(1, "Adress initialization failed", data);
-	data->bpp = bpp;
-	data->l_len = l_len;
+	data->image = newImage(data->display, TAB_X, TAB_Y);
 
-	int		x;
+	int		x;//TODO enlever fond blanc
 	int		y;
 	char	*pxl;
 
@@ -56,7 +53,7 @@ void	set_data(t_data *data, t_map *map)
 	{
 		for (x = 0; x < TAB_X; x++)
 		{
-			pxl = data->adress + (y * data->l_len + x * (data->bpp / 8));
+			pxl = data->image->adress + (y * data->image->l_len + x * (data->image->bpp / 8));
 			*(unsigned int *)pxl = 0xFFFFFF; // blanc
 		}
 	}
@@ -77,8 +74,9 @@ void	game(t_data *data, t_map *map)
 	//set map, x et y
 	set_data(data, map);
 	minimap(data);
-	mlx_put_image_to_window(data->display, data->window, data->image, 0, 0);
-	mlx_put_image_to_window(data->display, data->window, data->minimap->image, MINIMAP_SIZE / 15, MINIMAP_SIZE / 15);
+	mlx_put_image_to_window(data->display, data->window, data->image->image, 0, 0);
+	mlx_put_image_to_window(data->display, data->window, data->minimap->minimap->image, MINIMAP_SIZE / 15, MINIMAP_SIZE / 15);
+	mlx_put_image_to_window(data->display, data->window, data->minimap->cursor->image, data->minimap->cursor_x, data->minimap->cursor_y);
 	mlx_key_hook(data->window, key_handler, data);
 	mlx_hook(data->window, 17, 1L >> 0, close_window, data);
 	mlx_loop(data->display);

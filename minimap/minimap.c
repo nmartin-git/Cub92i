@@ -6,7 +6,7 @@
 /*   By: nmartin <nmartin@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/05 14:23:31 by nmartin           #+#    #+#             */
-/*   Updated: 2025/06/05 18:52:17 by nmartin          ###   ########.fr       */
+/*   Updated: 2025/06/06 17:58:05 by nmartin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,6 +19,7 @@ void	setMinimapColor(t_minimap *minimap)
 	minimap->w_color = 666666;
 	minimap->f_color = 777777;
 	minimap->b_color = 999999;
+	minimap->c_color = 888888;
 }
 
 int	getMinimapColor(t_minimap *minimap, int content)
@@ -33,13 +34,11 @@ int	getMinimapColor(t_minimap *minimap, int content)
 
 void	minimapData(t_minimap *minimap, void *display, int x, int y)
 {
-	int		bpp;
-	int		l_len;
-	int		end;
-
 	setMinimapColor(minimap);
 	minimap->x = x;
 	minimap->y = y;
+	minimap->cursor_x = MINIMAP_SIZE / 15;
+	minimap->cursor_y = MINIMAP_SIZE / 15;
 	if (minimap->x > minimap->y)
 		minimap->squareSize = MINIMAP_SIZE / minimap->x;
 	else
@@ -47,14 +46,8 @@ void	minimapData(t_minimap *minimap, void *display, int x, int y)
 	minimap->tab_x = minimap->squareSize * (x + 2);//TODO tej les +2
 	minimap->tab_y = minimap->squareSize * (y + 2);//TODO tej les +2
 	minimap->display = display;
-	minimap->image = mlx_new_image(minimap->display, minimap->tab_x , minimap->tab_y);
-	// if (!minimap->image)
-	// 	cub_exit(1, "Image initialization failed", data);//TODO gerer les leaks en cas derreurs
-	minimap->adress = mlx_get_data_addr(minimap->image, &bpp, &l_len, &end);
-	// if (!minimap->adress)
-	// 	cub_exit(1, "Adress initialization failed", data);//TODO gerer les leaks en cas derreurs
-	minimap->bpp = bpp;
-	minimap->l_len = l_len;
+	minimap->minimap = newImage(display, minimap->tab_x, minimap->tab_y);//TODO gerer les leaks en cas derreurs
+	minimap->cursor = newImage(display, minimap->squareSize / 1.5, minimap->squareSize / 1.5);//TODO gerer les leaks en cas derreurs//TODO gerer la taille du cursuer (propotionnel)
 }
 
 void	pixelPutSquare(t_minimap *minimap, t_pos pixel, int color)
@@ -66,8 +59,8 @@ void	pixelPutSquare(t_minimap *minimap, t_pos pixel, int color)
 	int		i;
 	int		y;
 
-	b = minimap->bpp;
-	l = minimap->l_len;
+	b = minimap->minimap->bpp;
+	l = minimap->minimap->l_len;
 	x = pixel.x * minimap->squareSize;
 	pixel.y *= minimap->squareSize;
 	y = 0;
@@ -80,7 +73,7 @@ void	pixelPutSquare(t_minimap *minimap, t_pos pixel, int color)
 			if (pixel.x >= 0 && pixel.x <= minimap->tab_x
 				&& pixel.y >= 0 && pixel.y <= minimap->tab_y)
 			{
-				pxl = minimap->adress + (pixel.y * l + pixel.x * (b / 8));
+				pxl = minimap->minimap->adress + (pixel.y * l + pixel.x * (b / 8));
 				*(unsigned int *)pxl = color;
 			}
 			pixel.x++;
@@ -108,4 +101,5 @@ void	minimapCreate(t_minimap *minimap, int **map)
 		}
 		pixel.y++;
 	}
+	pixelPutCursor(minimap->cursor, minimap->c_color, minimap->squareSize / 1.5, minimap->squareSize / 1.5);
 }
