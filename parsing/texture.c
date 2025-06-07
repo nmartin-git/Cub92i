@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   texture.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: igrousso <igrousso@student.42.fr>          +#+  +:+       +#+        */
+/*   By: nmartin <nmartin@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/04 12:40:24 by igrousso          #+#    #+#             */
-/*   Updated: 2025/06/06 16:15:44 by igrousso         ###   ########.fr       */
+/*   Updated: 2025/06/07 16:59:16 by nmartin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -138,6 +138,7 @@ int	gateway_textures(char *line, t_map *map, int *count)
 {
 	char	*tmp;
 
+	tmp = NULL;
 	if (ft_strchr("NSFW", line[0]))
 	{
 		if (fill_textures(line, map, count, tmp))

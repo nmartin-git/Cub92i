@@ -6,7 +6,7 @@
 /*   By: nmartin <nmartin@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/02 18:33:29 by nmartin           #+#    #+#             */
-/*   Updated: 2025/06/05 18:36:22 by nmartin          ###   ########.fr       */
+/*   Updated: 2025/06/06 17:04:13 by nmartin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,10 +14,13 @@
 
 void	free_data(t_data *data)
 {
-	if (data->minimap && data->minimap->image)
-		mlx_destroy_image(data->display, data->minimap->image);
-	if (data->image && data->image)
-		mlx_destroy_image(data->display, data->image);
+	if (data->minimap)
+	{
+		freeImage(data->minimap->minimap, data->display);
+		freeImage(data->minimap->cursor, data->display);
+	}
+	if (data->image)
+		freeImage(data->image, data->display);
 	if (data->display && data->window)
 		mlx_destroy_window(data->display, data->window);
 	if (data->display)
