@@ -6,11 +6,15 @@
 /*   By: igrousso <igrousso@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/04 12:37:25 by igrousso          #+#    #+#             */
-/*   Updated: 2025/06/05 14:54:23 by igrousso         ###   ########.fr       */
+/*   Updated: 2025/06/06 16:13:12 by igrousso         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../headers/parsing.h"
+
+/*
+désalloue un double tableau d'int
+*/
 
 void	ft_free_tab_int(int **tab)
 {
@@ -23,10 +27,18 @@ void	ft_free_tab_int(int **tab)
 	tab = NULL;
 }
 
+/*
+la fonction close en void
+*/
+
 void	close_void(int fd)
 {
 	close(fd);
 }
+
+/*
+désalloue les informations de la map
+*/
 
 void	free_infos(t_map *map)
 {
@@ -39,6 +51,10 @@ void	free_infos(t_map *map)
 	if (map->w_t)
 		free(map->w_t);
 }
+
+/*
+libère la mémoires des variables de la structure t_map
+*/
 
 void	free_map(t_map *map)
 {

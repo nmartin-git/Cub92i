@@ -6,11 +6,15 @@
 /*   By: igrousso <igrousso@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/04 12:31:38 by igrousso          #+#    #+#             */
-/*   Updated: 2025/06/05 20:01:23 by igrousso         ###   ########.fr       */
+/*   Updated: 2025/06/06 16:03:06 by igrousso         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../headers/parsing.h"
+
+/*
+vérifie si les contours de la map sont bien des murs
+*/
 
 int	check_neighbors(t_map *map, int x, int y)
 {
@@ -37,6 +41,10 @@ int	check_neighbors(t_map *map, int x, int y)
 	return (0);
 }
 
+/*
+vérifie si la map est valide
+*/
+
 int	check_map(t_map *map)
 {
 	int	x;
@@ -61,6 +69,10 @@ int	check_map(t_map *map)
 	return (0);
 }
 
+/*
+vérifie si le fichié passé en argument est sous la bonne extension
+*/
+
 int	check_av(char *av, int *fd)
 {
 	size_t	len;
@@ -77,6 +89,10 @@ int	check_av(char *av, int *fd)
 		return (write(2, "Error\nFailed to open the file\n", 30));
 	return (0);
 }
+
+/*
+vérifie si il manque des informations poru la map
+*/
 
 int	check_infos(t_map *map)
 {
@@ -95,10 +111,14 @@ int	check_infos(t_map *map)
 	return (0);
 }
 
+/*
+verifie si les rgb envoyés sont bien des chiffres
+*/
+
 int	check_colors(char **str)
 {
-	int i;
-	int j;
+	int	i;
+	int	j;
 
 	i = 0;
 	while (str[i])

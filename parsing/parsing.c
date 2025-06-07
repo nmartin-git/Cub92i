@@ -6,26 +6,15 @@
 /*   By: igrousso <igrousso@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/02 11:45:35 by nmartin           #+#    #+#             */
-/*   Updated: 2025/06/05 20:02:21 by igrousso         ###   ########.fr       */
+/*   Updated: 2025/06/07 16:44:48 by igrousso         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../headers/parsing.h"
 
-int	decode_r(int rgb)
-{
-	return ((rgb >> 16) & 255);
-}
-
-int	decode_g(int rgb)
-{
-	return ((rgb >> 8) & 255);
-}
-
-int	decode_b(int rgb)
-{
-	return (rgb & 255);
-}
+/*
+va remplir les informations utiles à la map
+*/
 
 int	fill_infos(int fd, t_map *map)
 {
@@ -54,6 +43,10 @@ int	fill_infos(int fd, t_map *map)
 	return (0);
 }
 
+/*
+va remplir la structure map
+*/
+
 int	fill_map(int fd, t_map *map, char *av)
 {
 	int	i;
@@ -72,6 +65,10 @@ int	fill_map(int fd, t_map *map, char *av)
 	return (0);
 }
 
+/*
+initialise la structure map avant utilisation
+*/
+
 void	pre_init(t_map *map)
 {
 	map->map = NULL;
@@ -83,7 +80,14 @@ void	pre_init(t_map *map)
 	map->w_t = NULL;
 	map->row = -1;
 	map->col = -1;
+	map->x_spawn = -1;
+	map->y_spawn = -1;
 }
+
+/*
+va recréer une map plus propre pour effacer des colonnes vides
+à gauche et à droite de la map parsée
+*/
 
 int	resize_map(t_map *map)
 {
@@ -113,6 +117,11 @@ int	resize_map(t_map *map)
 	return (0);
 }
 
+/* 
+va parser l'argument passé à la commande et remplir
+une t_map avec toutes les informations utiles à l'exec
+*/
+
 int	parsing(char *av, t_map *map)
 {
 	int		fd_map;
@@ -126,32 +135,34 @@ int	parsing(char *av, t_map *map)
 		return (free_map(map), 1);
 	if (resize_map(map))
 		return (free_infos(map), 1);
+	set_pos_spawn(map);
 	return (0);
 }
 
-int main(int ac, char **av)
-{
-	t_map map;
-	(void)ac;
-	if (parsing(av[1], &map))
-		return 1;
-	for (size_t i = 0; map.map[i] != 0; i++)
-	{
-		for (size_t j = 0; map.map[i][j] != 9; j++)
-			printf("%d", map.map[i][j]);
-		printf("\n");
-	}
-	printf("%d, %d\n", map.row, map.col);
-	printf("%s\n", map.n_t);
-	printf("%s\n", map.s_t);
-	printf("%s\n", map.e_t);
-	printf("%s\n", map.w_t);
-	printf("%d\n", map.f_rgb);
-	printf("%d\n", map.c_rgb);
-	printf("r %d, g %d, b %d\n", decode_r(map.f_rgb), decode_g(map.f_rgb),
-		decode_b(map.f_rgb));
-	printf("r %d, g %d, b %d\n", decode_r(map.c_rgb), decode_g(map.c_rgb),
-		decode_b(map.c_rgb));
-	free_map(&map);
-	return (0);
-}
+// int main(int ac, char **av)
+// {
+// 	t_map map;
+// 	(void)ac;
+// 	if (parsing(av[1], &map))
+// 		return 1;
+// 	for (size_t i = 0; map.map[i] != 0; i++)
+// 	{
+// 		for (size_t j = 0; map.map[i][j] != 9; j++)
+// 			printf("%d", map.map[i][j]);
+// 		printf("\n");
+// 	}
+// 	printf("%d, %d\n", map.x_spawn, map.y_spawn);
+// 	// printf("%d, %d\n", map.row, map.col);
+// 	// printf("%s\n", map.n_t);
+// 	// printf("%s\n", map.s_t);
+// 	// printf("%s\n", map.e_t);
+// 	// printf("%s\n", map.w_t);
+// 	// printf("%d\n", map.f_rgb);
+// 	// printf("%d\n", map.c_rgb);
+// 	// printf("r %d, g %d, b %d\n", decode_r(map.f_rgb), decode_g(map.f_rgb),
+// 	// 	decode_b(map.f_rgb));
+// 	// printf("r %d, g %d, b %d\n", decode_r(map.c_rgb), decode_g(map.c_rgb),
+// 	// 	decode_b(map.c_rgb));
+// 	free_map(&map);
+// 	return (0);
+// }

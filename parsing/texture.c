@@ -3,14 +3,18 @@
 /*                                                        :::      ::::::::   */
 /*   texture.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: igrousso <igrousso@student.42.fr>          +#+  +:+       +#+        */
+/*   By: nmartin <nmartin@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/04 12:40:24 by igrousso          #+#    #+#             */
-/*   Updated: 2025/06/05 20:10:48 by igrousso         ###   ########.fr       */
+/*   Updated: 2025/06/07 16:59:16 by nmartin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../headers/parsing.h"
+
+/*
+sauvegarde les informatinos des textures
+*/
 
 int	fill_t(char *line, t_map *map, char c1, char c2)
 {
@@ -39,11 +43,15 @@ int	fill_t(char *line, t_map *map, char c1, char c2)
 	return (0);
 }
 
+/*
+sauvegarde les informations des couleurs du plafond et du sol
+*/
+
 int	fill_colors(char *line, t_map *map, char c, char *tmp)
 {
 	char	**str;
-	int 	count;
-	int 	i;
+	int		count;
+	int		i;
 
 	count = 0;
 	i = -1;
@@ -67,6 +75,10 @@ int	fill_colors(char *line, t_map *map, char c, char *tmp)
 	fill_rgb(str, map, c);
 	return (free(tmp), ft_free_tab(str), 0);
 }
+
+/*
+fonction passerelle 2
+*/
 
 int	fill_textures(char *line, t_map *map, int *count, char *tmp)
 {
@@ -97,6 +109,10 @@ int	fill_textures(char *line, t_map *map, int *count, char *tmp)
 	return (0);
 }
 
+/*
+fonction passerelle 3
+*/
+
 int	fill_ec(char *line, t_map *map, int *count, char *tmp)
 {
 	if (line[0] == 'E' && !map->e_t)
@@ -114,10 +130,15 @@ int	fill_ec(char *line, t_map *map, int *count, char *tmp)
 	return (0);
 }
 
+/*
+fonction passerelle pour sauvegarder les informations de la map
+*/
+
 int	gateway_textures(char *line, t_map *map, int *count)
 {
-	char *tmp;
+	char	*tmp;
 
+	tmp = NULL;
 	if (ft_strchr("NSFW", line[0]))
 	{
 		if (fill_textures(line, map, count, tmp))
