@@ -6,7 +6,7 @@
 /*   By: nmartin <nmartin@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/05 14:23:42 by nmartin           #+#    #+#             */
-/*   Updated: 2025/06/06 17:57:03 by nmartin          ###   ########.fr       */
+/*   Updated: 2025/06/07 15:39:21 by nmartin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,25 +21,6 @@
 # define WALL 1
 # define FLOOR 0
 # define EMPTY 8
-
-typedef struct s_minimap
-{
-	void	*display;
-	t_image	*minimap;
-	t_image	*cursor;
-	int		cursor_x;
-	int		cursor_y;
-	int		squareSize;
-	int		p_color;
-	int		w_color;
-	int		f_color;
-	int		b_color;
-	int		c_color;
-	int		x;
-	int		y;
-	int		tab_x;
-	int		tab_y;
-}	t_minimap;
 
 /*---minimap.c---*/
 void	setMinimapColor(t_minimap *minimap);

@@ -6,7 +6,7 @@
 /*   By: nmartin <nmartin@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/02 11:45:56 by nmartin           #+#    #+#             */
-/*   Updated: 2025/06/06 18:01:50 by nmartin          ###   ########.fr       */
+/*   Updated: 2025/06/07 16:35:30 by nmartin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,13 +23,13 @@ int	key_handler(int key, t_data *data)
 	if (key == XK_Escape)
 		cub_exit(0, "Window closed successfully", data);
 	if (key == XK_Right)
-		write (1, "right\n", 6);
+		mooveCursor(data, data->minimap->squareSize / 4, 0);
 	if (key == XK_Left)
-		write (1, "left\n", 5);
+		mooveCursor(data, -(data->minimap->squareSize / 4), 0);
 	if (key == XK_Up)
-		write (1, "up\n", 3);
+		mooveCursor(data, 0, -(data->minimap->squareSize / 4));
 	if (key == XK_Down)
-		write (1, "down\n", 5);
+		mooveCursor(data, 0, data->minimap->squareSize / 4);
 	return (0);
 }
 

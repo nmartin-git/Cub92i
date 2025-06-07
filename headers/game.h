@@ -6,7 +6,7 @@
 /*   By: nmartin <nmartin@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/02 14:55:19 by nmartin           #+#    #+#             */
-/*   Updated: 2025/06/06 18:04:12 by nmartin          ###   ########.fr       */
+/*   Updated: 2025/06/07 16:33:54 by nmartin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,8 +30,10 @@ void	game(t_data *data, t_map *map);
 int		minimap(t_data *data);
 
 //---game_utils.c---
-
 void	cub_exit(int err, char *str, t_data *data);
 void	free_data(t_data *data);
+
+/*---key_handling.c---*/
+void	mooveCursor(t_data *data, int x, int y);
 
 #endif

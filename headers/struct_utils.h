@@ -6,13 +6,14 @@
 /*   By: nmartin <nmartin@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/06 16:52:00 by nmartin           #+#    #+#             */
-/*   Updated: 2025/06/06 18:04:19 by nmartin          ###   ########.fr       */
+/*   Updated: 2025/06/07 16:34:27 by nmartin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef STRUCT_UTILS_H
 # define STRUCT_UTILS_H
 
+# include "parsing.h"
 # include <unistd.h>
 # include <stdlib.h>
 # include "../minilibx-linux/mlx.h"
@@ -25,6 +26,25 @@ typedef struct s_image
 	int			bpp;
 	int			l_len;
 }	t_image;
+
+typedef struct s_minimap
+{
+	void	*display;
+	t_image	*minimap;
+	t_image	*cursor;
+	int		cursor_x;
+	int		cursor_y;
+	int		squareSize;
+	int		p_color;
+	int		w_color;
+	int		f_color;
+	int		b_color;
+	int		c_color;
+	int		x;
+	int		y;
+	int		tab_x;
+	int		tab_y;
+}	t_minimap;
 
 typedef struct s_pos
 {
