@@ -6,7 +6,7 @@
 /*   By: nmartin <nmartin@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/05 14:23:31 by nmartin           #+#    #+#             */
-/*   Updated: 2025/06/07 17:02:31 by nmartin          ###   ########.fr       */
+/*   Updated: 2025/06/07 18:22:26 by nmartin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,22 +32,23 @@ int	getMinimapColor(t_minimap *minimap, int content)
 		return (minimap->f_color);
 }
 
-void	minimapData(t_minimap *minimap, void *display, int x, int y)
+void	minimapData(t_minimap *minimap, t_data *data)
 {
 	setMinimapColor(minimap);
-	minimap->x = x;
-	minimap->y = y;
-	minimap->cursor_x = MINIMAP_SIZE / 15;
-	minimap->cursor_y = MINIMAP_SIZE / 15;
+	minimap->x = data->map->col;
+	minimap->y = data->map->row;
 	if (minimap->x > minimap->y)
 		minimap->squareSize = MINIMAP_SIZE / minimap->x;
 	else
 		minimap->squareSize = MINIMAP_SIZE / minimap->y;
-	minimap->tab_x = minimap->squareSize * (x);//TODO tej les +2
-	minimap->tab_y = minimap->squareSize * (y);//TODO tej les +2
-	minimap->display = display;
-	minimap->minimap = newImage(display, minimap->tab_x, minimap->tab_y);//TODO gerer les leaks en cas derreurs
-	minimap->cursor = newImage(display, minimap->squareSize / 1.5, minimap->squareSize / 1.5);//TODO gerer les leaks en cas derreurs//TODO gerer la taille du cursuer (propotionnel)
+	minimap->cursor_x = data->map->x_spawn * data->minimap->squareSize + MINIMAP_SIZE / 14;
+	minimap->cursor_y = data->map->y_spawn * data->minimap->squareSize + MINIMAP_SIZE / 14;
+	//printf("[%d][%d] * %d\n", data->map->y_spawn, data->map->x_spawn, data->minimap->squareSize);
+	minimap->tab_x = minimap->squareSize * minimap->x;
+	minimap->tab_y = minimap->squareSize * minimap->y;
+	minimap->display = data->display;
+	minimap->minimap = newImage(data->display, minimap->tab_x, minimap->tab_y);//TODO gerer les leaks en cas derreurs
+	minimap->cursor = newImage(data->display, minimap->squareSize / 1.5, minimap->squareSize / 1.5);//TODO gerer les leaks en cas derreurs//TODO gerer la taille du cursuer (propotionnel)
 }
 
 void	pixelPutSquare(t_minimap *minimap, t_pos pixel, int color)

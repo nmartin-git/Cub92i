@@ -6,7 +6,7 @@
 /*   By: nmartin <nmartin@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/02 14:55:19 by nmartin           #+#    #+#             */
-/*   Updated: 2025/06/07 16:55:13 by nmartin          ###   ########.fr       */
+/*   Updated: 2025/06/07 22:18:58 by nmartin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,7 +33,7 @@ void	cub_exit(int err, char *str, t_data *data);
 void	free_data(t_data *data);
 
 /*---key_handling.c---*/
-void	mooveCursor(t_data *data, int x, int y);
+void	mooveCursor(t_data *data, int input);
 int		key_handler(int key, t_data *data);
 
 #endif
