@@ -6,11 +6,15 @@
 /*   By: igrousso <igrousso@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/07 17:41:33 by igrousso          #+#    #+#             */
-/*   Updated: 2025/06/07 18:06:34 by igrousso         ###   ########.fr       */
+/*   Updated: 2025/06/07 20:24:33 by igrousso         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../headers/background.h"
+
+/*
+colorie le pixel dans la nouvelle image
+*/
 
 void	put_pixel_img(t_image *img, int x, int y, int color)
 {
@@ -25,11 +29,20 @@ void	put_pixel_img(t_image *img, int x, int y, int color)
 	}
 }
 
+/*
+renvoie la couleur du pixel
+*/
+
 unsigned int	get_pixel_img(t_image *img, int x, int y)
 {
 	return (*(unsigned int *)((img->adress + (y * img->l_len) + (x * img->bpp
 					/ 8))));
 }
+
+/*
+place une image au dessus d'une autre sans prendre en compte
+les pixels vides
+*/
 
 void	put_img_to_img(t_image *dst, t_image *src, int x, int y)
 {
@@ -42,7 +55,7 @@ void	put_img_to_img(t_image *dst, t_image *src, int x, int y)
 		j = 0;
 		while (j < 1920)
 		{
-			put_pixel_img(dst, x + i, y + j, get_pixel_img(src, i, j));
+			put_pixel_img(dst, x + j, y + i, get_pixel_img(src, j, i));
 			j++;
 		}
 		i++;

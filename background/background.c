@@ -6,11 +6,15 @@
 /*   By: igrousso <igrousso@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/07 17:27:20 by igrousso          #+#    #+#             */
-/*   Updated: 2025/06/07 18:06:40 by igrousso         ###   ########.fr       */
+/*   Updated: 2025/06/07 20:24:44 by igrousso         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../headers/background.h"
+
+/*
+colorie le pixel de la couleur du plafond
+*/
 
 void	paint_ceiling(char *dst, t_data *data, int j)
 {
@@ -30,6 +34,10 @@ void	paint_ceiling(char *dst, t_data *data, int j)
 	*(unsigned int *)dst = encode_rgb(r, g, b);
 }
 
+/*
+colorie le pixel de la couleur du sol
+*/
+
 void	paint_floor(char *dst, t_data *data, int j)
 {
 	int	r;
@@ -48,6 +56,10 @@ void	paint_floor(char *dst, t_data *data, int j)
 	*(unsigned int *)dst = encode_rgb(r, g, b);
 }
 
+/*
+parcourt la ligne
+*/
+
 void	gateway_paint(char *dst, t_image *img, t_data *data, int i)
 {
 	int	j;
@@ -62,6 +74,10 @@ void	gateway_paint(char *dst, t_image *img, t_data *data, int i)
 			paint_floor(dst, data, j);
 	}
 }
+
+/*
+contruit l'image du background
+*/
 
 int	paint_floor_and_ceiling(t_image *img, t_data *data)
 {
