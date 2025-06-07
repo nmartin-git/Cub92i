@@ -6,7 +6,7 @@
 /*   By: nmartin <nmartin@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/05 14:23:31 by nmartin           #+#    #+#             */
-/*   Updated: 2025/06/06 17:58:05 by nmartin          ###   ########.fr       */
+/*   Updated: 2025/06/07 17:02:31 by nmartin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,8 +43,8 @@ void	minimapData(t_minimap *minimap, void *display, int x, int y)
 		minimap->squareSize = MINIMAP_SIZE / minimap->x;
 	else
 		minimap->squareSize = MINIMAP_SIZE / minimap->y;
-	minimap->tab_x = minimap->squareSize * (x + 2);//TODO tej les +2
-	minimap->tab_y = minimap->squareSize * (y + 2);//TODO tej les +2
+	minimap->tab_x = minimap->squareSize * (x);//TODO tej les +2
+	minimap->tab_y = minimap->squareSize * (y);//TODO tej les +2
 	minimap->display = display;
 	minimap->minimap = newImage(display, minimap->tab_x, minimap->tab_y);//TODO gerer les leaks en cas derreurs
 	minimap->cursor = newImage(display, minimap->squareSize / 1.5, minimap->squareSize / 1.5);//TODO gerer les leaks en cas derreurs//TODO gerer la taille du cursuer (propotionnel)
@@ -90,10 +90,10 @@ void	minimapCreate(t_minimap *minimap, int **map)
 	int		color;
 
 	pixel.y = 0;
-	while (pixel.y < minimap->y + 2)//TODO tej les +2 qd parsing updated
+	while (pixel.y < minimap->y)//TODO tej les +2 qd parsing updated
 	{
 		pixel.x = 0;
-		while (pixel.x < minimap->x + 2)//TODO tej les +2 qd parsing updated
+		while (pixel.x < minimap->x)//TODO tej les +2 qd parsing updated
 		{
 			color = getMinimapColor(minimap, map[pixel.y][pixel.x]);
 			pixelPutSquare(minimap, pixel, color);
@@ -101,5 +101,5 @@ void	minimapCreate(t_minimap *minimap, int **map)
 		}
 		pixel.y++;
 	}
-	pixelPutCursor(minimap->cursor, minimap->c_color, minimap->squareSize / 1.5, minimap->squareSize / 1.5);
+	pixelPutCursor(minimap->cursor, minimap->c_color, minimap->squareSize / 1.5, minimap->squareSize / 3);
 }

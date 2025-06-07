@@ -3,32 +3,18 @@
 /*                                                        :::      ::::::::   */
 /*   parsing.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: nmartin <nmartin@student.42.fr>            +#+  +:+       +#+        */
+/*   By: igrousso <igrousso@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/02 11:45:35 by nmartin           #+#    #+#             */
-/*   Updated: 2025/06/05 14:27:03 by nmartin          ###   ########.fr       */
+/*   Updated: 2025/06/07 16:44:48 by igrousso         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../libft/libft.h"
-#include "parsing.h"
+#include "../headers/parsing.h"
 
-// #include "../headers/game.h"
-
-int	decode_r(int rgb)
-{
-	return ((rgb >> 16) & 255);
-}
-
-int	decode_g(int rgb)
-{
-	return ((rgb >> 8) & 255);
-}
-
-int	decode_b(int rgb)
-{
-	return (rgb & 255);
-}
+/*
+va remplir les informations utiles à la map
+*/
 
 int	fill_infos(int fd, t_map *map)
 {
@@ -45,16 +31,21 @@ int	fill_infos(int fd, t_map *map)
 		if (ft_strchr("NSFWEC", line[0]))
 		{
 			if (gateway_textures(line, map, &count))
-				return (1);
+				return (free_infos(map), 1);
 		}
 		else if (line[0] != '\n')
-			return (free(line), write(2, "Error\nIncorrect syntax\n", 23));
+			return (free_infos(map), free(line), \
+						write(2, "Error\nIncorrect syntax\n", 23));
 		free(line);
 	}
 	if (check_infos(map))
 		return (1);
 	return (0);
 }
+
+/*
+va remplir la structure map
+*/
 
 int	fill_map(int fd, t_map *map, char *av)
 {
@@ -74,6 +65,10 @@ int	fill_map(int fd, t_map *map, char *av)
 	return (0);
 }
 
+/*
+initialise la structure map avant utilisation
+*/
+
 void	pre_init(t_map *map)
 {
 	map->map = NULL;
@@ -85,7 +80,47 @@ void	pre_init(t_map *map)
 	map->w_t = NULL;
 	map->row = -1;
 	map->col = -1;
+	map->x_spawn = -1;
+	map->y_spawn = -1;
 }
+
+/*
+va recréer une map plus propre pour effacer des colonnes vides
+à gauche et à droite de la map parsée
+*/
+
+int	resize_map(t_map *map)
+{
+	int	pre_empty_col;
+	int	post_empty_col;
+	int	**newmap;
+	int	i;
+
+	pre_empty_col = count_pre_col(map->map);
+	post_empty_col = count_post_col(map->map, map->col + 2);
+	map->col = map->col + 4 - post_empty_col - pre_empty_col;
+	newmap = ft_calloc((map->row + 3), sizeof(int *));
+	if (!newmap)
+		return (ft_free_tab_int(map->map), \
+					write(2, "Error\nMalloc map fail\n", 22));
+	i = 0;
+	while (i <= (map->row + 1))
+	{
+		if (resize_line(map->map[i], &newmap[i], pre_empty_col, map->col))
+			return (ft_free_tab_int(map->map), ft_free_tab_int(newmap), \
+						write(2, "Error\nMalloc map fail\n", 22));
+		i++;
+	}
+	ft_free_tab_int(map->map);
+	map->map = newmap;
+	map->row += 2;
+	return (0);
+}
+
+/* 
+va parser l'argument passé à la commande et remplir
+une t_map avec toutes les informations utiles à l'exec
+*/
 
 int	parsing(char *av, t_map *map)
 {
@@ -98,22 +133,36 @@ int	parsing(char *av, t_map *map)
 		return (close_void(fd_map), 1);
 	if (check_map(map))
 		return (free_map(map), 1);
-	for (size_t i = 0; map->map[i] != 0; i++)
-	{
-		for (size_t j = 0; map->map[i][j] != 9; j++)
-			printf("%d", map->map[i][j]);
-		printf("\n");
-	}
-	printf("%d, %d\n", map->row, map->col);
-	printf("%s\n", map->n_t);
-	printf("%s\n", map->s_t);
-	printf("%s\n", map->e_t);
-	printf("%s\n", map->w_t);
-	printf("%d\n", map->f_rgb);
-	printf("%d\n", map->c_rgb);
-	printf("r %d, g %d, b %d\n", decode_r(map->f_rgb), decode_g(map->f_rgb),
-		decode_b(map->f_rgb));
-	printf("r %d, g %d, b %d\n", decode_r(map->c_rgb), decode_g(map->c_rgb),
-		decode_b(map->c_rgb));
+	if (resize_map(map))
+		return (free_infos(map), 1);
+	set_pos_spawn(map);
 	return (0);
 }
+
+// int main(int ac, char **av)
+// {
+// 	t_map map;
+// 	(void)ac;
+// 	if (parsing(av[1], &map))
+// 		return 1;
+// 	for (size_t i = 0; map.map[i] != 0; i++)
+// 	{
+// 		for (size_t j = 0; map.map[i][j] != 9; j++)
+// 			printf("%d", map.map[i][j]);
+// 		printf("\n");
+// 	}
+// 	printf("%d, %d\n", map.x_spawn, map.y_spawn);
+// 	// printf("%d, %d\n", map.row, map.col);
+// 	// printf("%s\n", map.n_t);
+// 	// printf("%s\n", map.s_t);
+// 	// printf("%s\n", map.e_t);
+// 	// printf("%s\n", map.w_t);
+// 	// printf("%d\n", map.f_rgb);
+// 	// printf("%d\n", map.c_rgb);
+// 	// printf("r %d, g %d, b %d\n", decode_r(map.f_rgb), decode_g(map.f_rgb),
+// 	// 	decode_b(map.f_rgb));
+// 	// printf("r %d, g %d, b %d\n", decode_r(map.c_rgb), decode_g(map.c_rgb),
+// 	// 	decode_b(map.c_rgb));
+// 	free_map(&map);
+// 	return (0);
+// }

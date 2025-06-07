@@ -6,11 +6,15 @@
 /*   By: igrousso <igrousso@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/04 12:42:56 by igrousso          #+#    #+#             */
-/*   Updated: 2025/06/04 13:03:44 by igrousso         ###   ########.fr       */
+/*   Updated: 2025/06/07 16:47:26 by igrousso         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "parsing.h"
+#include "../headers/parsing.h"
+
+/*
+remplie une ligne de la map
+*/
 
 int	fill_row(int **row, char *line, int col, int *count_spawn)
 {
@@ -39,6 +43,10 @@ int	fill_row(int **row, char *line, int col, int *count_spawn)
 	return (free(line), 0);
 }
 
+/*
+initialise la map et rempli la premiere ligne d'espaces vides
+*/
+
 int	init_map(t_map *map, int fd, char *av)
 {
 	int	i;
@@ -64,6 +72,10 @@ int	init_map(t_map *map, int fd, char *av)
 	return (0);
 }
 
+/*
+rempli la dernière ligne d'espaces vides
+*/
+
 int	last_row(int **row, int col)
 {
 	int	i;
@@ -77,6 +89,10 @@ int	last_row(int **row, int col)
 	(*row)[i] = 9;
 	return (0);
 }
+
+/*
+va créer la map dans un double tableau int
+*/
 
 int	fill_tabmap(int fd, t_map *map, int *i)
 {
@@ -105,4 +121,27 @@ int	fill_tabmap(int fd, t_map *map, int *i)
 		return (ft_free_tab_int(map->map), \
 			write(2, "Error\nMissing spawn point\n", 26));
 	return (0);
+}
+
+void	set_pos_spawn(t_map *map)
+{
+	int	i;
+	int	j;
+
+	i = 0;
+	while (map->map[i])
+	{
+		j = 0;
+		while (map->map[i][j] != 9)
+		{
+			if (map->map[i][j] >= 2 && map->map[i][j] <= 5)
+			{
+				map->x_spawn = j;
+				map->y_spawn = i;
+				return ;
+			}
+			j++;
+		}
+		i++;
+	}
 }

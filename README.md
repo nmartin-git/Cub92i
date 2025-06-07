@@ -10,3 +10,4 @@
 - - minimap qui change de couleurs a chaque puff
 - - pouvoir mettre la map en gros (changer MINIMAP_SIZE)
 - - ajouter fleche de direction au curseur
+- - chicha mystere qui donne pouvoirs et garder puff seulement pour gagner le niveau

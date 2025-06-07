@@ -6,7 +6,7 @@
 #    By: nmartin <nmartin@student.42.fr>            +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2025/02/05 15:41:03 by nmartin           #+#    #+#              #
-#    Updated: 2025/06/07 15:40:33 by nmartin          ###   ########.fr        #
+#    Updated: 2025/06/07 17:00:01 by nmartin          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -28,7 +28,7 @@ GAME_FILES = game.c game_utils.c key_handling.c
 GAME := $(addprefix $(GAME_PATH), $(GAME_FILES))
 PARSING_PATH = ./parsing/
 PARSING_FILES = parsing.c texture.c map.c map_utils.c free_map.c \
-					check_map.c
+					check_map.c resize_map.c
 PARSING := $(addprefix $(PARSING_PATH), $(PARSING_FILES))
 MINIMAP_PATH = ./minimap/
 MINIMAP_FILES = minimap.c cursor.c

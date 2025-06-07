@@ -6,7 +6,7 @@
 /*   By: nmartin <nmartin@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/05 14:23:42 by nmartin           #+#    #+#             */
-/*   Updated: 2025/06/07 15:39:21 by nmartin          ###   ########.fr       */
+/*   Updated: 2025/06/07 16:43:36 by nmartin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,7 +17,6 @@
 # include "../minilibx-linux/mlx.h"
 # include <X11/keysym.h>
 # define MINIMAP_SIZE 400
-# define CURSOR_RADIUS 140
 # define WALL 1
 # define FLOOR 0
 # define EMPTY 8
@@ -30,6 +29,6 @@ void	pixelPutSquare(t_minimap *minimap, t_pos pixel, int color);
 void	minimapCreate(t_minimap *minimap, int **map);
 
 /*---cursor.c---*/
-void	pixelPutCursor(t_image *cursor, int color, int width, int height);
+void	pixelPutCursor(t_image *cursor, int color, int size, int radius);
 
 #endif

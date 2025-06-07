@@ -6,7 +6,7 @@
 /*   By: nmartin <nmartin@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/02 14:55:19 by nmartin           #+#    #+#             */
-/*   Updated: 2025/06/07 16:33:54 by nmartin          ###   ########.fr       */
+/*   Updated: 2025/06/07 16:55:13 by nmartin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,7 +24,6 @@
 
 //---game.c---
 int		close_window(t_data *data);
-int		key_handler(int key, t_data *data);
 void	set_data(t_data *data, t_map *map);
 void	game(t_data *data, t_map *map);
 int		minimap(t_data *data);
@@ -35,5 +34,6 @@ void	free_data(t_data *data);
 
 /*---key_handling.c---*/
 void	mooveCursor(t_data *data, int x, int y);
+int		key_handler(int key, t_data *data);
 
 #endif

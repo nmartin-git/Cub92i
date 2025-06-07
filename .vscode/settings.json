@@ -1,6 +1,8 @@
 {
 	"files.associations": {
 		"game.h": "c",
-		"minimap.h": "c"
+		"minimap.h": "c",
+		"struct_utils.h": "c",
+		"parsing.h": "c"
 	}
 }
