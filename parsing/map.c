@@ -6,7 +6,7 @@
 /*   By: igrousso <igrousso@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/04 12:42:56 by igrousso          #+#    #+#             */
-/*   Updated: 2025/06/06 16:07:31 by igrousso         ###   ########.fr       */
+/*   Updated: 2025/06/07 15:15:59 by igrousso         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -121,4 +121,22 @@ int	fill_tabmap(int fd, t_map *map, int *i)
 		return (ft_free_tab_int(map->map), \
 			write(2, "Error\nMissing spawn point\n", 26));
 	return (0);
+}
+
+int set_pos_spawn(t_map *map)
+{
+	int i;
+	int j;
+	
+	i = 0;
+	while (map->map[i])
+	{
+		j = 0;
+		while (map->map[i][j])
+		{
+			/* code */
+		}
+		
+	}
+	
 }

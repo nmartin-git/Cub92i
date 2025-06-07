@@ -6,7 +6,7 @@
 /*   By: igrousso <igrousso@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/03 08:20:44 by igrousso          #+#    #+#             */
-/*   Updated: 2025/06/05 20:06:46 by igrousso         ###   ########.fr       */
+/*   Updated: 2025/06/07 15:15:23 by igrousso         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,6 +29,8 @@ typedef struct s_map
 	int		c_rgb;
 	int		row;
 	int		col;
+	int		x_spawn;
+	int		y_spawn;
 }			t_map;
 
 /* check_map */
