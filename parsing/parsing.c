@@ -6,7 +6,7 @@
 /*   By: igrousso <igrousso@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/02 11:45:35 by nmartin           #+#    #+#             */
-/*   Updated: 2025/06/07 15:13:20 by igrousso         ###   ########.fr       */
+/*   Updated: 2025/06/07 15:34:59 by igrousso         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -133,8 +133,7 @@ int	parsing(char *av, t_map *map)
 		return (free_map(map), 1);
 	if (resize_map(map))
 		return (free_infos(map), 1);
-	if (set_pos_spawn(map))
-		return (free_map(map), 1);
+	set_pos_spawn(map);
 	return (0);
 }
 
