@@ -6,7 +6,7 @@
 /*   By: igrousso <igrousso@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/04 12:43:53 by igrousso          #+#    #+#             */
-/*   Updated: 2025/06/07 14:59:08 by igrousso         ###   ########.fr       */
+/*   Updated: 2025/06/07 15:21:03 by igrousso         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,7 +56,7 @@ int	count_size(int fd, int *col)
 		if (!line && !is_empty)
 			return (write(2, "Error\nget_next_line count_row error\n", 36));
 		count++;
-		if ((*col) < ft_strlen(line))
+		if ((*col) < (int)ft_strlen(line))
 			(*col) = ft_strlen(line);
 	}
 	(*col)--;
