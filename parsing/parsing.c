@@ -6,7 +6,7 @@
 /*   By: igrousso <igrousso@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/02 11:45:35 by nmartin           #+#    #+#             */
-/*   Updated: 2025/06/07 15:34:59 by igrousso         ###   ########.fr       */
+/*   Updated: 2025/06/07 16:44:48 by igrousso         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -80,6 +80,8 @@ void	pre_init(t_map *map)
 	map->w_t = NULL;
 	map->row = -1;
 	map->col = -1;
+	map->x_spawn = -1;
+	map->y_spawn = -1;
 }
 
 /*
@@ -149,17 +151,18 @@ int	parsing(char *av, t_map *map)
 // 			printf("%d", map.map[i][j]);
 // 		printf("\n");
 // 	}
-// 	printf("%d, %d\n", map.row, map.col);
-// 	printf("%s\n", map.n_t);
-// 	printf("%s\n", map.s_t);
-// 	printf("%s\n", map.e_t);
-// 	printf("%s\n", map.w_t);
-// 	printf("%d\n", map.f_rgb);
-// 	printf("%d\n", map.c_rgb);
-// 	printf("r %d, g %d, b %d\n", decode_r(map.f_rgb), decode_g(map.f_rgb),
-// 		decode_b(map.f_rgb));
-// 	printf("r %d, g %d, b %d\n", decode_r(map.c_rgb), decode_g(map.c_rgb),
-// 		decode_b(map.c_rgb));
+// 	printf("%d, %d\n", map.x_spawn, map.y_spawn);
+// 	// printf("%d, %d\n", map.row, map.col);
+// 	// printf("%s\n", map.n_t);
+// 	// printf("%s\n", map.s_t);
+// 	// printf("%s\n", map.e_t);
+// 	// printf("%s\n", map.w_t);
+// 	// printf("%d\n", map.f_rgb);
+// 	// printf("%d\n", map.c_rgb);
+// 	// printf("r %d, g %d, b %d\n", decode_r(map.f_rgb), decode_g(map.f_rgb),
+// 	// 	decode_b(map.f_rgb));
+// 	// printf("r %d, g %d, b %d\n", decode_r(map.c_rgb), decode_g(map.c_rgb),
+// 	// 	decode_b(map.c_rgb));
 // 	free_map(&map);
 // 	return (0);
 // }

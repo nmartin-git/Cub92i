@@ -6,7 +6,7 @@
 /*   By: igrousso <igrousso@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/04 12:42:56 by igrousso          #+#    #+#             */
-/*   Updated: 2025/06/07 15:34:39 by igrousso         ###   ########.fr       */
+/*   Updated: 2025/06/07 16:47:26 by igrousso         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -123,21 +123,22 @@ int	fill_tabmap(int fd, t_map *map, int *i)
 	return (0);
 }
 
-void set_pos_spawn(t_map *map)
+void	set_pos_spawn(t_map *map)
 {
-	int i;
-	int j;
-	
+	int	i;
+	int	j;
+
 	i = 0;
 	while (map->map[i])
 	{
 		j = 0;
-		while (map->map[i][j])
+		while (map->map[i][j] != 9)
 		{
 			if (map->map[i][j] >= 2 && map->map[i][j] <= 5)
 			{
 				map->x_spawn = j;
 				map->y_spawn = i;
+				return ;
 			}
 			j++;
 		}

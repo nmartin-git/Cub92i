@@ -6,7 +6,7 @@
 /*   By: igrousso <igrousso@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/04 12:43:53 by igrousso          #+#    #+#             */
-/*   Updated: 2025/06/07 15:21:03 by igrousso         ###   ########.fr       */
+/*   Updated: 2025/06/07 16:46:59 by igrousso         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -125,7 +125,7 @@ void	fill_rgb(char **str, t_map *map, char c)
 		if (r == 100 && g == 100 && b == 100)
 			map->f_rgb = -11;
 		if (r == 200 && g == 100 && b == 100)
-			map->f_rgb = -12;		
+			map->f_rgb = -12;
 		else
 			map->f_rgb = encode_rgb(r, g, b);
 	}
