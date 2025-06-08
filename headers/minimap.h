@@ -6,7 +6,7 @@
 /*   By: nmartin <nmartin@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/05 14:23:42 by nmartin           #+#    #+#             */
-/*   Updated: 2025/06/07 22:21:45 by nmartin          ###   ########.fr       */
+/*   Updated: 2025/06/08 02:27:48 by nmartin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,11 +16,11 @@
 # include "struct_utils.h"
 # include "../minilibx-linux/mlx.h"
 # include <X11/keysym.h>
-# define MINIMAP_SIZE 400
+# define MINIMAP_SIZE 1600
 # define WALL 1
 # define FLOOR 0
 # define EMPTY 8
-# define STEP 10
+# define STEP 5
 
 enum input
 {
