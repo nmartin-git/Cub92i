@@ -6,7 +6,7 @@
 /*   By: igrousso <igrousso@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/07 17:35:27 by igrousso          #+#    #+#             */
-/*   Updated: 2025/06/07 19:02:46 by igrousso         ###   ########.fr       */
+/*   Updated: 2025/06/08 21:44:29 by igrousso         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,19 +49,4 @@ void	init_image(t_image *img)
 	img->adress = NULL;
 	img->bpp = -1;
 	img->l_len = -1;
-}
-
-/*
-libère l'image
-*/
-
-void	destroy_img(t_image *img, t_data *data)
-{
-	if (img->image)
-	{
-		mlx_destroy_image(data->display, img->image);
-		free(img->image);
-	}
-	if (img->adress)
-		free(img->adress);
 }

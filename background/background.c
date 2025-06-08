@@ -6,7 +6,7 @@
 /*   By: igrousso <igrousso@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/07 17:27:20 by igrousso          #+#    #+#             */
-/*   Updated: 2025/06/07 20:24:44 by igrousso         ###   ########.fr       */
+/*   Updated: 2025/06/08 21:44:48 by igrousso         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -68,9 +68,9 @@ void	gateway_paint(char *dst, t_image *img, t_data *data, int i)
 	while (++j < 1080)
 	{
 		dst = img->adress + (j * img->l_len + i * (img->bpp / 8));
-		if (j < 1080 / 2)
+		if (data->map->c_rgb > 0 && j < 1080 / 2)
 			paint_ceiling(dst, data, j);
-		else
+		else if (j >= 1080 / 2)
 			paint_floor(dst, data, j);
 	}
 }
@@ -83,17 +83,21 @@ int	paint_floor_and_ceiling(t_image *img, t_data *data)
 {
 	int		i;
 	char	*dst;
-	int		easter_egg;
+	int		null;
 
+	init_image(img);
 	img->image = mlx_new_image(data->display, 1920, 1080);
 	if (!img->image)
-		return (destroy_img(img, data), write(2,
+		return (mlx_destroy_image(data->display, img->image), write(2,
 				"Error\nFail to create image\n", 27));
-	img->adress = mlx_get_data_addr(img->image, &img->bpp, &img->l_len, NULL);
+	img->adress = mlx_get_data_addr(img->image, &img->bpp, &img->l_len, &null);
 	if (!img->adress)
-		return (destroy_img(img, data), write(2,
+		return (mlx_destroy_image(data->display, img->image), write(2,
 				"Error\nFail to get image address\n", 32));
 	i = -1;
+	if (data->map->c_rgb <= -10)
+		if (easter_egg(img, data))
+			return (mlx_destroy_image(data->display, img->image), 1);
 	while (++i < 1920)
 		gateway_paint(dst, img, data, i);
 	return (0);
