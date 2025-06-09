@@ -6,7 +6,7 @@
 /*   By: nmartin <nmartin@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/02 11:45:56 by nmartin           #+#    #+#             */
-/*   Updated: 2025/06/07 17:18:48 by nmartin          ###   ########.fr       */
+/*   Updated: 2025/06/09 15:03:33 by nmartin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,7 +25,7 @@ void	set_data(t_data *data, t_map *map)
 	data->display = mlx_init();
 	if (!data->display)
 		cub_exit(1, "Display initialization failed", data);
-	data->window = mlx_new_window(data->display, TAB_X, TAB_Y, "cub");
+	data->window = mlx_new_window(data->display, TAB_X, TAB_Y, "Cub92i");
 	if (!data->window)
 		cub_exit(1, "Window initialization failed", data);
 	data->image = newImage(data->display, TAB_X, TAB_Y);
