@@ -6,7 +6,7 @@
 /*   By: igrousso <igrousso@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/07 17:41:33 by igrousso          #+#    #+#             */
-/*   Updated: 2025/06/07 20:24:33 by igrousso         ###   ########.fr       */
+/*   Updated: 2025/06/09 17:33:26 by igrousso         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,7 +36,7 @@ renvoie la couleur du pixel
 unsigned int	get_pixel_img(t_image *img, int x, int y)
 {
 	return (*(unsigned int *)((img->adress + (y * img->l_len) + (x * img->bpp
-					/ 8))));
+				/ 8))));
 }
 
 /*
