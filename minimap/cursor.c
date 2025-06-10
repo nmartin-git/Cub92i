@@ -6,7 +6,7 @@
 /*   By: nmartin <nmartin@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/06 16:17:16 by nmartin           #+#    #+#             */
-/*   Updated: 2025/06/09 15:46:29 by nmartin          ###   ########.fr       */
+/*   Updated: 2025/06/10 18:46:40 by nmartin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -83,11 +83,6 @@ void	isYWall(t_data *data, int input)
 			data->minimap->cursor_y += STEP;
 	}
 }
-
-// void	initCursorDirection(t_minimap *minimap)
-// {
-	
-// }
 
 void	pixelPutCursor(t_image *cursor, int color, int size, int radius)
 {

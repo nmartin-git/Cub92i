@@ -6,7 +6,7 @@
 #    By: nmartin <nmartin@student.42.fr>            +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2025/02/05 15:41:03 by nmartin           #+#    #+#              #
-#    Updated: 2025/06/07 17:00:01 by nmartin          ###   ########.fr        #
+#    Updated: 2025/06/10 18:19:44 by nmartin          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -31,7 +31,7 @@ PARSING_FILES = parsing.c texture.c map.c map_utils.c free_map.c \
 					check_map.c resize_map.c
 PARSING := $(addprefix $(PARSING_PATH), $(PARSING_FILES))
 MINIMAP_PATH = ./minimap/
-MINIMAP_FILES = minimap.c cursor.c
+MINIMAP_FILES = minimap.c cursor.c raycasting.c
 MINIMAP := $(addprefix $(MINIMAP_PATH), $(MINIMAP_FILES))
 STRUCT_UTILS_PATH = ./struct_utils/
 STRUCT_UTILS_FILES = struct_utils.c

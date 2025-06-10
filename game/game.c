@@ -6,7 +6,7 @@
 /*   By: nmartin <nmartin@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/02 11:45:56 by nmartin           #+#    #+#             */
-/*   Updated: 2025/06/09 15:03:33 by nmartin          ###   ########.fr       */
+/*   Updated: 2025/06/10 20:14:23 by nmartin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -61,6 +61,7 @@ void	game(t_data *data, t_map *map)
 	minimap(data);
 	mlx_put_image_to_window(data->display, data->window, data->image->image, 0, 0);
 	mlx_put_image_to_window(data->display, data->window, data->minimap->minimap->image, MINIMAP_SIZE / 15, MINIMAP_SIZE / 15);
+	mlx_put_image_to_window(data->display, data->window, data->minimap->direction->image, data->minimap->cursor_x - data->minimap->squareSize * 2/3, data->minimap->cursor_y - data->minimap->squareSize * 2/3);
 	mlx_put_image_to_window(data->display, data->window, data->minimap->cursor->image, data->minimap->cursor_x, data->minimap->cursor_y);
 	mlx_key_hook(data->window, key_handler, data);
 	mlx_hook(data->window, 17, 1L >> 0, close_window, data);

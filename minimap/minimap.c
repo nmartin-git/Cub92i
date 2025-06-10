@@ -6,7 +6,7 @@
 /*   By: nmartin <nmartin@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/05 14:23:31 by nmartin           #+#    #+#             */
-/*   Updated: 2025/06/08 02:20:13 by nmartin          ###   ########.fr       */
+/*   Updated: 2025/06/10 20:03:42 by nmartin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,11 +44,12 @@ void	minimapData(t_minimap *minimap, t_data *data)
 	minimap->cursor_x = data->map->x_spawn * data->minimap->squareSize + MINIMAP_SIZE / 14;
 	minimap->cursor_y = data->map->y_spawn * data->minimap->squareSize + MINIMAP_SIZE / 14;
 	//printf("[%d][%d] * %d\n", data->map->y_spawn, data->map->x_spawn, data->minimap->squareSize);
-	minimap->tab_x = minimap->squareSize * minimap->x;
-	minimap->tab_y = minimap->squareSize * minimap->y;
+	minimap->p_angle = PI / 2;
 	minimap->display = data->display;
-	minimap->minimap = newImage(data->display, minimap->tab_x, minimap->tab_y);//TODO gerer les leaks en cas derreurs
+	minimap->minimap = newImage(data->display, minimap->squareSize * minimap->x, minimap->squareSize * minimap->y);//TODO gerer les leaks en cas derreurs
 	minimap->cursor = newImage(data->display, minimap->squareSize / 1.5, minimap->squareSize / 1.5);//TODO gerer les leaks en cas derreurs//TODO gerer la taille du cursuer (propotionnel)
+	minimap->direction = newImage(data->display, minimap->squareSize * 2, minimap->squareSize * 2);//TODO gerer les leaks en cas derreurs//TODO gerer la taille du cursuer (propotionnel)
+	minimap->raycasting = newImage(data->display, minimap->squareSize * minimap->x, minimap->squareSize * minimap->y);//TODO gerer les leaks en cas derreurs//TODO gerer la taille du cursuer (propotionnel)
 }
 
 void	pixelPutSquare(t_minimap *minimap, t_pos pixel, int color)
@@ -71,8 +72,8 @@ void	pixelPutSquare(t_minimap *minimap, t_pos pixel, int color)
 		pixel.x = x;
 		while (i < minimap->squareSize)
 		{
-			if (pixel.x >= 0 && pixel.x <= minimap->tab_x
-				&& pixel.y >= 0 && pixel.y <= minimap->tab_y)
+			if (pixel.x >= 0 && pixel.x <= minimap->minimap->tab_x
+				&& pixel.y >= 0 && pixel.y <= minimap->minimap->tab_y)
 			{
 				pxl = minimap->minimap->adress + (pixel.y * l + pixel.x * (b / 8));
 				*(unsigned int *)pxl = color;
@@ -103,4 +104,6 @@ void	minimapCreate(t_minimap *minimap, int **map)
 		pixel.y++;
 	}
 	pixelPutCursor(minimap->cursor, minimap->c_color, minimap->squareSize / 1.5, minimap->squareSize / 3);
+	put_line(minimap, 40, 390);
+	putCursorDirection(minimap);
 }

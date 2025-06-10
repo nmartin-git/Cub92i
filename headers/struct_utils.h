@@ -6,7 +6,7 @@
 /*   By: nmartin <nmartin@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/06 16:52:00 by nmartin           #+#    #+#             */
-/*   Updated: 2025/06/07 16:34:27 by nmartin          ###   ########.fr       */
+/*   Updated: 2025/06/10 19:46:10 by nmartin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,6 +25,8 @@ typedef struct s_image
 	char		*adress;
 	int			bpp;
 	int			l_len;
+	int			tab_x;
+	int			tab_y;
 }	t_image;
 
 typedef struct s_minimap
@@ -32,6 +34,9 @@ typedef struct s_minimap
 	void	*display;
 	t_image	*minimap;
 	t_image	*cursor;
+	t_image	*direction;
+	t_image	*raycasting;
+	double	p_angle;
 	int		cursor_x;
 	int		cursor_y;
 	int		squareSize;
@@ -42,8 +47,6 @@ typedef struct s_minimap
 	int		c_color;
 	int		x;
 	int		y;
-	int		tab_x;
-	int		tab_y;
 }	t_minimap;
 
 typedef struct s_pos
