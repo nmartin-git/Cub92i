@@ -6,7 +6,7 @@
 /*   By: nmartin <nmartin@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/02 11:45:56 by nmartin           #+#    #+#             */
-/*   Updated: 2025/06/10 20:14:23 by nmartin          ###   ########.fr       */
+/*   Updated: 2025/06/11 15:35:16 by nmartin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -59,8 +59,11 @@ void	game(t_data *data, t_map *map)
 	//set map, x et y
 	set_data(data, map);
 	minimap(data);
+	put_img_to_img(data->image->image, data->minimap->minimap->image, MINIMAP_SIZE / 15, MINIMAP_SIZE / 15);
+	put_img_to_img(data->image->image, data->minimap->raycasting->image, MINIMAP_SIZE / 15, MINIMAP_SIZE / 15);
 	mlx_put_image_to_window(data->display, data->window, data->image->image, 0, 0);
-	mlx_put_image_to_window(data->display, data->window, data->minimap->minimap->image, MINIMAP_SIZE / 15, MINIMAP_SIZE / 15);
+	// mlx_put_image_to_window(data->display, data->window, data->minimap->minimap->image, MINIMAP_SIZE / 15, MINIMAP_SIZE / 15);
+	// mlx_put_image_to_window(data->display, data->window, data->minimap->raycasting->image, MINIMAP_SIZE / 15, MINIMAP_SIZE / 15);
 	mlx_put_image_to_window(data->display, data->window, data->minimap->direction->image, data->minimap->cursor_x - data->minimap->squareSize * 2/3, data->minimap->cursor_y - data->minimap->squareSize * 2/3);
 	mlx_put_image_to_window(data->display, data->window, data->minimap->cursor->image, data->minimap->cursor_x, data->minimap->cursor_y);
 	mlx_key_hook(data->window, key_handler, data);

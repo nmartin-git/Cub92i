@@ -6,7 +6,7 @@
 /*   By: nmartin <nmartin@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/05 14:23:31 by nmartin           #+#    #+#             */
-/*   Updated: 2025/06/10 20:03:42 by nmartin          ###   ########.fr       */
+/*   Updated: 2025/06/11 15:09:04 by nmartin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -104,6 +104,6 @@ void	minimapCreate(t_minimap *minimap, int **map)
 		pixel.y++;
 	}
 	pixelPutCursor(minimap->cursor, minimap->c_color, minimap->squareSize / 1.5, minimap->squareSize / 3);
-	put_line(minimap, 40, 390);
+	putRaycasting(minimap, FOV);
 	putCursorDirection(minimap);
 }

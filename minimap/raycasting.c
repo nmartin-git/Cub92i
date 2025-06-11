@@ -6,7 +6,7 @@
 /*   By: nmartin <nmartin@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/10 15:59:29 by nmartin           #+#    #+#             */
-/*   Updated: 2025/06/10 20:19:15 by nmartin          ###   ########.fr       */
+/*   Updated: 2025/06/11 15:08:55 by nmartin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -81,38 +81,29 @@ void	big_angle(t_image *raycasting, t_pos pixel, int dx, int dy)
 	}
 }
 
-void	put_line(t_minimap *minimap, int x, int y)
-{	
-	int		dx;
-	int		dy;
-	t_pos	point_a;
-	
-	point_a.x = minimap->cursor_x + minimap->squareSize / 3 - MINIMAP_SIZE / 15;
-	point_a.y = minimap->cursor_y + minimap->squareSize / 3 - MINIMAP_SIZE / 15;
-	dx = x - point_a.x;
-	dy = y - point_a.y;
-	if (ft_abs(dx) > ft_abs(dy))
-		small_angle(minimap->raycasting, point_a, dx, dy);
-	else
-		big_angle(minimap->raycasting, point_a, dx, dy);
-}
-
-void	putCursorDirection(t_minimap *minimap)
+void	putRaycasting(t_minimap *minimap, double fov)
 {
+	double	angle;
 	int		x;
 	int		y;
 	int		dx;
 	int		dy;
 	t_pos	point_a;
 	
-	point_a.x = minimap->direction->tab_x / 2;
-	point_a.y = minimap->direction->tab_y / 2;
-	x = point_a.x + cos(minimap->p_angle) * minimap->squareSize;
-	y = point_a.y + sin(minimap->p_angle) * minimap->squareSize;
-	dx = x - point_a.x;
-	dy = y - point_a.y;
-	if (ft_abs(dx) > ft_abs(dy))
-		small_angle(minimap->direction, point_a, dx, dy);
-	else
-		big_angle(minimap->direction, point_a, dx, dy);
+	fov =((fov * PI) / 180) / 2;
+	angle = minimap->p_angle - fov;
+	while (angle < minimap->p_angle + fov)
+	{
+		point_a.x = minimap->cursor_x + minimap->squareSize / 3 - MINIMAP_SIZE / 15;
+		point_a.y = minimap->cursor_y + minimap->squareSize / 3 - MINIMAP_SIZE / 15;
+		x = point_a.x + cos(angle) * 100;//minimap->squareSize;
+		y = point_a.y + sin(angle) * 100;//minimap->squareSize;
+		dx = x - point_a.x;
+		dy = y - point_a.y;
+		if (ft_abs(dx) > ft_abs(dy))
+			small_angle(minimap->raycasting, point_a, dx, dy);
+		else
+			big_angle(minimap->raycasting, point_a, dx, dy);
+		angle += 0.1;
+	}
 }

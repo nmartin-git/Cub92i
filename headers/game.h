@@ -6,7 +6,7 @@
 /*   By: nmartin <nmartin@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/02 14:55:19 by nmartin           #+#    #+#             */
-/*   Updated: 2025/06/10 18:57:20 by nmartin          ###   ########.fr       */
+/*   Updated: 2025/06/11 15:32:56 by nmartin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,6 +16,7 @@
 # include "libft.h"
 # include "parsing.h"
 # include "minimap.h"
+# include "background.h"
 # include "../minilibx-linux/mlx.h"
 # include <X11/keysym.h>
 
