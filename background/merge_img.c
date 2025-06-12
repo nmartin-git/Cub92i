@@ -6,7 +6,7 @@
 /*   By: nmartin <nmartin@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/07 17:41:33 by igrousso          #+#    #+#             */
-/*   Updated: 2025/06/11 15:32:04 by nmartin          ###   ########.fr       */
+/*   Updated: 2025/06/12 15:31:18 by nmartin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,9 +20,9 @@ void	put_pixel_img(t_image *img, int x, int y, int color)
 {
 	char	*dst;
 
-	if (color == (int)0xFF000000)
+	if (color == (int)0xFF000000 || !color)
 		return ;
-	if (x >= 0 && y >= 0 && x < 1920 && y < 1080)
+	if (x >= 0 && y >= 0 && x < img->tab_x && y < img->tab_y)
 	{
 		dst = img->adress + (y * img->l_len + x * (img->bpp / 8));
 		*(unsigned int *)dst = color;
@@ -50,6 +50,11 @@ void	put_img_to_img(t_image *dst, t_image *src, int x, int y)
 	int	j;
 
 	i = 0;
+	if (!dst || !src || !dst->adress || !src->adress)
+	{
+		printf("Image pointer is NULL\n");
+		return;
+	}
 	while (i < src->tab_y)
 	{
 		j = 0;

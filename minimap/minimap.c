@@ -6,7 +6,7 @@
 /*   By: nmartin <nmartin@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/05 14:23:31 by nmartin           #+#    #+#             */
-/*   Updated: 2025/06/11 15:09:04 by nmartin          ###   ########.fr       */
+/*   Updated: 2025/06/12 18:38:48 by nmartin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,7 +44,14 @@ void	minimapData(t_minimap *minimap, t_data *data)
 	minimap->cursor_x = data->map->x_spawn * data->minimap->squareSize + MINIMAP_SIZE / 14;
 	minimap->cursor_y = data->map->y_spawn * data->minimap->squareSize + MINIMAP_SIZE / 14;
 	//printf("[%d][%d] * %d\n", data->map->y_spawn, data->map->x_spawn, data->minimap->squareSize);
-	minimap->p_angle = PI / 2;
+	if (data->map->map[data->map->y_spawn][data->map->x_spawn] == E_DIR)
+		minimap->p_angle = 0;
+	else if (data->map->map[data->map->y_spawn][data->map->x_spawn] == N_DIR)
+		minimap->p_angle = 3 * PI / 2;
+	else if (data->map->map[data->map->y_spawn][data->map->x_spawn] == W_DIR)
+		minimap->p_angle = PI;
+	else
+		minimap->p_angle = PI / 2;
 	minimap->display = data->display;
 	minimap->minimap = newImage(data->display, minimap->squareSize * minimap->x, minimap->squareSize * minimap->y);//TODO gerer les leaks en cas derreurs
 	minimap->cursor = newImage(data->display, minimap->squareSize / 1.5, minimap->squareSize / 1.5);//TODO gerer les leaks en cas derreurs//TODO gerer la taille du cursuer (propotionnel)
@@ -104,6 +111,6 @@ void	minimapCreate(t_minimap *minimap, int **map)
 		pixel.y++;
 	}
 	pixelPutCursor(minimap->cursor, minimap->c_color, minimap->squareSize / 1.5, minimap->squareSize / 3);
-	putRaycasting(minimap, FOV);
+	putRaycasting(minimap, FOV, RAY_NBR);
 	putCursorDirection(minimap);
 }

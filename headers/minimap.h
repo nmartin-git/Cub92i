@@ -6,7 +6,7 @@
 /*   By: nmartin <nmartin@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/05 14:23:42 by nmartin           #+#    #+#             */
-/*   Updated: 2025/06/11 15:30:19 by nmartin          ###   ########.fr       */
+/*   Updated: 2025/06/12 18:38:34 by nmartin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,6 +26,7 @@
 # define DIRECTION 0.1
 # define PI 3.1415926535
 # define FOV 60
+# define RAY_NBR 6
 
 enum input
 {
@@ -52,6 +53,6 @@ void	pixelPutCursor(t_image *cursor, int color, int size, int radius);
 void	pixel_put(t_image *raycasting, t_pos pixel, int color);
 void	small_angle(t_image *raycasting, t_pos pixel, int dx, int dy);
 void	big_angle(t_image *raycasting, t_pos pixel, int dx, int dy);
-void	putRaycasting(t_minimap *minimap, double fov);
+void	putRaycasting(t_minimap *minimap, double fov, int ray_nbr);
 
 #endif

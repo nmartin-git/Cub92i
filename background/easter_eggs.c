@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   easter_eggs.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: igrousso <igrousso@student.42.fr>          +#+  +:+       +#+        */
+/*   By: nmartin <nmartin@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/08 21:44:50 by igrousso          #+#    #+#             */
-/*   Updated: 2025/06/09 17:41:33 by igrousso         ###   ########.fr       */
+/*   Updated: 2025/06/12 14:42:46 by nmartin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -69,26 +69,27 @@ ouvre le bon fichier xpm
 
 int	easter_egg_img(t_data *data, t_image *newimg)
 {
+	newimg = NULL;
 	if (data->map->c_rgb == -10)
 	{
 		if (convert_xpm(".test.xpm"))
 			return (1);
-		newimg->image = mlx_xpm_file_to_image(data->display, "./.ceiling.xpm", \
-			&newimg->w, &newimg->h);
+		// newimg->image = mlx_xpm_file_to_image(data->display, "./.ceiling.xpm", \
+		// 	&newimg->w, &newimg->h);
 	}
 	else if (data->map->c_rgb == -11)
 	{
 		if (convert_xpm(".test2.xpm"))
 			return (1);
-		newimg->image = mlx_xpm_file_to_image(data->display, "./.ceiling2.xpm", \
-			&newimg->w, &newimg->h);
+		// newimg->image = mlx_xpm_file_to_image(data->display, "./.ceiling2.xpm", \
+		// 	&newimg->w, &newimg->h);
 	}
 	else if (data->map->c_rgb == -12)
 	{
 		if (convert_xpm(".test.xpm"))
 			return (1);
-		newimg->image = mlx_xpm_file_to_image(data->display, "./.ceiling3.xpm", \
-			&newimg->w, &newimg->h);
+		// newimg->image = mlx_xpm_file_to_image(data->display, "./.ceiling3.xpm", \
+		// 	&newimg->w, &newimg->h);
 	}
 	return (0);
 }

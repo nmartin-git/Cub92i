@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   background.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: igrousso <igrousso@student.42.fr>          +#+  +:+       +#+        */
+/*   By: nmartin <nmartin@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/07 17:27:20 by igrousso          #+#    #+#             */
-/*   Updated: 2025/06/09 17:28:14 by igrousso         ###   ########.fr       */
+/*   Updated: 2025/06/12 14:41:57 by nmartin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -86,21 +86,22 @@ int	paint_floor_and_ceiling(t_image *img, t_data *data)
 	char	*dst;
 	int		null;
 
+	dst = NULL;
 	init_image(img);
 	img->image = mlx_new_image(data->display, 1920, 1080);
 	if (!img->image)
 		return (mlx_destroy_image(data->display, img->image), write(2,
 				"Error\nFail to create image\n", 27));
-	img->w = TAB_X;
-	img->h = TAB_Y;
+	// img->w = TAB_X;
+	// img->h = TAB_Y;
 	img->adress = mlx_get_data_addr(img->image, &img->bpp, &img->l_len, &null);
 	if (!img->adress)
 		return (mlx_destroy_image(data->display, img->image), write(2,
 				"Error\nFail to get image address\n", 32));
 	i = -1;
-	if (data->map->c_rgb <= -10)
-		if (easter_egg(img, data))
-			return (mlx_destroy_image(data->display, img->image), 1);
+	// if (data->map->c_rgb <= -10)
+	// 	if (easter_egg(img, data))
+	// 		return (mlx_destroy_image(data->display, img->image), 1);
 	while (++i < 1920)
 		gateway_paint(dst, img, data, i);
 	return (0);
