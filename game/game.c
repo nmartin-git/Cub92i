@@ -6,7 +6,7 @@
 /*   By: nmartin <nmartin@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/02 11:45:56 by nmartin           #+#    #+#             */
-/*   Updated: 2025/06/12 15:22:53 by nmartin          ###   ########.fr       */
+/*   Updated: 2025/06/14 15:17:12 by nmartin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,7 +28,7 @@ void	set_data(t_data *data, t_map *map)
 	data->window = mlx_new_window(data->display, TAB_X, TAB_Y, "Cub92i");
 	if (!data->window)
 		cub_exit(1, "Window initialization failed", data);
-	data->image = newImage(data->display, TAB_X, TAB_Y);
+	data->image = new_image(data->display, TAB_X, TAB_Y);
 
 	// int		x;//TODO enlever fond blanc
 	// int		y;
@@ -49,8 +49,8 @@ int	minimap(t_data *data)
 {
 	data->minimap = malloc(sizeof(t_minimap));
 	//if (!data->minimap)//TODO gerer lerreur
-	minimapData(data->minimap, data);
-	minimapCreate(data->minimap, data->map->map);
+	minimap_data(data->minimap, data);
+	minimap_create(data->minimap, data->map->map);
 	return (0);
 }
 
@@ -62,7 +62,7 @@ void	game(t_data *data, t_map *map)
 	//loading screen ?
 	put_img_to_img(data->image, data->minimap->minimap, MINIMAP_SIZE / 15, MINIMAP_SIZE / 15);
 	put_img_to_img(data->image, data->minimap->raycasting, MINIMAP_SIZE / 15, MINIMAP_SIZE / 15);
-	put_img_to_img(data->image, data->minimap->direction, data->minimap->cursor_x - data->minimap->squareSize * 2/3, data->minimap->cursor_y - data->minimap->squareSize * 2/3);
+	put_img_to_img(data->image, data->minimap->direction, data->minimap->cursor_x - data->minimap->pxl_size * 2/3, data->minimap->cursor_y - data->minimap->pxl_size * 2/3);
 	put_img_to_img(data->image, data->minimap->cursor, data->minimap->cursor_x, data->minimap->cursor_y);
 	mlx_put_image_to_window(data->display, data->window, data->image->image, 0, 0);
 	// mlx_put_image_to_window(data->display, data->window, data->minimap->minimap->image, MINIMAP_SIZE / 15, MINIMAP_SIZE / 15);

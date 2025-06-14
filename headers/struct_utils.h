@@ -6,7 +6,7 @@
 /*   By: nmartin <nmartin@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/06 16:52:00 by nmartin           #+#    #+#             */
-/*   Updated: 2025/06/10 19:46:10 by nmartin          ###   ########.fr       */
+/*   Updated: 2025/06/14 15:02:31 by nmartin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,7 +39,7 @@ typedef struct s_minimap
 	double	p_angle;
 	int		cursor_x;
 	int		cursor_y;
-	int		squareSize;
+	int		pxl_size;
 	int		p_color;
 	int		w_color;
 	int		f_color;
@@ -64,7 +64,7 @@ typedef struct s_data
 	t_minimap	*minimap;
 }	t_data;
 
-t_image	*newImage(void *display, int tab_x, int tab_y);
-void	freeImage(t_image *image, void *display);
+t_image	*new_image(void *display, int tab_x, int tab_y);
+void	free_image(t_image *image, void *display);
 
 #endif

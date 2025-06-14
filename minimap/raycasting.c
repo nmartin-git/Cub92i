@@ -6,7 +6,7 @@
 /*   By: nmartin <nmartin@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/10 15:59:29 by nmartin           #+#    #+#             */
-/*   Updated: 2025/06/12 18:38:20 by nmartin          ###   ########.fr       */
+/*   Updated: 2025/06/14 18:44:24 by nmartin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -81,27 +81,25 @@ void	big_angle(t_image *raycasting, t_pos pixel, int dx, int dy)
 	}
 }
 
-void	putRaycasting(t_minimap *minimap, double fov, int ray_nbr)
+void	put_raycasting(t_minimap *minimap, double fov, int ray_nbr, int **map)
 {
 	double	angle;
 	double	diff;
-	int		x;
-	int		y;
 	int		dx;
 	int		dy;
 	t_pos	point_a;
+	t_pos	point_b;
 	
 	diff = ((fov / ray_nbr) * PI) / 180;
 	fov = ((fov * PI) / 180) / 2;
 	angle = minimap->p_angle - fov;
 	while (angle < minimap->p_angle + fov)
 	{
-		point_a.x = minimap->cursor_x + minimap->squareSize / 3 - MINIMAP_SIZE / 15;
-		point_a.y = minimap->cursor_y + minimap->squareSize / 3 - MINIMAP_SIZE / 15;
-		x = point_a.x + cos(angle) * 100;//minimap->squareSize;
-		y = point_a.y + sin(angle) * 100;//minimap->squareSize;
-		dx = x - point_a.x;
-		dy = y - point_a.y;
+		point_a.x = minimap->cursor_x + minimap->pxl_size / 3 - MINIMAP_SIZE / 15;
+		point_a.y = minimap->cursor_y + minimap->pxl_size / 3 - MINIMAP_SIZE / 15;
+		raycast(minimap, angle, map, &point_b);
+		dx = point_b.x - point_a.x;
+		dy = point_b.y - point_a.y;
 		if (ft_abs(dx) > ft_abs(dy))
 			small_angle(minimap->raycasting, point_a, dx, dy);
 		else

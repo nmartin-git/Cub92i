@@ -6,7 +6,7 @@
 /*   By: nmartin <nmartin@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/05 14:23:42 by nmartin           #+#    #+#             */
-/*   Updated: 2025/06/12 18:38:34 by nmartin          ###   ########.fr       */
+/*   Updated: 2025/06/14 18:42:31 by nmartin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,17 +18,17 @@
 # include <X11/keysym.h>
 # include <math.h>
 # define EMPTY_COLOR 0
-# define MINIMAP_SIZE 400
+# define MINIMAP_SIZE 1400
 # define WALL 1
 # define FLOOR 0
 # define EMPTY 8
 # define STEP 3
-# define DIRECTION 0.1
+# define ROTATION 0.1
 # define PI 3.1415926535
 # define FOV 60
-# define RAY_NBR 6
+# define RAY_NBR 10
 
-enum input
+enum e_input
 {
 	W,
 	A,
@@ -37,22 +37,29 @@ enum input
 };
 
 /*---minimap.c---*/
-void	setMinimapColor(t_minimap *minimap);
-int		getMinimapColor(t_minimap *minimap, int content);
-void	minimapData(t_minimap *minimap, t_data *data);
-void	pixelPutSquare(t_minimap *minimap, t_pos pixel, int color);
-void	minimapCreate(t_minimap *minimap, int **map);
+void	set_minimap_color(t_minimap *minimap);
+int		get_minimap_color(t_minimap *minimap, int content);
+void	minimap_data(t_minimap *minimap, t_data *data);
+void	pixel_put_square(t_minimap *minimap, t_pos pixel, int color);
+void	minimap_create(t_minimap *minimap, int **map);
 
 /*---cursor.c---*/
-void	isXWall(t_data *data, int input);
-void	isYWall(t_data *data, int input);
-void	putCursorDirection(t_minimap *minimap);
-void	pixelPutCursor(t_image *cursor, int color, int size, int radius);
+void	is_xwall(t_data *data, int input);
+void	is_ywall(t_data *data, int input);
+void	put_cursor_direction(t_minimap *minimap);
+void	pixel_put_cursor(t_image *cursor, int color, int size, int radius);
 
 /*---raycasting.c---*/
 void	pixel_put(t_image *raycasting, t_pos pixel, int color);
 void	small_angle(t_image *raycasting, t_pos pixel, int dx, int dy);
 void	big_angle(t_image *raycasting, t_pos pixel, int dx, int dy);
-void	putRaycasting(t_minimap *minimap, double fov, int ray_nbr);
+void	put_raycasting(t_minimap *minimap, double fov, int ray_nbr, int **map);
+
+/*---rays.c---*/
+int		is_wall(t_minimap *minimap, int **map, t_pos *pos);
+void	vertical_wall(t_minimap *minimap, int **map, t_pos *pos, double angle);
+void	horizontal_wall(t_minimap *minimap, int **map, t_pos *pos, double angle);
+void	set_nearest(t_minimap *minimap, t_pos *p1, t_pos *p2, double angle);
+t_pos	*raycast(t_minimap *minimap, double angle, int **map, t_pos *result);
 
 #endif

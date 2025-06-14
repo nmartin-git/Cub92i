@@ -3,17 +3,17 @@
 /*                                                        :::      ::::::::   */
 /*   background.h                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: igrousso <igrousso@student.42.fr>          +#+  +:+       +#+        */
+/*   By: nmartin <nmartin@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/07 17:35:41 by igrousso          #+#    #+#             */
-/*   Updated: 2025/06/08 21:44:38 by igrousso         ###   ########.fr       */
+/*   Updated: 2025/06/14 15:01:45 by nmartin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef BACKGROUND_HPP
-# define BACKGROUND_HPP
+#ifndef BACKGROUND_H
+# define BACKGROUND_H
 
-# include "../headers/struct_utils.h"
+# include "struct_utils.h"
 
 /* background_utils */
 
