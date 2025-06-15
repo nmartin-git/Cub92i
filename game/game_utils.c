@@ -6,7 +6,7 @@
 /*   By: nmartin <nmartin@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/02 18:33:29 by nmartin           #+#    #+#             */
-/*   Updated: 2025/06/14 15:17:25 by nmartin          ###   ########.fr       */
+/*   Updated: 2025/06/15 21:50:28 by nmartin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,7 +36,7 @@ void	free_data(t_data *data)
 
 void	cub_exit(int err, char *str, t_data *data)
 {
-	ft_printf_fd(2, "cub3d: %s\n", str);
+	ft_printf_fd(2, "cub92i: %s\n", str);
 	if (data)
 		free_data(data);
 	exit(err);
