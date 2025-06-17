@@ -6,7 +6,7 @@
 /*   By: nmartin <nmartin@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/07 15:26:13 by nmartin           #+#    #+#             */
-/*   Updated: 2025/06/14 18:44:13 by nmartin          ###   ########.fr       */
+/*   Updated: 2025/06/17 18:58:41 by nmartin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,7 +41,7 @@ void	moove_player(t_data *data, int input)
 	// clearImage(data->minimap->direction);
 	clear_image(data->minimap->raycasting);
 	// putCursorDirection(data->minimap);
-	put_raycasting(data->minimap, FOV, RAY_NBR, data->map->map);
+	put_raycasting(data->minimap, FOV, RAY_NBR, data);
 	mlx_clear_window(data->display, data->window);
 	put_img_to_img(data->image, data->minimap->minimap, MINIMAP_SIZE / 15, MINIMAP_SIZE / 15);
 	put_img_to_img(data->image, data->minimap->raycasting, MINIMAP_SIZE / 15, MINIMAP_SIZE / 15);
@@ -56,7 +56,7 @@ void	moove_cursor(t_data *data, int direction)
 	clear_image(data->minimap->direction);
 	clear_image(data->minimap->raycasting);
 	put_cursor_direction(data->minimap);
-	put_raycasting(data->minimap, FOV, RAY_NBR, data->map->map);
+	put_raycasting(data->minimap, FOV, RAY_NBR, data);
 	mlx_clear_window(data->display, data->window);
 	put_img_to_img(data->image, data->minimap->minimap, MINIMAP_SIZE / 15, MINIMAP_SIZE / 15);
 	put_img_to_img(data->image, data->minimap->raycasting, MINIMAP_SIZE / 15, MINIMAP_SIZE / 15);

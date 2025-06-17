@@ -6,7 +6,7 @@
 /*   By: nmartin <nmartin@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/05 14:23:31 by nmartin           #+#    #+#             */
-/*   Updated: 2025/06/14 18:40:19 by nmartin          ###   ########.fr       */
+/*   Updated: 2025/06/17 19:16:04 by nmartin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -94,7 +94,7 @@ void	pixel_put_square(t_minimap *minimap, t_pos pixel, int color)
 	}
 }
 
-void	minimap_create(t_minimap *minimap, int **map)
+void	minimap_create(t_minimap *minimap, t_data *data)
 {
 	t_pos	pixel;
 	int		color;
@@ -105,13 +105,13 @@ void	minimap_create(t_minimap *minimap, int **map)
 		pixel.x = 0;
 		while (pixel.x < minimap->x)
 		{
-			color = get_minimap_color(minimap, map[pixel.y][pixel.x]);
+			color = get_minimap_color(minimap, data->map->map[pixel.y][pixel.x]);
 			pixel_put_square(minimap, pixel, color);
 			pixel.x++;
 		}
 		pixel.y++;
 	}
 	pixel_put_cursor(minimap->cursor, minimap->c_color, minimap->pxl_size / 1.5, minimap->pxl_size / 3);
-	put_raycasting(minimap, FOV, RAY_NBR, map);
-	put_cursor_direction(minimap);
+	put_raycasting(minimap, FOV, RAY_NBR, data);
+	// put_cursor_direction(minimap);
 }

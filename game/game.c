@@ -6,7 +6,7 @@
 /*   By: nmartin <nmartin@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/02 11:45:56 by nmartin           #+#    #+#             */
-/*   Updated: 2025/06/14 15:17:12 by nmartin          ###   ########.fr       */
+/*   Updated: 2025/06/17 18:59:51 by nmartin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,7 +50,7 @@ int	minimap(t_data *data)
 	data->minimap = malloc(sizeof(t_minimap));
 	//if (!data->minimap)//TODO gerer lerreur
 	minimap_data(data->minimap, data);
-	minimap_create(data->minimap, data->map->map);
+	minimap_create(data->minimap, data);
 	return (0);
 }
 
