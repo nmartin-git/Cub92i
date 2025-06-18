@@ -6,7 +6,7 @@
 /*   By: nmartin <nmartin@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/07 15:26:13 by nmartin           #+#    #+#             */
-/*   Updated: 2025/06/17 18:58:41 by nmartin          ###   ########.fr       */
+/*   Updated: 2025/06/18 15:25:43 by nmartin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,20 +34,25 @@ void	clear_image(t_image *image)
 
 void	moove_player(t_data *data, int input)
 {
-	if (input == A || input == D)
-		is_xwall(data, input);
+	if (input == A)
+		go_left(data);
+	else if(input == D)
+		go_right(data);
+	else if (input == W)
+		go_up(data);
 	else
-		is_ywall(data, input);
+		go_down(data);
 	// clearImage(data->minimap->direction);
 	clear_image(data->minimap->raycasting);
 	// putCursorDirection(data->minimap);
 	put_raycasting(data->minimap, FOV, RAY_NBR, data);
 	mlx_clear_window(data->display, data->window);
 	put_img_to_img(data->image, data->minimap->minimap, MINIMAP_SIZE / 15, MINIMAP_SIZE / 15);
-	put_img_to_img(data->image, data->minimap->raycasting, MINIMAP_SIZE / 15, MINIMAP_SIZE / 15);
+	// put_img_to_img(data->image, data->minimap->raycasting, MINIMAP_SIZE / 15, MINIMAP_SIZE / 15);
 	put_img_to_img(data->image, data->minimap->direction, data->minimap->cursor_x - data->minimap->pxl_size * 2/3, data->minimap->cursor_y - data->minimap->pxl_size * 2/3);
 	put_img_to_img(data->image, data->minimap->cursor, data->minimap->cursor_x, data->minimap->cursor_y);
 	mlx_put_image_to_window(data->display, data->window, data->image->image, 0, 0);
+	mlx_put_image_to_window(data->display, data->window, data->minimap->cursor->image, data->minimap->cursor_x, data->minimap->cursor_y);
 }
 
 void	moove_cursor(t_data *data, int direction)
@@ -59,21 +64,21 @@ void	moove_cursor(t_data *data, int direction)
 	put_raycasting(data->minimap, FOV, RAY_NBR, data);
 	mlx_clear_window(data->display, data->window);
 	put_img_to_img(data->image, data->minimap->minimap, MINIMAP_SIZE / 15, MINIMAP_SIZE / 15);
-	put_img_to_img(data->image, data->minimap->raycasting, MINIMAP_SIZE / 15, MINIMAP_SIZE / 15);
+	// put_img_to_img(data->image, data->minimap->raycasting, MINIMAP_SIZE / 15, MINIMAP_SIZE / 15);
 	put_img_to_img(data->image, data->minimap->direction, data->minimap->cursor_x - data->minimap->pxl_size * 2/3, data->minimap->cursor_y - data->minimap->pxl_size * 2/3);
 	put_img_to_img(data->image, data->minimap->cursor, data->minimap->cursor_x, data->minimap->cursor_y);
 	mlx_put_image_to_window(data->display, data->window, data->image->image, 0, 0);
 }
 
 int	key_handler(int key, t_data *data)
-{
+{//mettre flag azerty / qwerty modifiable
 	if (key == XK_Escape)
 		cub_exit(0, "Window closed successfully", data);
-	if (key == XK_w || key == XK_W)
+	if (key == XK_w || key == XK_W || key == XK_z || key == XK_Z)
 		moove_player(data, W);
 	if (key == XK_a || key == XK_A)
 		moove_player(data, A);
-	if (key == XK_s || key == XK_S)
+	if (key == XK_s || key == XK_S || key == XK_q || key == XK_Q)
 		moove_player(data, S);
 	if (key == XK_d || key == XK_D)
 		moove_player(data, D);

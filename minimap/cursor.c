@@ -6,83 +6,11 @@
 /*   By: nmartin <nmartin@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/06 16:17:16 by nmartin           #+#    #+#             */
-/*   Updated: 2025/06/15 21:45:09 by nmartin          ###   ########.fr       */
+/*   Updated: 2025/06/18 14:05:19 by nmartin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minimap.h"
-
-int get_pixel_color(t_image *image, int x, int y)
-{
-	char *dst = image->adress + (y * image->l_len + x * (image->bpp / 8));
-	return (*(unsigned int *)dst);
-}
-
-void	is_xwall(t_data *data, int input)
-{
-	int	saved;
-	int	x;
-	int	y;
-	int	y2;
-
-	saved = (data->minimap->cursor_x - MINIMAP_SIZE / 15) / data->minimap->pxl_size;
-	y = (data->minimap->cursor_y - MINIMAP_SIZE / 15) / data->minimap->pxl_size;
-	y2 = (data->minimap->cursor_y - MINIMAP_SIZE / 15 + data->minimap->pxl_size / 1.5) / data->minimap->pxl_size;
-	if (input == D)
-	{
-		x = (data->minimap->cursor_x + data->minimap->pxl_size / 1.5 - MINIMAP_SIZE / 15 + STEP) / data->minimap->pxl_size;
-		// if (data->map->map[y2][x] == WALL)
-		// 	return ;
-		if (data->map->map[y][x] == WALL)
-		{
-			data->minimap->cursor_x += (x * data->minimap->pxl_size + MINIMAP_SIZE / 15) - (data->minimap->cursor_x + data->minimap->pxl_size / 1.5);
-			if (get_pixel_color(data->minimap->minimap, data->minimap->cursor_x + data->minimap->pxl_size / 1.5 - MINIMAP_SIZE / 15, data->minimap->cursor_y - MINIMAP_SIZE / 15) == data->minimap->f_color)
-				data->minimap->cursor_x++;
-		}
-		else
-			data->minimap->cursor_x += STEP;
-	}
-	else if (input == A)
-	{
-		x = (data->minimap->cursor_x - MINIMAP_SIZE / 15 - STEP) / data->minimap->pxl_size;
-		// if (data->map->map[y2][x] == WALL)
-		// 	return ;
-		if (data->map->map[y][x] == WALL)
-			data->minimap->cursor_x -= data->minimap->cursor_x - (saved * data->minimap->pxl_size + MINIMAP_SIZE / 15);
-		else
-			data->minimap->cursor_x -= STEP;
-	}
-}
-
-void	is_ywall(t_data *data, int input)
-{
-	int	saved;
-	int	x;
-	int	y;
-
-	saved = (data->minimap->cursor_y - MINIMAP_SIZE / 15) / data->minimap->pxl_size;
-	x = (data->minimap->cursor_x - MINIMAP_SIZE / 15) / data->minimap->pxl_size;
-	if (input == W)
-	{
-		y = (data->minimap->cursor_y - MINIMAP_SIZE / 15 - STEP) / data->minimap->pxl_size;
-		if (data->map->map[y][x] == WALL)
-			data->minimap->cursor_y -= data->minimap->cursor_y - (saved * data->minimap->pxl_size + MINIMAP_SIZE / 15);
-		else
-			data->minimap->cursor_y -= STEP;
-	}
-	else if (input == S)
-	{
-		y = (data->minimap->cursor_y + data->minimap->pxl_size / 1.5 - MINIMAP_SIZE / 15 + STEP) / data->minimap->pxl_size;
-		if (data->map->map[y][x] == WALL)
-		{
-			data->minimap->cursor_y += (y * data->minimap->pxl_size + MINIMAP_SIZE / 15) - (data->minimap->cursor_y + data->minimap->pxl_size / 1.5);
-			if (get_pixel_color(data->minimap->minimap, data->minimap->cursor_x - MINIMAP_SIZE / 15, data->minimap->cursor_y + data->minimap->pxl_size / 1.5 - MINIMAP_SIZE / 15) == data->minimap->f_color)
-				data->minimap->cursor_y++;
-		}
-		else
-			data->minimap->cursor_y += STEP;
-	}
-}
 
 void	put_cursor_direction(t_minimap *minimap)
 {

@@ -6,7 +6,7 @@
 /*   By: nmartin <nmartin@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/13 14:11:53 by nmartin           #+#    #+#             */
-/*   Updated: 2025/06/17 19:50:55 by nmartin          ###   ########.fr       */
+/*   Updated: 2025/06/18 14:49:52 by nmartin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -110,7 +110,7 @@ t_pos	*raycast(t_minimap *minimap, double angle, t_data *data, t_pos *result)
 	vertical_wall(minimap, data, &pv, angle);
 	dst1 = sqrt(pow(ph.x - minimap->cursor_x + minimap->pxl_size / 3, 2) + pow(minimap->cursor_y + minimap->pxl_size / 3 - ph.y, 2));
 	dst2 = sqrt(pow(pv.x - minimap->cursor_x + minimap->pxl_size / 3, 2) + pow(minimap->cursor_y + minimap->pxl_size / 3 - pv.y, 2));
-	printf("%d (%d, %d) < %d (%d, %d)\n", dst1, ph.x, ph.y, dst2, pv.x, pv.y);
+	// printf("%d (%d, %d) < %d (%d, %d)\n", dst1, ph.x, ph.y, dst2, pv.x, pv.y);
 	if (dst1 < dst2)
 		*result = ph;
 	else

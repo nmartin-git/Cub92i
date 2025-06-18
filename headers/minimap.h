@@ -6,7 +6,7 @@
 /*   By: nmartin <nmartin@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/05 14:23:42 by nmartin           #+#    #+#             */
-/*   Updated: 2025/06/17 19:32:25 by nmartin          ###   ########.fr       */
+/*   Updated: 2025/06/18 14:34:04 by nmartin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,7 +18,7 @@
 # include <X11/keysym.h>
 # include <math.h>
 # define EMPTY_COLOR 0
-# define MINIMAP_SIZE 1800
+# define MINIMAP_SIZE 1400
 # define WALL 1
 # define FLOOR 0
 # define EMPTY 8
@@ -45,10 +45,15 @@ void	pixel_put_square(t_minimap *minimap, t_pos pixel, int color);
 void	minimap_create(t_minimap *minimap, t_data *data);
 
 /*---cursor.c---*/
-void	is_xwall(t_data *data, int input);
-void	is_ywall(t_data *data, int input);
 void	put_cursor_direction(t_minimap *minimap);
 void	pixel_put_cursor(t_image *cursor, int color, int size, int radius);
+
+/*---collision.c*/
+int		get_pixel_color(t_image *image, int x, int y);
+void	go_left(t_data *data);
+void	go_right(t_data *data);
+void	go_up(t_data *data);
+void	go_down(t_data *data);
 
 /*---raycasting.c---*/
 void	pixel_put(t_image *raycasting, t_pos pixel, int color);
