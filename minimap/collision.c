@@ -6,17 +6,11 @@
 /*   By: nmartin <nmartin@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/18 13:52:58 by nmartin           #+#    #+#             */
-/*   Updated: 2025/06/18 17:05:36 by nmartin          ###   ########.fr       */
+/*   Updated: 2025/06/20 15:35:13 by nmartin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minimap.h"
-
-int	get_pixel_color(t_image *image, int x, int y)
-{
-	char *dst = image->adress + (y * image->l_len + x * (image->bpp / 8));
-	return (*(unsigned int *)dst);
-}
 
 void	go_left(t_data *data)
 {
@@ -28,12 +22,11 @@ void	go_left(t_data *data)
 
 	x = (data->minimap->cursor_x - MINIMAP_SIZE / 15 - STEP) / data->minimap->pxl_size;
 	y = (data->minimap->cursor_y - MINIMAP_SIZE / 15) / data->minimap->pxl_size;
-	y2 = (data->minimap->cursor_y - MINIMAP_SIZE / 15 + data->minimap->pxl_size / 1.5) / data->minimap->pxl_size;
+	y2 = (data->minimap->cursor_y - MINIMAP_SIZE / 15 + data->minimap->pxl_size / 1.5 -1) / data->minimap->pxl_size;
 	if (data->map->map[y][x] == WALL || data->map->map[y2][x] == WALL)
 	{
 		wall_edge = (x + 1) * data->minimap->pxl_size + MINIMAP_SIZE / 15;
 		diff = data->minimap->cursor_x - wall_edge;
-		printf("%d - %d = %f\n", data->minimap->cursor_x, wall_edge, diff);
 		data->minimap->cursor_x -= diff;
 	}
 	else
@@ -43,23 +36,19 @@ void	go_left(t_data *data)
 void	go_right(t_data *data)
 {
 	int	saved;
-	// int	near;
 	int	x;
 	int	y;
 	int	y2;
 
 	saved = (data->minimap->cursor_x - MINIMAP_SIZE / 15) / data->minimap->pxl_size;
 	y = (data->minimap->cursor_y - MINIMAP_SIZE / 15) / data->minimap->pxl_size;
-	y2 = (data->minimap->cursor_y - MINIMAP_SIZE / 15 + data->minimap->pxl_size / 1.5) / data->minimap->pxl_size;
+	y2 = (data->minimap->cursor_y - MINIMAP_SIZE / 15 + data->minimap->pxl_size / 1.5 - 1) / data->minimap->pxl_size;
 	x = (data->minimap->cursor_x + data->minimap->pxl_size / 1.5 - MINIMAP_SIZE / 15 + STEP) / data->minimap->pxl_size;
 	if (data->map->map[y][x] == WALL || data->map->map[y2][x] == WALL)
 	{
-		printf("%d += %f (%d - %f)\n", data->minimap->cursor_x, (x * data->minimap->pxl_size + MINIMAP_SIZE / 15) - (data->minimap->cursor_x + data->minimap->pxl_size / 1.5), x * data->minimap->pxl_size + MINIMAP_SIZE / 15, data->minimap->cursor_x + data->minimap->pxl_size / 1.5);
 		data->minimap->cursor_x += (x * data->minimap->pxl_size + MINIMAP_SIZE / 15) - (data->minimap->cursor_x + data->minimap->pxl_size / 1.5);
 		if ((x * data->minimap->pxl_size + MINIMAP_SIZE / 15) - (data->minimap->cursor_x + data->minimap->pxl_size / 1.5) < 1 && (x * data->minimap->pxl_size + MINIMAP_SIZE / 15) - (data->minimap->cursor_x + data->minimap->pxl_size / 1.5) > 0)
 			data->minimap->cursor_x++;
-		// if (get_pixel_color(data->minimap->minimap, data->minimap->cursor_x + data->minimap->pxl_size / 1.5 - MINIMAP_SIZE / 15, data->minimap->cursor_y - MINIMAP_SIZE / 15) == data->minimap->f_color)
-		// 	data->minimap->cursor_x++;
 	}
 	else
 		data->minimap->cursor_x += STEP;
@@ -74,7 +63,7 @@ void	go_up(t_data *data)
 	float	diff;
 
 	x = (data->minimap->cursor_x - MINIMAP_SIZE / 15) / data->minimap->pxl_size;
-	x2 = (data->minimap->cursor_x - MINIMAP_SIZE / 15 + data->minimap->pxl_size / 1.5) / data->minimap->pxl_size;
+	x2 = (data->minimap->cursor_x - MINIMAP_SIZE / 15 + data->minimap->pxl_size / 1.5 - 1) / data->minimap->pxl_size;
 	y = (data->minimap->cursor_y - MINIMAP_SIZE / 15 - STEP) / data->minimap->pxl_size;
 	if (data->map->map[y][x] == WALL || data->map->map[y][x2] == WALL)
 	{
@@ -95,7 +84,7 @@ void	go_down(t_data *data)
 
 	saved = (data->minimap->cursor_y - MINIMAP_SIZE / 15) / data->minimap->pxl_size;
 	x = (data->minimap->cursor_x - MINIMAP_SIZE / 15) / data->minimap->pxl_size;
-	x2 = (data->minimap->cursor_x - MINIMAP_SIZE / 15 + data->minimap->pxl_size / 1.5) / data->minimap->pxl_size;
+	x2 = (data->minimap->cursor_x - MINIMAP_SIZE / 15 + data->minimap->pxl_size / 1.5 - 1) / data->minimap->pxl_size;
 	y = (data->minimap->cursor_y + data->minimap->pxl_size / 1.5 - MINIMAP_SIZE / 15 + STEP) / data->minimap->pxl_size;
 	if (data->map->map[y][x] == WALL || data->map->map[y][x2] == WALL)
 	{

@@ -6,7 +6,7 @@
 /*   By: nmartin <nmartin@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/05 14:23:42 by nmartin           #+#    #+#             */
-/*   Updated: 2025/06/18 14:34:04 by nmartin          ###   ########.fr       */
+/*   Updated: 2025/06/20 16:16:02 by nmartin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,7 +49,6 @@ void	put_cursor_direction(t_minimap *minimap);
 void	pixel_put_cursor(t_image *cursor, int color, int size, int radius);
 
 /*---collision.c*/
-int		get_pixel_color(t_image *image, int x, int y);
 void	go_left(t_data *data);
 void	go_right(t_data *data);
 void	go_up(t_data *data);

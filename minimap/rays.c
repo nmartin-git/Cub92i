@@ -6,7 +6,7 @@
 /*   By: nmartin <nmartin@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/13 14:11:53 by nmartin           #+#    #+#             */
-/*   Updated: 2025/06/18 14:49:52 by nmartin          ###   ########.fr       */
+/*   Updated: 2025/06/20 17:51:05 by nmartin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,8 +19,8 @@ int	is_wall(t_minimap *minimap, t_data *data, t_pos *pos)
 	
 	if (pos->x == TAN_ERR || pos->y == TAN_ERR)
 		return (1);
-	x_wall = (pos->x - MINIMAP_SIZE / 15 - minimap->pxl_size / 3) / minimap->pxl_size;
-	y_wall = (pos->y - MINIMAP_SIZE / 15 /*- minimap->pxl_size / 3*/) / minimap->pxl_size;
+	x_wall = (pos->x - MINIMAP_SIZE / 15) / minimap->pxl_size;
+	y_wall = (pos->y - MINIMAP_SIZE / 15) / minimap->pxl_size;
 	if (x_wall >= data->map->col || y_wall >= data->map->row
 		|| x_wall < 0 || y_wall < 0)
 		return (1);
@@ -72,9 +72,9 @@ void	horizontal_wall(t_minimap *minimap, t_data *data, t_pos *pos, double angle)
 
 void	set_nearest(t_minimap *minimap, t_pos *ph, t_pos *pv, double angle)
 {
-	ph->y = (int)floor((minimap->cursor_y + minimap->pxl_size / 3) / minimap->pxl_size);
+	ph->y = (int)floor((minimap->cursor_y/* + minimap->pxl_size / 3*/) / minimap->pxl_size);
 	if (sin(angle) < 0)
-		ph->y = ph->y * minimap->pxl_size - 1 + minimap->pxl_size / 3;
+		ph->y = ph->y * minimap->pxl_size + minimap->pxl_size / 3 - 1;
 	else
 		ph->y = ph->y * minimap->pxl_size + minimap->pxl_size + minimap->pxl_size / 3;
 	if (fabs(tan(angle)) < 0.001)
@@ -107,15 +107,15 @@ t_pos	*raycast(t_minimap *minimap, double angle, t_data *data, t_pos *result)
 
 	set_nearest(minimap, &ph, &pv, angle);
 	horizontal_wall(minimap, data, &ph, angle);
-	vertical_wall(minimap, data, &pv, angle);
+	// vertical_wall(minimap, data, &pv, angle);
 	dst1 = sqrt(pow(ph.x - minimap->cursor_x + minimap->pxl_size / 3, 2) + pow(minimap->cursor_y + minimap->pxl_size / 3 - ph.y, 2));
 	dst2 = sqrt(pow(pv.x - minimap->cursor_x + minimap->pxl_size / 3, 2) + pow(minimap->cursor_y + minimap->pxl_size / 3 - pv.y, 2));
 	// printf("%d (%d, %d) < %d (%d, %d)\n", dst1, ph.x, ph.y, dst2, pv.x, pv.y);
-	if (dst1 < dst2)
-		*result = ph;
-	else
-		*result = pv;
-	// *result = ph;
+	// if (dst1 < dst2)
+	// 	*result = ph;
+	// else
+	// 	*result = pv;
+	*result = ph;
 	result->x -= MINIMAP_SIZE / 15;
 	result->y -= MINIMAP_SIZE / 15;
 	return (result);
