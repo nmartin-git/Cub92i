@@ -6,7 +6,7 @@
 /*   By: nmartin <nmartin@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/02 11:45:56 by nmartin           #+#    #+#             */
-/*   Updated: 2025/06/20 15:36:18 by nmartin          ###   ########.fr       */
+/*   Updated: 2025/06/21 16:15:51 by nmartin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,7 +56,6 @@ int	minimap(t_data *data)
 
 void	game(t_data *data, t_map *map)
 {
-	//set map, x et y
 	set_data(data, map);
 	minimap(data);
 	//loading screen ?

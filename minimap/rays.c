@@ -6,7 +6,7 @@
 /*   By: nmartin <nmartin@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/13 14:11:53 by nmartin           #+#    #+#             */
-/*   Updated: 2025/06/20 17:51:05 by nmartin          ###   ########.fr       */
+/*   Updated: 2025/06/21 17:44:15 by nmartin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -95,7 +95,7 @@ void	set_nearest(t_minimap *minimap, t_pos *ph, t_pos *pv, double angle)
 		pv->y = TAN_ERR;
 	}
 	else
-		pv->y = (minimap->cursor_y) + (pv->x -minimap->cursor_x) * tan(angle);
+		pv->y = (minimap->cursor_y) + (pv->x - (minimap->cursor_x + minimap->pxl_size / 3)) * tan(angle);
 }
 
 t_pos	*raycast(t_minimap *minimap, double angle, t_data *data, t_pos *result)
@@ -107,15 +107,15 @@ t_pos	*raycast(t_minimap *minimap, double angle, t_data *data, t_pos *result)
 
 	set_nearest(minimap, &ph, &pv, angle);
 	horizontal_wall(minimap, data, &ph, angle);
-	// vertical_wall(minimap, data, &pv, angle);
+	vertical_wall(minimap, data, &pv, angle);
 	dst1 = sqrt(pow(ph.x - minimap->cursor_x + minimap->pxl_size / 3, 2) + pow(minimap->cursor_y + minimap->pxl_size / 3 - ph.y, 2));
 	dst2 = sqrt(pow(pv.x - minimap->cursor_x + minimap->pxl_size / 3, 2) + pow(minimap->cursor_y + minimap->pxl_size / 3 - pv.y, 2));
-	// printf("%d (%d, %d) < %d (%d, %d)\n", dst1, ph.x, ph.y, dst2, pv.x, pv.y);
-	// if (dst1 < dst2)
-	// 	*result = ph;
-	// else
-	// 	*result = pv;
-	*result = ph;
+	printf("%d (%d, %d) < %d (%d, %d)\n", dst1, ph.x, ph.y, dst2, pv.x, pv.y);
+	if (dst1 < dst2)
+		*result = ph;
+	else
+		*result = pv;
+	// *result = pv;
 	result->x -= MINIMAP_SIZE / 15;
 	result->y -= MINIMAP_SIZE / 15;
 	return (result);
