@@ -6,11 +6,31 @@
 /*   By: igrousso <igrousso@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/05 14:50:13 by igrousso          #+#    #+#             */
-/*   Updated: 2025/06/06 16:04:50 by igrousso         ###   ########.fr       */
+/*   Updated: 2025/06/23 21:09:31 by igrousso         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../headers/parsing.h"
+
+/*
+verifie si une ligne est vide
+*/
+
+int is_line_empty(char *line)
+{
+	int i;
+
+	i = 0;
+	if (line[0] == '\n')
+		return (0);
+	while (line[i])
+	{
+		if (ft_strchr("10NSWE", line[i]))
+			return (1);
+		i++;
+	}
+	return (0);
+}
 
 /*
 verifie si une colonne est un espace vide

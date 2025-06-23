@@ -6,7 +6,7 @@
 /*   By: igrousso <igrousso@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/03 08:20:44 by igrousso          #+#    #+#             */
-/*   Updated: 2025/06/07 16:40:04 by igrousso         ###   ########.fr       */
+/*   Updated: 2025/06/23 21:04:35 by igrousso         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -74,6 +74,7 @@ void		set_pos_spawn(t_map *map);
 
 /* resize_map.c */
 
+int			is_line_empty(char *line);
 int			is_col_empty(int **map, int i);
 int			count_pre_col(int **map);
 int			count_post_col(int **map, int size);

@@ -6,7 +6,7 @@
 /*   By: igrousso <igrousso@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/04 12:42:56 by igrousso          #+#    #+#             */
-/*   Updated: 2025/06/07 16:47:26 by igrousso         ###   ########.fr       */
+/*   Updated: 2025/06/23 21:11:13 by igrousso         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -122,6 +122,10 @@ int	fill_tabmap(int fd, t_map *map, int *i)
 			write(2, "Error\nMissing spawn point\n", 26));
 	return (0);
 }
+
+/*
+stock les coordonnées de spawn du joueur
+*/
 
 void	set_pos_spawn(t_map *map)
 {
