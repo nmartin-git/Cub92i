@@ -6,7 +6,7 @@
 /*   By: igrousso <igrousso@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/05 14:50:13 by igrousso          #+#    #+#             */
-/*   Updated: 2025/06/23 21:09:31 by igrousso         ###   ########.fr       */
+/*   Updated: 2025/06/23 21:12:45 by igrousso         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,9 +16,9 @@
 verifie si une ligne est vide
 */
 
-int is_line_empty(char *line)
+int	is_line_empty(char *line)
 {
-	int i;
+	int	i;
 
 	i = 0;
 	if (line[0] == '\n')
