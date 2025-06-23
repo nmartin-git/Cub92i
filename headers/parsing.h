@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parsing.h                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: igrousso <igrousso@student.42.fr>          +#+  +:+       +#+        */
+/*   By: nmartin <nmartin@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/03 08:20:44 by igrousso          #+#    #+#             */
-/*   Updated: 2025/06/07 16:40:04 by igrousso         ###   ########.fr       */
+/*   Updated: 2025/06/12 17:21:09 by nmartin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,6 +17,11 @@
 # include <fcntl.h>
 # include <stdio.h>
 # include <string.h>
+
+# define N_DIR 2
+# define S_DIR 3
+# define E_DIR 4
+# define W_DIR 5
 
 typedef struct s_map
 {

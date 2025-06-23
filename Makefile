@@ -6,7 +6,7 @@
 #    By: nmartin <nmartin@student.42.fr>            +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2025/02/05 15:41:03 by nmartin           #+#    #+#              #
-#    Updated: 2025/06/07 17:00:01 by nmartin          ###   ########.fr        #
+#    Updated: 2025/06/18 14:04:58 by nmartin          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -31,17 +31,21 @@ PARSING_FILES = parsing.c texture.c map.c map_utils.c free_map.c \
 					check_map.c resize_map.c
 PARSING := $(addprefix $(PARSING_PATH), $(PARSING_FILES))
 MINIMAP_PATH = ./minimap/
-MINIMAP_FILES = minimap.c cursor.c
+MINIMAP_FILES = minimap.c cursor.c raycasting.c rays.c collision.c
 MINIMAP := $(addprefix $(MINIMAP_PATH), $(MINIMAP_FILES))
 STRUCT_UTILS_PATH = ./struct_utils/
 STRUCT_UTILS_FILES = struct_utils.c
 STRUCT_UTILS := $(addprefix $(STRUCT_UTILS_PATH), $(STRUCT_UTILS_FILES))
+BACKGROUND_PATH = ./background/
+BACKGROUND_FILES = background.c merge_img.c easter_eggs.c background_utils.c
+BACKGROUND := $(addprefix $(BACKGROUND_PATH), $(BACKGROUND_FILES))
 OBJ_PATH = ./objs/
 OBJ := $(addprefix $(OBJ_PATH), $(CUB_FILES:.c=.o)) \
 		$(addprefix $(OBJ_PATH), $(PARSING_FILES:.c=.o)) \
 			$(addprefix $(OBJ_PATH), $(GAME_FILES:.c=.o)) \
 				$(addprefix $(OBJ_PATH), $(MINIMAP_FILES:.c=.o)) \
-					$(addprefix $(OBJ_PATH), $(STRUCT_UTILS_FILES:.c=.o))
+					$(addprefix $(OBJ_PATH), $(STRUCT_UTILS_FILES:.c=.o)) \
+						$(addprefix $(OBJ_PATH), $(BACKGROUND_FILES:.c=.o))
 SRC_BNS_PATH = ./srcs_bonus/
 SRC_BNS_FILES = 
 SRC_BNS := $(addprefix $(SRC_BNS_PATH), $(SRC_BNS_FILES))
@@ -100,6 +104,12 @@ $(OBJ_PATH)%.o : $(MINIMAP_PATH)%.c
 
 $(OBJ_PATH)%.o : $(STRUCT_UTILS_PATH)%.c
 	@printf "$(BLUE)Compiling $(NAME) struct_utils: [$<] $(RESET)"
+	@mkdir -p $(OBJ_PATH)
+	@$(CC) $(CFLAGS) $(HEADERS) -c $< -o $@
+	@printf "\r\033[K"
+
+$(OBJ_PATH)%.o : $(BACKGROUND_PATH)%.c
+	@printf "$(BLUE)Compiling $(NAME) background: [$<] $(RESET)"
 	@mkdir -p $(OBJ_PATH)
 	@$(CC) $(CFLAGS) $(HEADERS) -c $< -o $@
 	@printf "\r\033[K"

@@ -6,13 +6,13 @@
 /*   By: nmartin <nmartin@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/05 14:23:31 by nmartin           #+#    #+#             */
-/*   Updated: 2025/06/07 17:02:31 by nmartin          ###   ########.fr       */
+/*   Updated: 2025/06/18 13:45:09 by nmartin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minimap.h"
 
-void	setMinimapColor(t_minimap *minimap)
+void	set_minimap_color(t_minimap *minimap)
 {
 	//TODO faire des presets ou un bail de random colors
 	minimap->p_color = 555555;
@@ -22,8 +22,9 @@ void	setMinimapColor(t_minimap *minimap)
 	minimap->c_color = 888888;
 }
 
-int	getMinimapColor(t_minimap *minimap, int content)
-{//TODO ptet ajouter couleur de checkpoint, boss, el mordjene, puff
+int	get_minimap_color(t_minimap *minimap, int content)
+{
+	//TODO ptet ajouter couleur de checkpoint, boss, el mordjene, puff
 	if (content == WALL)
 		return (minimap->w_color);
 	else if (content == EMPTY)
@@ -32,25 +33,34 @@ int	getMinimapColor(t_minimap *minimap, int content)
 		return (minimap->f_color);
 }
 
-void	minimapData(t_minimap *minimap, void *display, int x, int y)
+void	minimap_data(t_minimap *minimap, t_data *data)
 {
-	setMinimapColor(minimap);
-	minimap->x = x;
-	minimap->y = y;
-	minimap->cursor_x = MINIMAP_SIZE / 15;
-	minimap->cursor_y = MINIMAP_SIZE / 15;
+	set_minimap_color(minimap);
+	minimap->x = data->map->col;
+	minimap->y = data->map->row;
 	if (minimap->x > minimap->y)
-		minimap->squareSize = MINIMAP_SIZE / minimap->x;
+		minimap->pxl_size = MINIMAP_SIZE / minimap->x;
 	else
-		minimap->squareSize = MINIMAP_SIZE / minimap->y;
-	minimap->tab_x = minimap->squareSize * (x);//TODO tej les +2
-	minimap->tab_y = minimap->squareSize * (y);//TODO tej les +2
-	minimap->display = display;
-	minimap->minimap = newImage(display, minimap->tab_x, minimap->tab_y);//TODO gerer les leaks en cas derreurs
-	minimap->cursor = newImage(display, minimap->squareSize / 1.5, minimap->squareSize / 1.5);//TODO gerer les leaks en cas derreurs//TODO gerer la taille du cursuer (propotionnel)
+		minimap->pxl_size = MINIMAP_SIZE / minimap->y;
+	minimap->cursor_x = data->map->x_spawn * data->minimap->pxl_size + MINIMAP_SIZE / 14;
+	minimap->cursor_y = data->map->y_spawn * data->minimap->pxl_size + MINIMAP_SIZE / 14;
+	//printf("[%d][%d] * %d\n", data->map->y_spawn, data->map->x_spawn, data->minimap->pxl_size);
+	if (data->map->map[data->map->y_spawn][data->map->x_spawn] == E_DIR)
+		minimap->p_angle = 0;
+	else if (data->map->map[data->map->y_spawn][data->map->x_spawn] == N_DIR)
+		minimap->p_angle = 3 * PI / 2;
+	else if (data->map->map[data->map->y_spawn][data->map->x_spawn] == W_DIR)
+		minimap->p_angle = PI;
+	else
+		minimap->p_angle = PI / 2;
+	minimap->display = data->display;
+	minimap->minimap = new_image(data->display, minimap->pxl_size * minimap->x, minimap->pxl_size * minimap->y);//TODO gerer les leaks en cas derreurs
+	minimap->cursor = new_image(data->display, minimap->pxl_size / 1.5, minimap->pxl_size / 1.5);//TODO gerer les leaks en cas derreurs//TODO gerer la taille du cursuer (propotionnel)
+	minimap->direction = new_image(data->display, minimap->pxl_size * 2, minimap->pxl_size * 2);//TODO gerer les leaks en cas derreurs//TODO gerer la taille du cursuer (propotionnel)
+	minimap->raycasting = new_image(data->display, minimap->pxl_size * minimap->x, minimap->pxl_size * minimap->y);//TODO gerer les leaks en cas derreurs//TODO gerer la taille du cursuer (propotionnel)
 }
 
-void	pixelPutSquare(t_minimap *minimap, t_pos pixel, int color)
+void	pixel_put_square(t_minimap *minimap, t_pos pixel, int color)
 {
 	char	*pxl;
 	int		b;
@@ -61,17 +71,17 @@ void	pixelPutSquare(t_minimap *minimap, t_pos pixel, int color)
 
 	b = minimap->minimap->bpp;
 	l = minimap->minimap->l_len;
-	x = pixel.x * minimap->squareSize;
-	pixel.y *= minimap->squareSize;
+	x = pixel.x * minimap->pxl_size;
+	pixel.y *= minimap->pxl_size;
 	y = 0;
-	while (y < minimap->squareSize)
+	while (y < minimap->pxl_size)
 	{
 		i = 0;
 		pixel.x = x;
-		while (i < minimap->squareSize)
+		while (i < minimap->pxl_size)
 		{
-			if (pixel.x >= 0 && pixel.x <= minimap->tab_x
-				&& pixel.y >= 0 && pixel.y <= minimap->tab_y)
+			if (pixel.x >= 0 && pixel.x <= minimap->minimap->tab_x
+				&& pixel.y >= 0 && pixel.y <= minimap->minimap->tab_y)
 			{
 				pxl = minimap->minimap->adress + (pixel.y * l + pixel.x * (b / 8));
 				*(unsigned int *)pxl = color;
@@ -84,22 +94,24 @@ void	pixelPutSquare(t_minimap *minimap, t_pos pixel, int color)
 	}
 }
 
-void	minimapCreate(t_minimap *minimap, int **map)
+void	minimap_create(t_minimap *minimap, t_data *data)
 {
 	t_pos	pixel;
 	int		color;
 
 	pixel.y = 0;
-	while (pixel.y < minimap->y)//TODO tej les +2 qd parsing updated
+	while (pixel.y < minimap->y)
 	{
 		pixel.x = 0;
-		while (pixel.x < minimap->x)//TODO tej les +2 qd parsing updated
+		while (pixel.x < minimap->x)
 		{
-			color = getMinimapColor(minimap, map[pixel.y][pixel.x]);
-			pixelPutSquare(minimap, pixel, color);
+			color = get_minimap_color(minimap, data->map->map[pixel.y][pixel.x]);
+			pixel_put_square(minimap, pixel, color);
 			pixel.x++;
 		}
 		pixel.y++;
 	}
-	pixelPutCursor(minimap->cursor, minimap->c_color, minimap->squareSize / 1.5, minimap->squareSize / 3);
+	pixel_put_cursor(minimap->cursor, minimap->c_color, minimap->pxl_size / 1.5, minimap->pxl_size / 3);
+	put_raycasting(minimap, FOV, RAY_NBR, data);
+	put_cursor_direction(minimap);
 }

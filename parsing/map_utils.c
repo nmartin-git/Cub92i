@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   map_utils.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: igrousso <igrousso@student.42.fr>          +#+  +:+       +#+        */
+/*   By: nmartin <nmartin@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/04 12:43:53 by igrousso          #+#    #+#             */
-/*   Updated: 2025/06/07 16:46:59 by igrousso         ###   ########.fr       */
+/*   Updated: 2025/06/12 17:20:54 by nmartin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -74,22 +74,22 @@ int	ctoi(char c, int *count)
 	else if (c == 'N')
 	{
 		(*count)--;
-		return (2);
+		return (N_DIR);
 	}
 	else if (c == 'S')
 	{
 		(*count)--;
-		return (3);
+		return (S_DIR);
 	}
 	else if (c == 'E')
 	{
 		(*count)--;
-		return (4);
+		return (E_DIR);
 	}
 	else if (c == 'W')
 	{
 		(*count)--;
-		return (5);
+		return (W_DIR);
 	}
 	else if (c == ' ' || c == '\n')
 		return (8);
