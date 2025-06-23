@@ -6,7 +6,7 @@
 /*   By: nmartin <nmartin@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/13 14:11:53 by nmartin           #+#    #+#             */
-/*   Updated: 2025/06/21 17:44:15 by nmartin          ###   ########.fr       */
+/*   Updated: 2025/06/23 18:11:35 by nmartin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -95,27 +95,35 @@ void	set_nearest(t_minimap *minimap, t_pos *ph, t_pos *pv, double angle)
 		pv->y = TAN_ERR;
 	}
 	else
-		pv->y = (minimap->cursor_y) + (pv->x - (minimap->cursor_x + minimap->pxl_size / 3)) * tan(angle);
+		pv->y = (minimap->cursor_y + minimap->pxl_size / 3) + (pv->x - (minimap->cursor_x + minimap->pxl_size / 3)) * tan(angle);
 }
 
 t_pos	*raycast(t_minimap *minimap, double angle, t_data *data, t_pos *result)
 {
 	t_pos	ph;
 	t_pos	pv;
-	int		dst1;
-	int		dst2;
+	long	dst1;
+	long	dst2;
+	int		x_origin;
+	int		y_origin;
 
 	set_nearest(minimap, &ph, &pv, angle);
 	horizontal_wall(minimap, data, &ph, angle);
 	vertical_wall(minimap, data, &pv, angle);
-	dst1 = sqrt(pow(ph.x - minimap->cursor_x + minimap->pxl_size / 3, 2) + pow(minimap->cursor_y + minimap->pxl_size / 3 - ph.y, 2));
-	dst2 = sqrt(pow(pv.x - minimap->cursor_x + minimap->pxl_size / 3, 2) + pow(minimap->cursor_y + minimap->pxl_size / 3 - pv.y, 2));
-	printf("%d (%d, %d) < %d (%d, %d)\n", dst1, ph.x, ph.y, dst2, pv.x, pv.y);
+	x_origin = minimap->cursor_x + minimap->pxl_size / 3;
+	y_origin = minimap->cursor_y + minimap->pxl_size / 3;
+	if (ph.x == TAN_ERR || ph.y == TAN_ERR)
+		dst1 = LONG_MAX;
+	else
+		dst1 = pow(ph.x - x_origin, 2) + pow(ph.y - y_origin, 2);
+	if (pv.x == TAN_ERR || pv.y == TAN_ERR)
+		dst2 = LONG_MIN;
+	else
+		dst2 = pow(pv.x - x_origin, 2) + pow(pv.y - y_origin, 2);
 	if (dst1 < dst2)
 		*result = ph;
 	else
 		*result = pv;
-	// *result = pv;
 	result->x -= MINIMAP_SIZE / 15;
 	result->y -= MINIMAP_SIZE / 15;
 	return (result);

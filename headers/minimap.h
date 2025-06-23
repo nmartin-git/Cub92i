@@ -6,7 +6,7 @@
 /*   By: nmartin <nmartin@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/05 14:23:42 by nmartin           #+#    #+#             */
-/*   Updated: 2025/06/21 15:47:24 by nmartin          ###   ########.fr       */
+/*   Updated: 2025/06/23 18:05:34 by nmartin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,6 +17,7 @@
 # include "../minilibx-linux/mlx.h"
 # include <X11/keysym.h>
 # include <math.h>
+# include <limits.h>
 # define EMPTY_COLOR 0
 # define MINIMAP_SIZE 1400
 # define WALL 1
