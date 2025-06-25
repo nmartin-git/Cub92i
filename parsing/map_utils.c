@@ -6,7 +6,7 @@
 /*   By: igrousso <igrousso@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/04 12:43:53 by igrousso          #+#    #+#             */
-/*   Updated: 2025/06/23 21:10:02 by igrousso         ###   ########.fr       */
+/*   Updated: 2025/06/25 18:31:38 by igrousso         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,7 +49,7 @@ int	count_size(int fd, int *col)
 	if (!line)
 		return (ft_putstr_fd("Error\nMap is empty\n", 2), -1);
 	(*col) = ft_strlen(line);
-	while (line && is_line_empty(line))
+	while (line)
 	{
 		free(line);
 		line = get_next_line(fd, &is_empty);

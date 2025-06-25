@@ -6,7 +6,7 @@
 /*   By: igrousso <igrousso@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/03 08:20:44 by igrousso          #+#    #+#             */
-/*   Updated: 2025/06/23 21:04:35 by igrousso         ###   ########.fr       */
+/*   Updated: 2025/06/25 18:24:28 by igrousso         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,6 +32,14 @@ typedef struct s_map
 	int		x_spawn;
 	int		y_spawn;
 }			t_map;
+
+typedef struct s_resize
+{
+	int		pre_empty_col;
+	int		post_empty_col;
+	int		post_empty_row;
+	int		i;
+}			t_resize;
 
 /* check_map */
 
@@ -74,7 +82,7 @@ void		set_pos_spawn(t_map *map);
 
 /* resize_map.c */
 
-int			is_line_empty(char *line);
+int			count_post_row(int **map, int size);
 int			is_col_empty(int **map, int i);
 int			count_pre_col(int **map);
 int			count_post_col(int **map, int size);

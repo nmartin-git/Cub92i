@@ -6,31 +6,11 @@
 /*   By: igrousso <igrousso@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/05 14:50:13 by igrousso          #+#    #+#             */
-/*   Updated: 2025/06/23 21:12:45 by igrousso         ###   ########.fr       */
+/*   Updated: 2025/06/25 18:32:21 by igrousso         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../headers/parsing.h"
-
-/*
-verifie si une ligne est vide
-*/
-
-int	is_line_empty(char *line)
-{
-	int	i;
-
-	i = 0;
-	if (line[0] == '\n')
-		return (0);
-	while (line[i])
-	{
-		if (ft_strchr("10NSWE", line[i]))
-			return (1);
-		i++;
-	}
-	return (0);
-}
 
 /*
 verifie si une colonne est un espace vide
@@ -50,6 +30,29 @@ int	is_col_empty(int **map, int i)
 	return (0);
 }
 
+/*
+compte le nombre de lignes vides en fin de fichiers
+*/
+
+int	count_post_row(int **map, int size)
+{
+	int	i;
+	int	j;
+
+	i = 0;
+	while (size--)
+	{
+		j = 0;
+		while (map[size][j] != 9)
+		{
+			if (map[size][j] != 8)
+				return (i);
+			j++;
+		}
+		i++;
+	}
+	return (i);
+}
 /*
 compte le nombre de colonnes vides à gauche de la map
 */

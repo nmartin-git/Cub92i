@@ -6,7 +6,7 @@
 /*   By: igrousso <igrousso@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/02 11:45:35 by nmartin           #+#    #+#             */
-/*   Updated: 2025/06/23 21:10:40 by igrousso         ###   ########.fr       */
+/*   Updated: 2025/06/25 18:32:54 by igrousso         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -85,31 +85,32 @@ void	pre_init(t_map *map)
 }
 
 /*
-va recréer une map plus propre pour effacer des colonnes vides
-à gauche et à droite de la map parsée
+va recréer une map plus propre pour effacer des colonnes et
+les lignes vides en extrémité de la map parsée
 */
 
 int	resize_map(t_map *map)
 {
-	int	pre_empty_col;
-	int	post_empty_col;
-	int	**newmap;
-	int	i;
+	t_resize	tmp;
+	int			**newmap;
 
-	pre_empty_col = count_pre_col(map->map);
-	post_empty_col = count_post_col(map->map, map->col + 2);
-	map->col = map->col + 4 - post_empty_col - pre_empty_col;
+	tmp.pre_empty_col = count_pre_col(map->map);
+	tmp.post_empty_col = count_post_col(map->map, map->col + 2);
+	tmp.post_empty_row = count_post_row(map->map, map->row + 1);
+	map->row = map->row - tmp.post_empty_row;
+	map->col = map->col + 4 - tmp.post_empty_col - tmp.pre_empty_col;
 	newmap = ft_calloc((map->row + 3), sizeof(int *));
 	if (!newmap)
 		return (ft_free_tab_int(map->map), \
 					write(2, "Error\nMalloc map fail\n", 22));
-	i = 0;
-	while (i <= (map->row + 1))
+	tmp.i = 0;
+	while (tmp.i <= (map->row + 1))
 	{
-		if (resize_line(map->map[i], &newmap[i], pre_empty_col, map->col))
+		if (resize_line(map->map[tmp.i], &newmap[tmp.i], tmp.pre_empty_col, \
+				map->col))
 			return (ft_free_tab_int(map->map), ft_free_tab_int(newmap), \
 						write(2, "Error\nMalloc map fail\n", 22));
-		i++;
+		tmp.i++;
 	}
 	ft_free_tab_int(map->map);
 	map->map = newmap;
@@ -152,7 +153,7 @@ int	parsing(char *av, t_map *map)
 // 		printf("\n");
 // 	}
 // 	printf("%d, %d\n", map.x_spawn, map.y_spawn);
-// 	// printf("%d, %d\n", map.row, map.col);
+// 	printf("%d, %d\n", map.row, map.col);
 // 	// printf("%s\n", map.n_t);
 // 	// printf("%s\n", map.s_t);
 // 	// printf("%s\n", map.e_t);
