@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minimap.h                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: nmartin <nmartin@student.42.fr>            +#+  +:+       +#+        */
+/*   By: igrousso <igrousso@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/05 14:23:42 by nmartin           #+#    #+#             */
-/*   Updated: 2025/06/23 18:05:34 by nmartin          ###   ########.fr       */
+/*   Updated: 2025/06/27 18:29:48 by igrousso         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,6 +14,7 @@
 # define MINIMAP_H
 
 # include "struct_utils.h"
+# include "game.h"
 # include "../minilibx-linux/mlx.h"
 # include <X11/keysym.h>
 # include <math.h>

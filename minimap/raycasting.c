@@ -3,14 +3,14 @@
 /*                                                        :::      ::::::::   */
 /*   raycasting.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: nmartin <nmartin@student.42.fr>            +#+  +:+       +#+        */
+/*   By: igrousso <igrousso@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/10 15:59:29 by nmartin           #+#    #+#             */
-/*   Updated: 2025/06/18 14:36:36 by nmartin          ###   ########.fr       */
+/*   Updated: 2025/06/27 18:11:00 by igrousso         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-# include "minimap.h"
+#include "minimap.h"
 
 void	pixel_put(t_image *raycasting, t_pos pixel, int color)
 {
@@ -18,9 +18,11 @@ void	pixel_put(t_image *raycasting, t_pos pixel, int color)
 	int		b;
 
 	b = raycasting->bpp;
-	if (pixel.x >= 0 && pixel.x <= raycasting->tab_x && pixel.y >= 0 && pixel.y <= raycasting->tab_y)
+	if (pixel.x >= 0 && pixel.x <= raycasting->tab_x && pixel.y >= 0
+		&& pixel.y <= raycasting->tab_y)
 	{
-		pxl = raycasting->adress + (pixel.y * raycasting->l_len + pixel.x * (b / 8));
+		pxl = raycasting->adress + (pixel.y * raycasting->l_len + pixel.x * (b
+					/ 8));
 		*(unsigned int *)pxl = color;
 	}
 }
@@ -81,27 +83,54 @@ void	big_angle(t_image *raycasting, t_pos pixel, int dx, int dy)
 	}
 }
 
-void	put_raycasting(t_minimap *minimap, double fov, int ray_nbr, t_data *data)
+void	test(t_data *data, float distance, int i, double fov)
+{
+	t_pos	pixel;
+	float	hauteur;
+	int		j;
+	int		k;
+
+	(void)fov;
+	pixel.x = i;
+	hauteur = (TAB_Y / distance) * 4;
+	j = (TAB_Y - hauteur) / 2;
+	k = 0;
+	printf("%f\n", hauteur);
+	while (k < hauteur)
+	{
+		pixel.y = j + k;
+		pixel_put(data->game, pixel, encode_rgb(255, 255, 255));
+		k++;
+	}
+}
+
+void	put_raycasting(t_minimap *minimap, double fov, int ray_nbr,
+		t_data *data)
 {
 	double	angle;
 	double	diff;
+	double	distance;
 	int		i;
 	int		dx;
 	int		dy;
 	t_pos	point_a;
 	t_pos	point_b;
-	
+
 	i = 0;
 	fov = (fov * PI) / 180;
 	diff = fov / (ray_nbr - 1);
 	while (i < ray_nbr)
 	{
 		angle = minimap->p_angle - (fov / 2.0) + i * diff;
-		point_a.x = minimap->cursor_x + minimap->pxl_size / 3 - MINIMAP_SIZE / 15;
-		point_a.y = minimap->cursor_y + minimap->pxl_size / 3 - MINIMAP_SIZE / 15;
+		point_a.x = minimap->cursor_x + minimap->pxl_size / 3 - MINIMAP_SIZE
+			/ 15;
+		point_a.y = minimap->cursor_y + minimap->pxl_size / 3 - MINIMAP_SIZE
+			/ 15;
 		raycast(minimap, angle, data, &point_b);
 		dx = point_b.x - point_a.x;
 		dy = point_b.y - point_a.y;
+		distance = sqrt(pow(dx, 2) + pow(dy, 2));
+		test(data, distance * cos(angle - minimap->p_angle), i, fov);
 		if (ft_abs(dx) > ft_abs(dy))
 			small_angle(minimap->raycasting, point_a, dx, dy);
 		else
