@@ -6,7 +6,7 @@
 /*   By: igrousso <igrousso@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/07 15:26:13 by nmartin           #+#    #+#             */
-/*   Updated: 2025/06/29 19:14:06 by igrousso         ###   ########.fr       */
+/*   Updated: 2025/06/30 20:16:43 by igrousso         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -61,9 +61,21 @@ void	moove_cursor(t_data *data, int direction)
 	// put_raycasting(data->minimap, FOV, TAB_X, data);
 }
 
+int	mouse_move(int x, int y, t_data *data)
+{
+	static int	last_x = TAB_X / 2;
+	int			dx;
+	(void)y;
+
+	dx = x - last_x;
+	data->minimap->p_angle += dx * ROTATION * 0.01;
+	mlx_mouse_move(data->display, data->window, TAB_X / 2, TAB_Y / 2);
+	return (0);
+}
+
 int	key_handler(int key, t_data *data)
 {
- // mettre flag azerty / qwerty modifiable
+	// mettre flag azerty / qwerty modifiable
 	if (key == XK_Escape)
 		cub_exit(0, "Window closed successfully", data);
 	if (key == XK_w || key == XK_W || key == XK_z || key == XK_Z)
