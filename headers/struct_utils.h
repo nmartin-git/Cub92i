@@ -6,7 +6,7 @@
 /*   By: igrousso <igrousso@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/06 16:52:00 by nmartin           #+#    #+#             */
-/*   Updated: 2025/06/25 23:49:53 by igrousso         ###   ########.fr       */
+/*   Updated: 2025/06/30 19:41:48 by igrousso         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -59,6 +59,7 @@ typedef struct s_data
 {
 	void		*display;
 	void		*window;
+	t_image		*background;
 	t_image		*image;
 	t_map		*map;
 	t_minimap	*minimap;

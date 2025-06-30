@@ -6,7 +6,7 @@
 /*   By: igrousso <igrousso@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/10 15:59:29 by nmartin           #+#    #+#             */
-/*   Updated: 2025/06/27 18:11:00 by igrousso         ###   ########.fr       */
+/*   Updated: 2025/06/30 19:38:10 by igrousso         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -83,24 +83,19 @@ void	big_angle(t_image *raycasting, t_pos pixel, int dx, int dy)
 	}
 }
 
-void	test(t_data *data, float distance, int i, double fov)
+void	test(t_data *data, float distance, int i)
 {
 	t_pos	pixel;
 	float	hauteur;
 	int		j;
-	int		k;
 
-	(void)fov;
 	pixel.x = i;
-	hauteur = (TAB_Y / distance) * 4;
+	hauteur = (TAB_Y / distance) * (MINIMAP_SIZE / 100);
 	j = (TAB_Y - hauteur) / 2;
-	k = 0;
-	printf("%f\n", hauteur);
-	while (k < hauteur)
+	while (j < ((TAB_Y - hauteur) / 2) + hauteur)
 	{
-		pixel.y = j + k;
+		pixel.y = j++;
 		pixel_put(data->game, pixel, encode_rgb(255, 255, 255));
-		k++;
 	}
 }
 
@@ -130,11 +125,11 @@ void	put_raycasting(t_minimap *minimap, double fov, int ray_nbr,
 		dx = point_b.x - point_a.x;
 		dy = point_b.y - point_a.y;
 		distance = sqrt(pow(dx, 2) + pow(dy, 2));
-		test(data, distance * cos(angle - minimap->p_angle), i, fov);
-		if (ft_abs(dx) > ft_abs(dy))
-			small_angle(minimap->raycasting, point_a, dx, dy);
-		else
-			big_angle(minimap->raycasting, point_a, dx, dy);
+		test(data, distance * cos(angle - minimap->p_angle), i);
+		// if (ft_abs(dx) > ft_abs(dy))
+		// 	small_angle(minimap->raycasting, point_a, dx, dy);
+		// else
+		// 	big_angle(minimap->raycasting, point_a, dx, dy);
 		i++;
 	}
 }

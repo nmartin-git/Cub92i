@@ -6,7 +6,7 @@
 /*   By: igrousso <igrousso@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/05 14:23:31 by nmartin           #+#    #+#             */
-/*   Updated: 2025/06/27 17:08:15 by igrousso         ###   ########.fr       */
+/*   Updated: 2025/06/29 19:18:39 by igrousso         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -112,6 +112,4 @@ void	minimap_create(t_minimap *minimap, t_data *data)
 		pixel.y++;
 	}
 	pixel_put_cursor(minimap->cursor, minimap->c_color, minimap->pxl_size / 1.5, minimap->pxl_size / 3);
-	put_raycasting(minimap, FOV, TAB_X, data);
-	put_cursor_direction(minimap);
 }
