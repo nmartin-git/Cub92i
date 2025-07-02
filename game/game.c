@@ -6,7 +6,7 @@
 /*   By: igrousso <igrousso@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/02 11:45:56 by nmartin           #+#    #+#             */
-/*   Updated: 2025/06/30 20:23:45 by igrousso         ###   ########.fr       */
+/*   Updated: 2025/07/02 18:44:39 by igrousso         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,11 +32,7 @@ void	set_data(t_data *data, t_map *map)
 	data->image = new_image(data->display, TAB_X, TAB_Y);
 	data->game = new_image(data->display, TAB_X, TAB_Y);
 	data->background = new_image(data->display, TAB_X, TAB_Y);
-	if (paint_floor_and_ceiling(data->background, data))
-	{
-		free_data(data);
-		exit(1);
-	}
+
 	// int		x;//TODO enlever fond blanc
 	// int		y;
 	// char	*pxl;
@@ -105,8 +101,13 @@ void	game(t_data *data, t_map *map)
 {
 	set_data(data, map);
 	minimap(data);
-	/*TODO mouse hide mais sans leaks, mettre un ptit curser au milieu de l'ecran en mode cs go*/
 	// loading screen ?
+	mlx_mouse_hide_no_leak(data->display, data->window);
+	if (paint_floor_and_ceiling(data->background, data))
+	{
+		free_data(data);
+		exit(1);
+	}
 	mlx_hook(data->window, 6, (1L<<6), &mouse_move, data);
 	mlx_key_hook(data->window, key_handler, data);
 	mlx_hook(data->window, 17, 1L >> 0, close_window, data);

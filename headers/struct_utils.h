@@ -6,7 +6,7 @@
 /*   By: igrousso <igrousso@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/06 16:52:00 by nmartin           #+#    #+#             */
-/*   Updated: 2025/06/30 19:41:48 by igrousso         ###   ########.fr       */
+/*   Updated: 2025/07/02 18:44:26 by igrousso         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -68,5 +68,8 @@ typedef struct s_data
 
 t_image			*new_image(void *display, int tab_x, int tab_y);
 void			free_image(t_image *image, void *display);
+
+void			mlx_mouse_hide_no_leak(void *mlx, void *win);
+void			mlx_mouse_show_no_leak(void *mlx, void *win);
 
 #endif
