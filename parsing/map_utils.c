@@ -6,7 +6,7 @@
 /*   By: igrousso <igrousso@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/04 12:43:53 by igrousso          #+#    #+#             */
-/*   Updated: 2025/06/25 18:31:38 by igrousso         ###   ########.fr       */
+/*   Updated: 2025/07/02 16:54:25 by igrousso         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -118,17 +118,17 @@ void	fill_rgb(char **str, t_map *map, char c)
 	r = ft_atoi(str[0]);
 	g = ft_atoi(str[1]);
 	b = ft_atoi(str[2]);
-	if (c == 'F')
+	if (c == 'C')
 	{
 		if (r == 0 && g == 0 && b == 0)
-			map->f_rgb = -10;
+			map->c_rgb = -10;
 		if (r == 100 && g == 100 && b == 100)
-			map->f_rgb = -11;
-		if (r == 200 && g == 100 && b == 100)
-			map->f_rgb = -12;
+			map->c_rgb = -11;
+		if (r == 200 && g == 200 && b == 200)
+			map->c_rgb = -12;
 		else
-			map->f_rgb = encode_rgb(r, g, b);
+			map->c_rgb = encode_rgb(r, g, b);
 	}
-	if (c == 'C')
-		map->c_rgb = encode_rgb(r, g, b);
+	if (c == 'F')
+		map->f_rgb = encode_rgb(r, g, b);
 }
