@@ -6,7 +6,7 @@
 /*   By: igrousso <igrousso@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/07 17:27:20 by igrousso          #+#    #+#             */
-/*   Updated: 2025/06/09 17:28:14 by igrousso         ###   ########.fr       */
+/*   Updated: 2025/07/02 16:57:12 by igrousso         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -91,8 +91,8 @@ int	paint_floor_and_ceiling(t_image *img, t_data *data)
 	if (!img->image)
 		return (mlx_destroy_image(data->display, img->image), write(2,
 				"Error\nFail to create image\n", 27));
-	img->w = TAB_X;
-	img->h = TAB_Y;
+	img->tab_x = TAB_X;
+	img->tab_y = TAB_Y;
 	img->adress = mlx_get_data_addr(img->image, &img->bpp, &img->l_len, &null);
 	if (!img->adress)
 		return (mlx_destroy_image(data->display, img->image), write(2,
