@@ -6,7 +6,7 @@
 /*   By: igrousso <igrousso@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/08 21:44:50 by igrousso          #+#    #+#             */
-/*   Updated: 2025/07/02 16:59:28 by igrousso         ###   ########.fr       */
+/*   Updated: 2025/07/02 17:04:30 by igrousso         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,7 +21,7 @@ void	fill_command(char **command, char *str, char *xlen, char *ylen)
 {
 	int	len;
 
-	len = 21 + strlen(xlen) + strlen(ylen) + (strlen(str) * 2);
+	len = 21 + ft_ft_strlen(xlen) + ft_ft_strlen(ylen) + (ft_strlen(str) * 2);
 	ft_strlcat((*command), "convert ", len);
 	ft_strlcat((*command), str, len);
 	ft_strlcat((*command), " -resize ", len);
@@ -50,7 +50,7 @@ int	convert_xpm(char *str)
 	ylen = ft_itoa(TAB_Y / 2);
 	if (!ylen)
 		return (free(xlen), write(2, "Error\nMalloc fail\n", 18));
-	len = 21 + strlen(xlen) + strlen(ylen) + (strlen(str) * 2);
+	len = 21 + ft_strlen(xlen) + ft_strlen(ylen) + (ft_strlen(str) * 2);
 	command = calloc(len, sizeof(char));
 	if (!command)
 		return (free(xlen), free(ylen), write(2, "Error\nMalloc fail\n", 18));
