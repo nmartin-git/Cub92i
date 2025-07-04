@@ -6,7 +6,7 @@
 /*   By: igrousso <igrousso@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/04 12:43:53 by igrousso          #+#    #+#             */
-/*   Updated: 2025/07/02 16:54:25 by igrousso         ###   ########.fr       */
+/*   Updated: 2025/07/04 17:56:13 by igrousso         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -69,7 +69,7 @@ char to int avec les spécificités de la map
 
 int	ctoi(char c, int *count)
 {
-	if (c >= '0' && c <= '9')
+	if (c == '0' || c == '1' || c == '9')
 		return (c - '0');
 	else if (c == 'N')
 	{
@@ -91,9 +91,7 @@ int	ctoi(char c, int *count)
 		(*count)--;
 		return (5);
 	}
-	else if (c == ' ' || c == '\n')
-		return (8);
-	return (ft_putstr_fd("Error\nIncorect character\n", 2), -2);
+	return (ctoi2(c));
 }
 
 /*
