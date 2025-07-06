@@ -6,7 +6,7 @@
 /*   By: igrousso <igrousso@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/08 21:44:50 by igrousso          #+#    #+#             */
-/*   Updated: 2025/07/02 17:04:30 by igrousso         ###   ########.fr       */
+/*   Updated: 2025/07/06 18:54:20 by igrousso         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -106,7 +106,15 @@ int	easter_egg(t_image *img, t_data *data)
 	if (easter_egg_img(data, &new))
 		return (1);
 	if (!new.image)
-		return (write(2, "Error\nFail to init\n", 19));
+	{
+		if (data->map->c_rgb == -10)
+			data->map->c_rgb = encode_rgb(0, 0, 0);
+		if (data->map->c_rgb == -11)
+			data->map->c_rgb = encode_rgb(100, 100, 100);
+		if (data->map->c_rgb == -12)
+			data->map->c_rgb = encode_rgb(200, 200, 200);				
+		return (0);
+	}
 	new.adress = mlx_get_data_addr(new.image, &new.bpp, &new.l_len, &null);
 	if (!new.adress)
 	{
