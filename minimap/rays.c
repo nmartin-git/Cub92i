@@ -6,7 +6,7 @@
 /*   By: nmartin <nmartin@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/13 14:11:53 by nmartin           #+#    #+#             */
-/*   Updated: 2025/06/23 18:11:35 by nmartin          ###   ########.fr       */
+/*   Updated: 2025/07/07 11:48:35 by nmartin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -74,9 +74,9 @@ void	set_nearest(t_minimap *minimap, t_pos *ph, t_pos *pv, double angle)
 {
 	ph->y = (int)floor((minimap->cursor_y/* + minimap->pxl_size / 3*/) / minimap->pxl_size);
 	if (sin(angle) < 0)
-		ph->y = ph->y * minimap->pxl_size + minimap->pxl_size / 3 - 1;
+		ph->y = ph->y * minimap->pxl_size + minimap->pxl_size / 3 - 0;
 	else
-		ph->y = ph->y * minimap->pxl_size + minimap->pxl_size + minimap->pxl_size / 3;
+		ph->y = ph->y * minimap->pxl_size + minimap->pxl_size + 1 + minimap->pxl_size / 3;
 	if (fabs(tan(angle)) < 0.001)
 	{
 		ph->x = TAN_ERR;
@@ -86,9 +86,9 @@ void	set_nearest(t_minimap *minimap, t_pos *ph, t_pos *pv, double angle)
 		ph->x = (ph->y - (minimap->cursor_y + minimap->pxl_size / 3)) / tan(angle) + (minimap->cursor_x + minimap->pxl_size / 3);
 	pv->x = (int)floor((minimap->cursor_x /*+ minimap->pxl_size / 3*/) / minimap->pxl_size);
 	if (cos(angle) > 0)
-		pv->x = pv->x * minimap->pxl_size + minimap->pxl_size + minimap->pxl_size / 3;
+		pv->x = pv->x * minimap->pxl_size + minimap->pxl_size + 1 + minimap->pxl_size / 3;
 	else
-		pv->x = pv->x * minimap->pxl_size - 1 + minimap->pxl_size / 3;
+		pv->x = pv->x * minimap->pxl_size - 0 + minimap->pxl_size / 3;
 	if (fabs(cos(angle)) < 0.0001)
 	{
 		pv->x = TAN_ERR;
