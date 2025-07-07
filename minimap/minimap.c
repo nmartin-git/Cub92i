@@ -6,7 +6,7 @@
 /*   By: nmartin <nmartin@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/05 14:23:31 by nmartin           #+#    #+#             */
-/*   Updated: 2025/06/18 13:45:09 by nmartin          ###   ########.fr       */
+/*   Updated: 2025/07/07 14:00:53 by nmartin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,6 +31,33 @@ int	get_minimap_color(t_minimap *minimap, int content)
 		return (minimap->b_color);
 	else
 		return (minimap->f_color);
+}
+
+void	minimap_raycast_data(t_minimap *minimap, t_data *data)
+{
+	set_minimap_color(minimap);
+	minimap->x = data->map->col;
+	minimap->y = data->map->row;
+	if (minimap->x > minimap->y)
+		minimap->pxl_size = RAYCASTING_MAP_SIZE / minimap->x;
+	else
+		minimap->pxl_size = RAYCASTING_MAP_SIZE / minimap->y;
+	minimap->cursor_x = data->map->x_spawn * data->minimap->pxl_size + MINIMAP_SIZE / 14;
+	minimap->cursor_y = data->map->y_spawn * data->minimap->pxl_size + MINIMAP_SIZE / 14;
+	//printf("[%d][%d] * %d\n", data->map->y_spawn, data->map->x_spawn, data->minimap->pxl_size);
+	if (data->map->map[data->map->y_spawn][data->map->x_spawn] == E_DIR)
+		minimap->p_angle = 0;
+	else if (data->map->map[data->map->y_spawn][data->map->x_spawn] == N_DIR)
+		minimap->p_angle = 3 * PI / 2;
+	else if (data->map->map[data->map->y_spawn][data->map->x_spawn] == W_DIR)
+		minimap->p_angle = PI;
+	else
+		minimap->p_angle = PI / 2;
+	minimap->display = data->display;
+	minimap->minimap = new_image(data->display, minimap->pxl_size * minimap->x, minimap->pxl_size * minimap->y);//TODO gerer les leaks en cas derreurs
+	minimap->cursor = new_image(data->display, minimap->pxl_size / 1.5, minimap->pxl_size / 1.5);//TODO gerer les leaks en cas derreurs//TODO gerer la taille du cursuer (propotionnel)
+	minimap->direction = new_image(data->display, minimap->pxl_size * 2, minimap->pxl_size * 2);//TODO gerer les leaks en cas derreurs//TODO gerer la taille du cursuer (propotionnel)
+	minimap->raycasting = new_image(data->display, minimap->pxl_size * minimap->x, minimap->pxl_size * minimap->y);//TODO gerer les leaks en cas derreurs//TODO gerer la taille du cursuer (propotionnel)
 }
 
 void	minimap_data(t_minimap *minimap, t_data *data)

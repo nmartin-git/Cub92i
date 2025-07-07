@@ -6,7 +6,7 @@
 /*   By: nmartin <nmartin@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/06 16:52:00 by nmartin           #+#    #+#             */
-/*   Updated: 2025/06/14 15:02:31 by nmartin          ###   ########.fr       */
+/*   Updated: 2025/07/07 14:15:08 by nmartin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -62,6 +62,7 @@ typedef struct s_data
 	t_image		*image;
 	t_map		*map;
 	t_minimap	*minimap;
+	t_minimap	*raycast;
 }	t_data;
 
 t_image	*new_image(void *display, int tab_x, int tab_y);

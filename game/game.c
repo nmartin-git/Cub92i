@@ -6,7 +6,7 @@
 /*   By: nmartin <nmartin@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/02 11:45:56 by nmartin           #+#    #+#             */
-/*   Updated: 2025/06/21 16:15:51 by nmartin          ###   ########.fr       */
+/*   Updated: 2025/07/07 14:15:21 by nmartin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,20 +29,6 @@ void	set_data(t_data *data, t_map *map)
 	if (!data->window)
 		cub_exit(1, "Window initialization failed", data);
 	data->image = new_image(data->display, TAB_X, TAB_Y);
-
-	// int		x;//TODO enlever fond blanc
-	// int		y;
-	// char	*pxl;
-
-	// for (y = 0; y < TAB_Y; y++)
-	// {
-	// 	for (x = 0; x < TAB_X; x++)
-	// 	{
-	// 		pxl = data->image->adress + (y * data->image->l_len + x * (data->image->bpp / 8));
-	// 		*(unsigned int *)pxl = 0xFFFFFF; // blanc
-	// 	}
-	// }
-
 }
 
 int	minimap(t_data *data)
@@ -50,6 +36,8 @@ int	minimap(t_data *data)
 	data->minimap = malloc(sizeof(t_minimap));
 	//if (!data->minimap)//TODO gerer lerreur
 	minimap_data(data->minimap, data);
+	minimap_raycast_data(data->raycast, data);
+	put_raycasting(data->raycast, FOV, RAY_NBR, data);
 	minimap_create(data->minimap, data);
 	return (0);
 }
