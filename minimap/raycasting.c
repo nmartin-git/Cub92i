@@ -6,7 +6,7 @@
 /*   By: nmartin <nmartin@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/10 15:59:29 by nmartin           #+#    #+#             */
-/*   Updated: 2025/06/18 14:36:36 by nmartin          ###   ########.fr       */
+/*   Updated: 2025/07/07 17:07:12 by nmartin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -108,4 +108,5 @@ void	put_raycasting(t_minimap *minimap, double fov, int ray_nbr, t_data *data)
 			big_angle(minimap->raycasting, point_a, dx, dy);
 		i++;
 	}
+	printf("%d = %d - %d\n", MINIMAP_SIZE, MINIMAP_SIZE % 15, minimap->pxl_size % 3);
 }

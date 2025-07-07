@@ -6,7 +6,7 @@
 /*   By: nmartin <nmartin@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/13 14:11:53 by nmartin           #+#    #+#             */
-/*   Updated: 2025/07/07 14:12:06 by nmartin          ###   ########.fr       */
+/*   Updated: 2025/07/07 19:25:18 by nmartin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,7 +16,11 @@ int	is_wall(t_minimap *minimap, t_data *data, t_pos *pos)
 {
 	int	x_wall;
 	int	y_wall;
-	
+	int	x;
+	int	y;
+
+	x = pos->x;
+	y = pos->y;
 	if (pos->x == TAN_ERR || pos->y == TAN_ERR)
 		return (1);
 	x_wall = (pos->x - MINIMAP_SIZE / 15) / minimap->pxl_size;
@@ -72,11 +76,11 @@ void	horizontal_wall(t_minimap *minimap, t_data *data, t_pos *pos, double angle)
 
 void	set_nearest(t_minimap *minimap, t_pos *ph, t_pos *pv, double angle)
 {
-	ph->y = (int)floor((minimap->cursor_y/* + minimap->pxl_size / 3*/) / minimap->pxl_size);
+	ph->y = (int)floor((minimap->cursor_y) / minimap->pxl_size);
 	if (sin(angle) < 0)
-		ph->y = ph->y * minimap->pxl_size + minimap->pxl_size / 3;
+		ph->y = ph->y * minimap->pxl_size + 1 + minimap->pxl_size / 3;
 	else
-		ph->y = ph->y * minimap->pxl_size + minimap->pxl_size + 1 + minimap->pxl_size / 3;
+		ph->y = ph->y * minimap->pxl_size + minimap->pxl_size + minimap->pxl_size / 3;
 	if (fabs(tan(angle)) < 0.001)
 	{
 		ph->x = TAN_ERR;
@@ -84,11 +88,11 @@ void	set_nearest(t_minimap *minimap, t_pos *ph, t_pos *pv, double angle)
 	}
 	else
 		ph->x = (ph->y - (minimap->cursor_y + minimap->pxl_size / 3)) / tan(angle) + (minimap->cursor_x + minimap->pxl_size / 3);
-	pv->x = (int)floor((minimap->cursor_x /*+ minimap->pxl_size / 3*/) / minimap->pxl_size);
+	pv->x = (int)floor((minimap->cursor_x) / minimap->pxl_size);
 	if (cos(angle) > 0)
-		pv->x = pv->x * minimap->pxl_size + minimap->pxl_size + 1 + minimap->pxl_size / 3;
+		pv->x = pv->x * minimap->pxl_size + minimap->pxl_size + minimap->pxl_size / 3;
 	else
-		pv->x = pv->x * minimap->pxl_size + minimap->pxl_size / 3;
+		pv->x = pv->x * minimap->pxl_size + 1 + minimap->pxl_size / 3;
 	if (fabs(cos(angle)) < 0.0001)
 	{
 		pv->x = TAN_ERR;
@@ -108,8 +112,9 @@ t_pos	*raycast(t_minimap *minimap, double angle, t_data *data, t_pos *result)
 	int		y_origin;
 
 	set_nearest(minimap, &ph, &pv, angle);
-	horizontal_wall(minimap, data, &ph, angle);
-	vertical_wall(minimap, data, &pv, angle);
+	(void)data;
+	// horizontal_wall(minimap, data, &ph, angle);
+	// vertical_wall(minimap, data, &pv, angle);
 	x_origin = minimap->cursor_x + minimap->pxl_size / 3;
 	y_origin = minimap->cursor_y + minimap->pxl_size / 3;
 	if (ph.x == TAN_ERR || ph.y == TAN_ERR)
@@ -121,9 +126,15 @@ t_pos	*raycast(t_minimap *minimap, double angle, t_data *data, t_pos *result)
 	else
 		dst2 = pow(pv.x - x_origin, 2) + pow(pv.y - y_origin, 2);
 	if (dst1 < dst2)
-		*result = ph;
+	{
+		result->x = ph.x;
+		result->y = ph.y;
+	}
 	else
-		*result = pv;
+	{
+		result->x = pv.x;
+		result->y = pv.y;
+	}
 	result->x -= MINIMAP_SIZE / 15;
 	result->y -= MINIMAP_SIZE / 15;
 	return (result);

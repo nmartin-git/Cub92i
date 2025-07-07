@@ -6,7 +6,7 @@
 /*   By: nmartin <nmartin@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/02 11:45:56 by nmartin           #+#    #+#             */
-/*   Updated: 2025/07/07 14:15:21 by nmartin          ###   ########.fr       */
+/*   Updated: 2025/07/07 18:17:54 by nmartin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,8 +36,6 @@ int	minimap(t_data *data)
 	data->minimap = malloc(sizeof(t_minimap));
 	//if (!data->minimap)//TODO gerer lerreur
 	minimap_data(data->minimap, data);
-	minimap_raycast_data(data->raycast, data);
-	put_raycasting(data->raycast, FOV, RAY_NBR, data);
 	minimap_create(data->minimap, data);
 	return (0);
 }
