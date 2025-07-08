@@ -6,7 +6,7 @@
 /*   By: nmartin <nmartin@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/13 14:11:53 by nmartin           #+#    #+#             */
-/*   Updated: 2025/07/08 14:32:37 by nmartin          ###   ########.fr       */
+/*   Updated: 2025/07/08 14:42:25 by nmartin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -124,7 +124,7 @@ void	set_nearest(t_minimap *minimap, t_pos *ph, t_pos *pv, double angle)
 	}
 }
 
-t_pos	*raycast(t_minimap *minimap, double angle, t_data *data, t_pos *result)
+t_ray	*raycast(t_minimap *minimap, t_ray *ray, t_data *data, t_pos *result)
 {
 	t_pos	ph;
 	t_pos	pv;
@@ -133,10 +133,9 @@ t_pos	*raycast(t_minimap *minimap, double angle, t_data *data, t_pos *result)
 	int		x_origin;
 	int		y_origin;
 
-	set_nearest(minimap, &ph, &pv, angle);
-	(void)data;
-	horizontal_wall(minimap, data, &ph, angle);
-	vertical_wall(minimap, data, &pv, angle);
+	set_nearest(minimap, &ph, &pv, ray->angle);
+	horizontal_wall(minimap, data, &ph, ray->angle);
+	vertical_wall(minimap, data, &pv, ray->angle);
 	x_origin = minimap->cursor_x + minimap->pxl_size / 3;
 	y_origin = minimap->cursor_y + minimap->pxl_size / 3;
 	if (ph.x == TAN_ERR || ph.y == TAN_ERR)
@@ -151,15 +150,19 @@ t_pos	*raycast(t_minimap *minimap, double angle, t_data *data, t_pos *result)
 	{
 		result->x = ph.x;
 		result->y = ph.y;
+		ray->dst = dst1;
+		ray->x_y = HORIZONTAL;
 	}
 	else
 	{
 		result->x = pv.x;
 		result->y = pv.y;
+		ray->dst = dst2;
+		ray->x_y = VERTICAL;
 	}
 	result->x -= MINIMAP_SIZE / 15;
 	result->y -= MINIMAP_SIZE / 15;
 	// if (result->x + MINIMAP_SIZE / 15 == TAN_ERR || result->y + MINIMAP_SIZE / 15 == TAN_ERR)
 	// 	return (NULL);
-	return (result);
+	return (ray);
 }

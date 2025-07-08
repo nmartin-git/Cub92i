@@ -6,7 +6,7 @@
 /*   By: nmartin <nmartin@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/10 15:59:29 by nmartin           #+#    #+#             */
-/*   Updated: 2025/07/08 13:21:48 by nmartin          ###   ########.fr       */
+/*   Updated: 2025/07/08 14:38:35 by nmartin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -83,23 +83,23 @@ void	big_angle(t_image *raycasting, t_pos pixel, int dx, int dy)
 
 void	put_raycasting(t_minimap *minimap, double fov, int ray_nbr, t_data *data)
 {
-	double	angle;
 	double	diff;
 	int		i;
 	int		dx;
 	int		dy;
 	t_pos	point_a;
 	t_pos	point_b;
+	t_ray	ray;
 	
 	i = 0;
 	fov = (fov * PI) / 180;
 	diff = fov / (ray_nbr - 1);
 	while (i < ray_nbr)
 	{
-		angle = minimap->p_angle - (fov / 2.0) + i * diff;
+		ray.angle = minimap->p_angle - (fov / 2.0) + i * diff;
 		point_a.x = minimap->cursor_x + minimap->pxl_size / 3 - MINIMAP_SIZE / 15;
 		point_a.y = minimap->cursor_y + minimap->pxl_size / 3 - MINIMAP_SIZE / 15;
-		if (!raycast(minimap, angle, data, &point_b))
+		if (!raycast(minimap, &ray, data, &point_b))
 			i = i - 1 + 1;//gerer tan err
 		dx = point_b.x - point_a.x;
 		dy = point_b.y - point_a.y;
