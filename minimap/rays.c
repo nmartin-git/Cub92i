@@ -6,7 +6,7 @@
 /*   By: nmartin <nmartin@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/13 14:11:53 by nmartin           #+#    #+#             */
-/*   Updated: 2025/07/08 14:18:06 by nmartin          ###   ########.fr       */
+/*   Updated: 2025/07/08 14:32:37 by nmartin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -63,15 +63,15 @@ void	horizontal_wall(t_minimap *minimap, t_data *data, t_pos *pos, double angle)
 	}
 	else
 		x = y / tan(angle);
-	if (!is_wall(minimap, data, pos))
-	{
-		pos->x += 1;
-		pos->y += 1;
-		if (is_wall(minimap, data, pos))
-			return ;
-		pos->x -= 1;
-		pos->y -= 1;
-	}
+	// if (!is_wall(minimap, data, pos))
+	// {
+	// 	pos->x += 1;
+	// 	pos->y += 1;
+	// 	if (is_wall(minimap, data, pos))
+	// 		return ;
+	// 	pos->x -= 1;
+	// 	pos->y -= 1;
+	// }//fix corner bug
 	while (!is_wall(minimap, data, pos))
 	{
 		pos->x += x;
