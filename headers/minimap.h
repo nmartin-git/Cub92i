@@ -6,7 +6,7 @@
 /*   By: nmartin <nmartin@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/05 14:23:42 by nmartin           #+#    #+#             */
-/*   Updated: 2025/07/07 19:01:40 by nmartin          ###   ########.fr       */
+/*   Updated: 2025/07/08 14:24:50 by nmartin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,15 +19,15 @@
 # include <math.h>
 # include <limits.h>
 # define EMPTY_COLOR 0
-# define MINIMAP_SIZE 1800
+# define MINIMAP_SIZE 400
 # define WALL 1
 # define FLOOR 0
 # define EMPTY 8
 # define STEP 3
 # define ROTATION 0.1
 # define PI 3.1415926535
-# define FOV 90 /*60*/
-# define RAY_NBR /*60*/ 100
+# define FOV 60
+# define RAY_NBR /*60*/ 600
 # define TAN_ERR 9999
 
 enum e_input

@@ -6,7 +6,7 @@
 /*   By: nmartin <nmartin@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/10 15:59:29 by nmartin           #+#    #+#             */
-/*   Updated: 2025/07/07 17:07:12 by nmartin          ###   ########.fr       */
+/*   Updated: 2025/07/08 13:21:48 by nmartin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -99,7 +99,8 @@ void	put_raycasting(t_minimap *minimap, double fov, int ray_nbr, t_data *data)
 		angle = minimap->p_angle - (fov / 2.0) + i * diff;
 		point_a.x = minimap->cursor_x + minimap->pxl_size / 3 - MINIMAP_SIZE / 15;
 		point_a.y = minimap->cursor_y + minimap->pxl_size / 3 - MINIMAP_SIZE / 15;
-		raycast(minimap, angle, data, &point_b);
+		if (!raycast(minimap, angle, data, &point_b))
+			i = i - 1 + 1;//gerer tan err
 		dx = point_b.x - point_a.x;
 		dy = point_b.y - point_a.y;
 		if (ft_abs(dx) > ft_abs(dy))
@@ -108,5 +109,4 @@ void	put_raycasting(t_minimap *minimap, double fov, int ray_nbr, t_data *data)
 			big_angle(minimap->raycasting, point_a, dx, dy);
 		i++;
 	}
-	printf("%d = %d - %d\n", MINIMAP_SIZE, MINIMAP_SIZE % 15, minimap->pxl_size % 3);
 }
