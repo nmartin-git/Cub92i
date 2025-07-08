@@ -6,7 +6,7 @@
 /*   By: igrousso <igrousso@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/03 08:20:44 by igrousso          #+#    #+#             */
-/*   Updated: 2025/07/04 17:53:26 by igrousso         ###   ########.fr       */
+/*   Updated: 2025/07/08 16:01:27 by igrousso         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,6 +31,11 @@ typedef struct s_map
 	int		col;
 	int		x_spawn;
 	int		y_spawn;
+	int		_92i;
+	int		paqueta;
+	int		el_mordjene;
+	int		puff;
+	int		chicha;
 }			t_map;
 
 typedef struct s_resize
@@ -74,7 +79,8 @@ void		fill_rgb(char **str, t_map *map, char c);
 
 /* map_utils2.c*/
 
-int	ctoi2(char c);
+int			ctoi2(char c);
+void		count_collectible(char c, t_map *map);
 
 /* map */
 

@@ -6,7 +6,7 @@
 /*   By: igrousso <igrousso@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/02 11:45:35 by nmartin           #+#    #+#             */
-/*   Updated: 2025/07/05 15:09:13 by igrousso         ###   ########.fr       */
+/*   Updated: 2025/07/08 16:03:04 by igrousso         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -82,6 +82,11 @@ void	pre_init(t_map *map)
 	map->col = -1;
 	map->x_spawn = -1;
 	map->y_spawn = -1;
+	map->_92i = 0;
+	map->paqueta = 0;
+	map->el_mordjene = 0;
+	map->puff = 0;
+	map->chicha = 0;
 }
 
 /*
@@ -154,6 +159,11 @@ int	parsing(char *av, t_map *map)
 // 	}
 // 	printf("%d, %d\n", map.x_spawn, map.y_spawn);
 // 	printf("%d, %d\n", map.row, map.col);
+// 	printf("%d\n", map._92i);
+// 	printf("%d\n", map.paqueta);
+// 	printf("%d\n", map.el_mordjene);
+// 	printf("%d\n", map.puff);
+// 	printf("%d\n", map.chicha);
 // 	// printf("%s\n", map.n_t);
 // 	// printf("%s\n", map.s_t);
 // 	// printf("%s\n", map.e_t);
