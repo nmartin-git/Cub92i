@@ -3,14 +3,18 @@
 /*                                                        :::      ::::::::   */
 /*   texture.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: igrousso <igrousso@student.42.fr>          +#+  +:+       +#+        */
+/*   By: nmartin <nmartin@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/04 12:40:24 by igrousso          #+#    #+#             */
-/*   Updated: 2025/06/04 12:49:37 by igrousso         ###   ########.fr       */
+/*   Updated: 2025/06/07 16:59:16 by nmartin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "parsing.h"
+#include "../headers/parsing.h"
+
+/*
+sauvegarde les informatinos des textures
+*/
 
 int	fill_t(char *line, t_map *map, char c1, char c2)
 {
@@ -39,31 +43,44 @@ int	fill_t(char *line, t_map *map, char c1, char c2)
 	return (0);
 }
 
-int	fill_colors(char *line, t_map *map, char c)
-{
-	int		r;
-	int		g;
-	int		b;
-	char	**str;
+/*
+sauvegarde les informations des couleurs du plafond et du sol
+*/
 
+int	fill_colors(char *line, t_map *map, char c, char *tmp)
+{
+	char	**str;
+	int		count;
+	int		i;
+
+	count = 0;
+	i = -1;
 	if (line[1] && line[1] != ' ' && ft_strlen(line) > 14)
 		return (write(2, "Error\nIncorrect texture syntax\n", 31));
 	line = &line[2];
-	str = ft_split(line, ',');
+	tmp = ft_substr(line, 0, ft_strlen(line) - 1);
+	if (!tmp)
+		return (write(2, "Error\nMalloc color fail\n", 24));
+	while (tmp[++i])
+		if (tmp[i] == ',')
+			count++;
+	if (count != 2)
+		return (free(tmp), write(2, "Error\nInvalid color syntaxe\n", 28));
+	str = ft_split(tmp, ',');
 	if (!str)
-		return (write(2, "Error\nSplit fail\n", 17));
-	r = ft_atoi(str[0]);
-	g = ft_atoi(str[1]);
-	b = ft_atoi(str[2]);
-	if (c == 'F')
-		map->f_rgb = encode_rgb(r, g, b);
-	if (c == 'C')
-		map->c_rgb = encode_rgb(r, g, b);
-	ft_free_tab(str);
-	return (0);
+		return (free(tmp), write(2, "Error\nSplit fail\n", 17));
+	if (!str[0] || !str[1] || !str[2] || check_colors(str))
+		return (free(tmp), ft_free_tab(str), \
+					write(2, "Error\nInvalid color syntaxe\n", 28));
+	fill_rgb(str, map, c);
+	return (free(tmp), ft_free_tab(str), 0);
 }
 
-int	fill_textures(char *line, t_map *map, int *count)
+/*
+fonction passerelle 2
+*/
+
+int	fill_textures(char *line, t_map *map, int *count, char *tmp)
 {
 	if (line[0] == 'N' && !map->n_t)
 	{
@@ -80,7 +97,7 @@ int	fill_textures(char *line, t_map *map, int *count)
 	if (line[0] == 'F' && map->f_rgb == -1)
 	{
 		(*count)--;
-		if (fill_colors(line, map, 'F'))
+		if (fill_colors(line, map, 'F', tmp))
 			return (1);
 	}
 	if (line[0] == 'W' && !map->w_t)
@@ -92,7 +109,11 @@ int	fill_textures(char *line, t_map *map, int *count)
 	return (0);
 }
 
-int	fill_ec(char *line, t_map *map, int *count)
+/*
+fonction passerelle 3
+*/
+
+int	fill_ec(char *line, t_map *map, int *count, char *tmp)
 {
 	if (line[0] == 'E' && !map->e_t)
 	{
@@ -103,22 +124,29 @@ int	fill_ec(char *line, t_map *map, int *count)
 	if (line[0] == 'C' && map->c_rgb == -1)
 	{
 		(*count)--;
-		if (fill_colors(line, map, 'C'))
+		if (fill_colors(line, map, 'C', tmp))
 			return (1);
 	}
 	return (0);
 }
 
+/*
+fonction passerelle pour sauvegarder les informations de la map
+*/
+
 int	gateway_textures(char *line, t_map *map, int *count)
 {
+	char	*tmp;
+
+	tmp = NULL;
 	if (ft_strchr("NSFW", line[0]))
 	{
-		if (fill_textures(line, map, count))
+		if (fill_textures(line, map, count, tmp))
 			return (free(line), 1);
 	}
 	else if (ft_strchr("EC", line[0]))
 	{
-		if (fill_ec(line, map, count))
+		if (fill_ec(line, map, count, tmp))
 			return (free(line), 1);
 	}
 	return (0);
