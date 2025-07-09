@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parsing.h                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: nmartin <nmartin@student.42.fr>            +#+  +:+       +#+        */
+/*   By: igrousso <igrousso@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/03 08:20:44 by igrousso          #+#    #+#             */
-/*   Updated: 2025/06/12 17:21:09 by nmartin          ###   ########.fr       */
+/*   Updated: 2025/07/09 16:48:55 by igrousso         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,11 +17,6 @@
 # include <fcntl.h>
 # include <stdio.h>
 # include <string.h>
-
-# define N_DIR 2
-# define S_DIR 3
-# define E_DIR 4
-# define W_DIR 5
 
 typedef struct s_map
 {
@@ -36,7 +31,20 @@ typedef struct s_map
 	int		col;
 	int		x_spawn;
 	int		y_spawn;
+	int		_92i;
+	int		paqueta;
+	int		el_mordjene;
+	int		puff;
+	int		chicha;
 }			t_map;
+
+typedef struct s_resize
+{
+	int		pre_empty_col;
+	int		post_empty_col;
+	int		post_empty_row;
+	int		i;
+}			t_resize;
 
 /* check_map */
 
@@ -69,6 +77,11 @@ int			ctoi(char c, int *count);
 int			encode_rgb(int r, int g, int b);
 void		fill_rgb(char **str, t_map *map, char c);
 
+/* map_utils2.c*/
+
+int			ctoi2(char c);
+void		count_collectible(char c, t_map *map);
+
 /* map */
 
 int			fill_row(int **row, char *line, int col, int *count_spawn);
@@ -79,6 +92,7 @@ void		set_pos_spawn(t_map *map);
 
 /* resize_map.c */
 
+int			count_post_row(int **map, int size);
 int			is_col_empty(int **map, int i);
 int			count_pre_col(int **map);
 int			count_post_col(int **map, int size);
