@@ -6,7 +6,7 @@
 /*   By: nmartin <nmartin@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/05 14:23:31 by nmartin           #+#    #+#             */
-/*   Updated: 2025/07/09 14:18:39 by nmartin          ###   ########.fr       */
+/*   Updated: 2025/07/09 15:11:37 by nmartin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -106,9 +106,9 @@ void	minimap_create(t_minimap *minimap, t_data *data)
 		{
 			color = get_minimap_color(minimap, data->map->map[pixel.y][pixel.x]);
 			pixel_put_square(minimap, pixel, color);
-			if (data->map->map[pixel.y][pixel.x] == 'M')
+			// if (data->map->map[pixel.y][pixel.x] == 'M')
 				
-			if (data->map->map[pixel.y][pixel.x] == 'P')
+			// if (data->map->map[pixel.y][pixel.x] == 'P')
 			pixel.x++;
 		}
 		pixel.y++;
