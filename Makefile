@@ -3,10 +3,10 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: nmartin <nmartin@student.42.fr>            +#+  +:+       +#+         #
+#    By: igrousso <igrousso@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2025/02/05 15:41:03 by nmartin           #+#    #+#              #
-#    Updated: 2025/06/18 14:04:58 by nmartin          ###   ########.fr        #
+#    Updated: 2025/07/02 18:45:02 by igrousso         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -34,7 +34,7 @@ MINIMAP_PATH = ./minimap/
 MINIMAP_FILES = minimap.c cursor.c raycasting.c rays.c collision.c
 MINIMAP := $(addprefix $(MINIMAP_PATH), $(MINIMAP_FILES))
 STRUCT_UTILS_PATH = ./struct_utils/
-STRUCT_UTILS_FILES = struct_utils.c
+STRUCT_UTILS_FILES = struct_utils.c mlx_no_leaks.c
 STRUCT_UTILS := $(addprefix $(STRUCT_UTILS_PATH), $(STRUCT_UTILS_FILES))
 BACKGROUND_PATH = ./background/
 BACKGROUND_FILES = background.c merge_img.c easter_eggs.c background_utils.c

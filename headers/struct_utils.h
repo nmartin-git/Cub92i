@@ -6,7 +6,7 @@
 /*   By: igrousso <igrousso@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/06 16:52:00 by nmartin           #+#    #+#             */
-/*   Updated: 2025/07/02 18:44:26 by igrousso         ###   ########.fr       */
+/*   Updated: 2025/07/08 16:46:45 by igrousso         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,6 +18,14 @@
 # include <X11/keysym.h>
 # include <stdlib.h>
 # include <unistd.h>
+
+typedef enum e_face
+{
+	NORTH,
+	SOUTH,
+	EAST,
+	WEST
+}				t_face;
 
 typedef struct s_image
 {
@@ -55,6 +63,13 @@ typedef struct s_pos
 	int			y;
 }				t_pos;
 
+typedef struct s_ray
+{
+	int		x_y;
+	double	angle;
+	long	dst;
+}	t_ray;
+
 typedef struct s_data
 {
 	void		*display;
@@ -64,6 +79,7 @@ typedef struct s_data
 	t_map		*map;
 	t_minimap	*minimap;
 	t_image		*game;
+	t_minimap	*raycast;
 }				t_data;
 
 t_image			*new_image(void *display, int tab_x, int tab_y);

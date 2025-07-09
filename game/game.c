@@ -6,7 +6,7 @@
 /*   By: igrousso <igrousso@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/02 11:45:56 by nmartin           #+#    #+#             */
-/*   Updated: 2025/07/02 18:44:39 by igrousso         ###   ########.fr       */
+/*   Updated: 2025/07/09 17:57:35 by igrousso         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -108,6 +108,7 @@ void	game(t_data *data, t_map *map)
 		free_data(data);
 		exit(1);
 	}
+	mlx_put_image_to_window(data->display, data->window, data->image->image, 0, 0);
 	mlx_hook(data->window, 6, (1L<<6), &mouse_move, data);
 	mlx_key_hook(data->window, key_handler, data);
 	mlx_hook(data->window, 17, 1L >> 0, close_window, data);

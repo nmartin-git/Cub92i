@@ -6,7 +6,7 @@
 /*   By: igrousso <igrousso@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/05 14:23:42 by nmartin           #+#    #+#             */
-/*   Updated: 2025/06/30 19:39:00 by igrousso         ###   ########.fr       */
+/*   Updated: 2025/07/09 17:54:15 by igrousso         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,16 +20,18 @@
 # include <math.h>
 # include <limits.h>
 # define EMPTY_COLOR 0
-# define MINIMAP_SIZE 10000
+# define MINIMAP_SIZE 5000
 # define WALL 1
 # define FLOOR 0
 # define EMPTY 8
-# define STEP 3
+# define STEP MINIMAP_SIZE / 250
 # define ROTATION 0.1
 # define PI 3.1415926535
 # define FOV 60
-# define RAY_NBR 60
+# define RAY_NBR /*60*/ 1920
 # define TAN_ERR 9999
+# define HORIZONTAL 1
+# define VERTICAL 2
 
 enum e_input
 {
@@ -67,6 +69,6 @@ int		is_wall(t_minimap *minimap, t_data *data, t_pos *pos);
 void	vertical_wall(t_minimap *minimap, t_data *data, t_pos *pos, double angle);
 void	horizontal_wall(t_minimap *minimap, t_data *data, t_pos *pos, double angle);
 void	set_nearest(t_minimap *minimap, t_pos *p1, t_pos *p2, double angle);
-t_pos	*raycast(t_minimap *minimap, double angle, t_data *data, t_pos *result);
+t_ray	*raycast(t_minimap *minimap, t_ray *ray, t_data *data, t_pos *result);
 
 #endif

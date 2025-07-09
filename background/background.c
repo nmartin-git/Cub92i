@@ -6,7 +6,7 @@
 /*   By: igrousso <igrousso@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/07 17:27:20 by igrousso          #+#    #+#             */
-/*   Updated: 2025/06/30 19:42:41 by igrousso         ###   ########.fr       */
+/*   Updated: 2025/06/30 21:38:10 by igrousso         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -99,9 +99,9 @@ int	paint_floor_and_ceiling(t_image *img, t_data *data)
 		return (mlx_destroy_image(data->display, img->image), write(2,
 				"Error\nFail to get image address\n", 32));
 	i = -1;
-	// if (data->map->c_rgb <= -10)
-	// 	if (easter_egg(img, data))
-	// 		return (mlx_destroy_image(data->display, img->image), 1);
+	if (data->map->c_rgb <= -10)
+		if (easter_egg(img, data))
+			return (mlx_destroy_image(data->display, img->image), 1);
 	while (++i < 1920)
 		gateway_paint(dst, img, data, i);
 	return (0);
