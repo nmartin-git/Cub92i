@@ -6,7 +6,7 @@
 /*   By: nmartin <nmartin@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/02 11:45:56 by nmartin           #+#    #+#             */
-/*   Updated: 2025/07/09 15:36:33 by nmartin          ###   ########.fr       */
+/*   Updated: 2025/07/09 15:37:33 by nmartin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -65,6 +65,10 @@ void	pv_bar(t_data *data)
 		}
 		y++;
 	}
+	if (data->health > 100)
+		data->health > 100;
+	if (data->health < 0)
+		data->health = 0;
 	y = 0;
 	while (y < TAB_Y / 20)
 	{
