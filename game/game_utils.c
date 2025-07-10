@@ -6,7 +6,7 @@
 /*   By: nmartin <nmartin@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/02 18:33:29 by nmartin           #+#    #+#             */
-/*   Updated: 2025/06/15 21:50:28 by nmartin          ###   ########.fr       */
+/*   Updated: 2025/07/09 15:35:15 by nmartin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,7 +18,11 @@ void	free_data(t_data *data)
 	{
 		free_image(data->minimap->minimap, data->display);
 		free_image(data->minimap->cursor, data->display);
+		free_image(data->minimap->direction, data->display);
+		free_image(data->minimap->raycasting, data->display);
 	}
+	if (data->pv)
+		free_image(data->pv, data->display);
 	if (data->image)
 		free_image(data->image, data->display);
 	if (data->display && data->window)

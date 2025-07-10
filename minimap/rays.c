@@ -6,7 +6,7 @@
 /*   By: nmartin <nmartin@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/13 14:11:53 by nmartin           #+#    #+#             */
-/*   Updated: 2025/07/08 14:42:25 by nmartin          ###   ########.fr       */
+/*   Updated: 2025/07/10 14:55:34 by nmartin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -89,6 +89,8 @@ void	set_nearest(t_minimap *minimap, t_pos *ph, t_pos *pv, double angle)
 	player_x = minimap->cursor_x + minimap->pxl_size / 3;
 	player_y = minimap->cursor_y + minimap->pxl_size / 3;
 	grid_y = (int)floor((player_y - MINIMAP_SIZE / 15) / minimap->pxl_size);
+	ph->x = 0;
+	pv->y = 0;
 	if (sin(angle) > 0)
 		ph->y = (grid_y + 1) * minimap->pxl_size + MINIMAP_SIZE / 15;
 	else if (sin(angle) < 0)

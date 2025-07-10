@@ -6,7 +6,7 @@
 /*   By: nmartin <nmartin@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/05 14:23:42 by nmartin           #+#    #+#             */
-/*   Updated: 2025/07/08 15:33:20 by nmartin          ###   ########.fr       */
+/*   Updated: 2025/07/10 16:02:19 by nmartin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,6 +31,9 @@
 # define TAN_ERR 9999
 # define HORIZONTAL 1
 # define VERTICAL 2
+# define MORDJENE_COLOR 0xE6D295
+# define MORDJENE_BG_COLOR 0xCDB577
+# define PUFF_COLOR 0xFF69B4
 
 enum e_input
 {
@@ -69,5 +72,10 @@ void	vertical_wall(t_minimap *minimap, t_data *data, t_pos *pos, double angle);
 void	horizontal_wall(t_minimap *minimap, t_data *data, t_pos *pos, double angle);
 void	set_nearest(t_minimap *minimap, t_pos *p1, t_pos *p2, double angle);
 t_ray	*raycast(t_minimap *minimap, t_ray *ray, t_data *data, t_pos *result);
+
+/*---items.c---*/
+void	put_pxl(t_image *image, int x, int y, int color);
+void	put_mordjene(t_minimap *minimap, t_pos pos, int radius, int inner_radius);
+void	put_puff(t_minimap *minimap, t_pos pos, int width, int height);
 
 #endif

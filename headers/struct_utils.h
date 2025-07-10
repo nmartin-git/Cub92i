@@ -6,7 +6,7 @@
 /*   By: nmartin <nmartin@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/06 16:52:00 by nmartin           #+#    #+#             */
-/*   Updated: 2025/07/08 14:35:44 by nmartin          ###   ########.fr       */
+/*   Updated: 2025/07/09 14:50:27 by nmartin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -67,6 +67,8 @@ typedef struct s_data
 	void		*display;
 	void		*window;
 	t_image		*image;
+	t_image		*pv;
+	int			health;
 	t_map		*map;
 	t_minimap	*minimap;
 	t_minimap	*raycast;

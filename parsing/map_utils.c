@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   map_utils.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: nmartin <nmartin@student.42.fr>            +#+  +:+       +#+        */
+/*   By: igrousso <igrousso@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/04 12:43:53 by igrousso          #+#    #+#             */
-/*   Updated: 2025/06/12 17:20:54 by nmartin          ###   ########.fr       */
+/*   Updated: 2025/07/04 17:56:13 by igrousso         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -69,31 +69,29 @@ char to int avec les spécificités de la map
 
 int	ctoi(char c, int *count)
 {
-	if (c >= '0' && c <= '9')
+	if (c == '0' || c == '1' || c == '9')
 		return (c - '0');
 	else if (c == 'N')
 	{
 		(*count)--;
-		return (N_DIR);
+		return (2);
 	}
 	else if (c == 'S')
 	{
 		(*count)--;
-		return (S_DIR);
+		return (3);
 	}
 	else if (c == 'E')
 	{
 		(*count)--;
-		return (E_DIR);
+		return (4);
 	}
 	else if (c == 'W')
 	{
 		(*count)--;
-		return (W_DIR);
+		return (5);
 	}
-	else if (c == ' ' || c == '\n')
-		return (8);
-	return (ft_putstr_fd("Error\nIncorect character\n", 2), -2);
+	return (ctoi2(c));
 }
 
 /*
@@ -118,17 +116,17 @@ void	fill_rgb(char **str, t_map *map, char c)
 	r = ft_atoi(str[0]);
 	g = ft_atoi(str[1]);
 	b = ft_atoi(str[2]);
-	if (c == 'F')
+	if (c == 'C')
 	{
 		if (r == 0 && g == 0 && b == 0)
-			map->f_rgb = -10;
+			map->c_rgb = -10;
 		if (r == 100 && g == 100 && b == 100)
-			map->f_rgb = -11;
-		if (r == 200 && g == 100 && b == 100)
-			map->f_rgb = -12;
+			map->c_rgb = -11;
+		if (r == 200 && g == 200 && b == 200)
+			map->c_rgb = -12;
 		else
-			map->f_rgb = encode_rgb(r, g, b);
+			map->c_rgb = encode_rgb(r, g, b);
 	}
-	if (c == 'C')
-		map->c_rgb = encode_rgb(r, g, b);
+	if (c == 'F')
+		map->f_rgb = encode_rgb(r, g, b);
 }

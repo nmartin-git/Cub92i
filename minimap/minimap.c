@@ -6,7 +6,7 @@
 /*   By: nmartin <nmartin@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/05 14:23:31 by nmartin           #+#    #+#             */
-/*   Updated: 2025/07/09 14:18:39 by nmartin          ###   ########.fr       */
+/*   Updated: 2025/07/10 15:47:21 by nmartin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -61,15 +61,10 @@ void	minimap_data(t_minimap *minimap, t_data *data)
 
 void	pixel_put_square(t_minimap *minimap, t_pos pixel, int color)
 {
-	char	*pxl;
-	int		b;
-	int		l;
 	int		x;
 	int		i;
 	int		y;
 
-	b = minimap->minimap->bpp;
-	l = minimap->minimap->l_len;
 	x = pixel.x * minimap->pxl_size;
 	pixel.y *= minimap->pxl_size;
 	y = 0;
@@ -79,12 +74,7 @@ void	pixel_put_square(t_minimap *minimap, t_pos pixel, int color)
 		pixel.x = x;
 		while (i < minimap->pxl_size)
 		{
-			if (pixel.x >= 0 && pixel.x <= minimap->minimap->tab_x
-				&& pixel.y >= 0 && pixel.y <= minimap->minimap->tab_y)
-			{
-				pxl = minimap->minimap->adress + (pixel.y * l + pixel.x * (b / 8));
-				*(unsigned int *)pxl = color;
-			}
+			put_pxl(minimap->minimap, pixel.x, pixel.y, color);
 			pixel.x++;
 			i++;
 		}
@@ -106,9 +96,10 @@ void	minimap_create(t_minimap *minimap, t_data *data)
 		{
 			color = get_minimap_color(minimap, data->map->map[pixel.y][pixel.x]);
 			pixel_put_square(minimap, pixel, color);
-			if (data->map->map[pixel.y][pixel.x] == 'M')
-				
-			if (data->map->map[pixel.y][pixel.x] == 'P')
+			if (data->map->map[pixel.y][pixel.x] == MORDJENE)
+				put_mordjene(minimap, pixel, minimap->pxl_size / 3, minimap->pxl_size / 4);
+			else if (data->map->map[pixel.y][pixel.x] == PUFF)
+				put_puff(minimap, pixel, minimap->pxl_size / 3, minimap->pxl_size * 3 / 4);
 			pixel.x++;
 		}
 		pixel.y++;

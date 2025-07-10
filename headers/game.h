@@ -6,7 +6,7 @@
 /*   By: nmartin <nmartin@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/02 14:55:19 by nmartin           #+#    #+#             */
-/*   Updated: 2025/06/14 15:20:47 by nmartin          ###   ########.fr       */
+/*   Updated: 2025/07/09 15:16:30 by nmartin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,6 +22,9 @@
 
 # define TAB_X 1920//1280
 # define TAB_Y 1080//720
+# define HEALTH 100
+# define HEALTH_COLOR 123456
+# define HEALTH_BG_COLOR 12345678
 
 //---game.c---
 int		close_window(t_data *data);
