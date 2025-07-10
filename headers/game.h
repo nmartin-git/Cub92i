@@ -6,7 +6,7 @@
 /*   By: nmartin <nmartin@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/02 14:55:19 by nmartin           #+#    #+#             */
-/*   Updated: 2025/07/09 15:16:30 by nmartin          ###   ########.fr       */
+/*   Updated: 2025/07/10 17:59:17 by nmartin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,6 +29,7 @@
 //---game.c---
 int		close_window(t_data *data);
 void	set_data(t_data *data, t_map *map);
+void	pv_bar(t_data *data);
 void	game(t_data *data, t_map *map);
 int		minimap(t_data *data);
 

@@ -6,7 +6,7 @@
 /*   By: nmartin <nmartin@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/05 14:23:42 by nmartin           #+#    #+#             */
-/*   Updated: 2025/07/10 16:02:19 by nmartin          ###   ########.fr       */
+/*   Updated: 2025/07/10 17:37:39 by nmartin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,11 +18,14 @@
 # include <X11/keysym.h>
 # include <math.h>
 # include <limits.h>
+
 # define EMPTY_COLOR 0
 # define MINIMAP_SIZE 1400
+
 # define WALL 1
 # define FLOOR 0
 # define EMPTY 8
+
 # define STEP 3
 # define ROTATION 0.1
 # define PI 3.1415926535
@@ -31,6 +34,9 @@
 # define TAN_ERR 9999
 # define HORIZONTAL 1
 # define VERTICAL 2
+
+# define HEAL 20
+
 # define MORDJENE_COLOR 0xE6D295
 # define MORDJENE_BG_COLOR 0xCDB577
 # define PUFF_COLOR 0xFF69B4

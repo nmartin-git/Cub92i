@@ -6,7 +6,7 @@
 /*   By: nmartin <nmartin@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/02 11:45:56 by nmartin           #+#    #+#             */
-/*   Updated: 2025/07/10 13:40:53 by nmartin          ###   ########.fr       */
+/*   Updated: 2025/07/10 18:02:02 by nmartin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,7 +20,7 @@ int	close_window(t_data *data)
 
 void	set_data(t_data *data, t_map *map)
 {
-	data->health = HEALTH;
+	data->health = HEALTH - 40;
 	data->minimap = NULL;
 	data->pv = NULL;
 	data->map = map;
@@ -44,41 +44,24 @@ int	minimap(t_data *data)
 
 void	pv_bar(t_data *data)
 {
-	char	*pxl;
-	int		b;
-	int		l;
 	int		x;
 	int		y;
 
-	data->pv = new_image(data->display, TAB_X / 2, TAB_Y / 20);
-	b = data->pv->bpp;
-	l = data->pv->l_len;
+	printf("---%d---\n", data->health);
 	y = 0;
 	while (y < TAB_Y / 20)
 	{
 		x = 0;
 		while (x < TAB_X / 2)
-		{
-			pxl = data->pv->adress + (y * l + x * (b / 8));
-			*(unsigned int *)pxl = HEALTH_BG_COLOR;
-			x++;
-		}
+			put_pxl(data->pv, x++, y, HEALTH_BG_COLOR);
 		y++;
 	}
-	if (data->health > 100)//TODO tej si inutile
-		data->health = 100;
-	if (data->health < 0)
-		data->health = 0;
 	y = 0;
 	while (y < TAB_Y / 20)
 	{
 		x = 0;
 		while (x < (TAB_X / 2) * data->health / 100)
-		{
-			pxl = data->pv->adress + (y * l + x * (b / 8));
-			*(unsigned int *)pxl = HEALTH_COLOR;
-			x++;
-		}
+			put_pxl(data->pv, x++, y, HEALTH_COLOR);
 		y++;
 	}
 }
@@ -87,6 +70,7 @@ void	game(t_data *data, t_map *map)
 {
 	set_data(data, map);
 	minimap(data);
+	data->pv = new_image(data->display, TAB_X / 2, TAB_Y / 20);
 	pv_bar(data);
 	//loading screen ?
 	put_img_to_img(data->image, data->minimap->minimap, MINIMAP_SIZE / 15, MINIMAP_SIZE / 15);

@@ -6,11 +6,43 @@
 /*   By: nmartin <nmartin@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/07 15:26:13 by nmartin           #+#    #+#             */
-/*   Updated: 2025/06/20 15:37:33 by nmartin          ###   ########.fr       */
+/*   Updated: 2025/07/10 18:46:31 by nmartin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "game.h"
+
+void	check_items(t_data *data, t_minimap *minimap)
+{
+	int	player_x;
+	int	player_y;
+	
+	player_x = (minimap->cursor_x + minimap->pxl_size / 3 - MINIMAP_SIZE / 15) / minimap->pxl_size;
+	player_y = (minimap->cursor_y + minimap->pxl_size / 3 - MINIMAP_SIZE / 15) / minimap->pxl_size;
+	if (data->map->map[player_y][player_x] == MORDJENE && data->health > 0)
+	{
+		data->health += HEAL;
+		if (data->health > 100)
+			data->health = 100;
+		data->map->map[player_y][player_x] = FLOOR;
+	}
+	else if (data->map->map[player_y][player_x] == PUFF)
+	{
+		data->puff++;
+		data->map->map[player_y][player_x] = FLOOR;
+		if (data->puff >= data->map->puff)
+		{
+			free_data(data);
+			exit (EXIT_SUCCESS);
+		}
+	}
+	else
+		return ;
+	clear_image(data->minimap->minimap);
+	clear_image(data->pv);
+	pv_bar(data);
+	minimap_create(data->minimap, data);
+}
 
 void	clear_image(t_image *image)
 {
@@ -42,6 +74,7 @@ void	moove_player(t_data *data, int input)
 		go_up(data);
 	else
 		go_down(data);
+	check_items(data, data->minimap);
 	clear_image(data->minimap->direction);
 	clear_image(data->minimap->raycasting);
 	put_cursor_direction(data->minimap);
@@ -51,6 +84,7 @@ void	moove_player(t_data *data, int input)
 	put_img_to_img(data->image, data->minimap->raycasting, MINIMAP_SIZE / 15, MINIMAP_SIZE / 15);
 	put_img_to_img(data->image, data->minimap->direction, data->minimap->cursor_x - data->minimap->pxl_size * 2/3, data->minimap->cursor_y - data->minimap->pxl_size * 2/3);
 	put_img_to_img(data->image, data->minimap->cursor, data->minimap->cursor_x, data->minimap->cursor_y);
+	put_img_to_img(data->image, data->pv, TAB_X / 4, TAB_Y - TAB_Y / 6);
 	mlx_put_image_to_window(data->display, data->window, data->image->image, 0, 0);
 }
 
