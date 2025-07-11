@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minimap.h                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: nmartin <nmartin@student.42.fr>            +#+  +:+       +#+        */
+/*   By: igrousso <igrousso@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/05 14:23:42 by nmartin           #+#    #+#             */
-/*   Updated: 2025/06/23 18:05:34 by nmartin          ###   ########.fr       */
+/*   Updated: 2025/07/10 19:12:44 by igrousso         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,6 +29,10 @@
 # define FOV 60
 # define RAY_NBR 60
 # define TAN_ERR 9999
+# define N_DIR 2
+# define S_DIR 3
+# define E_DIR 4
+# define W_DIR 5
 
 enum e_input
 {
@@ -50,10 +54,16 @@ void	put_cursor_direction(t_minimap *minimap);
 void	pixel_put_cursor(t_image *cursor, int color, int size, int radius);
 
 /*---collision.c*/
-void	go_left(t_data *data);
-void	go_right(t_data *data);
-void	go_up(t_data *data);
-void	go_down(t_data *data);
+void	go_left(t_data *data, int pixels);
+void	go_right(t_data *data, int pixels);
+void	go_up(t_data *data, int pixels);
+void	go_down(t_data *data, int pixels);
+
+/*---deplacements---*/
+void	left_step(t_data *data);
+void	right_step(t_data *data);
+void	forward_step(t_data *data);
+void	backward_step(t_data *data);
 
 /*---raycasting.c---*/
 void	pixel_put(t_image *raycasting, t_pos pixel, int color);

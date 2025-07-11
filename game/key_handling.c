@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   key_handling.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: nmartin <nmartin@student.42.fr>            +#+  +:+       +#+        */
+/*   By: igrousso <igrousso@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/07 15:26:13 by nmartin           #+#    #+#             */
-/*   Updated: 2025/06/20 15:37:33 by nmartin          ###   ########.fr       */
+/*   Updated: 2025/07/10 19:21:02 by igrousso         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,13 +35,13 @@ void	clear_image(t_image *image)
 void	moove_player(t_data *data, int input)
 {
 	if (input == A)
-		go_left(data);
+		left_step(data);/*go_left(data);*/
 	else if(input == D)
-		go_right(data);
+		right_step(data);/*go_right(data);*/
 	else if (input == W)
-		go_up(data);
+		forward_step(data);/*go_up(data);*/
 	else
-		go_down(data);
+		backward_step(data);/*go_down(data);*/
 	clear_image(data->minimap->direction);
 	clear_image(data->minimap->raycasting);
 	put_cursor_direction(data->minimap);
@@ -57,6 +57,10 @@ void	moove_player(t_data *data, int input)
 void	moove_cursor(t_data *data, int direction)
 {
 	data->minimap->p_angle += ROTATION * direction;
+	if (data->minimap->p_angle > 2 * PI)
+		data->minimap->p_angle = 0;
+	if (data->minimap->p_angle < 0)
+		data->minimap->p_angle = 2 * PI;		
 	clear_image(data->minimap->direction);
 	clear_image(data->minimap->raycasting);
 	put_cursor_direction(data->minimap);
