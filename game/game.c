@@ -6,7 +6,7 @@
 /*   By: igrousso <igrousso@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/02 11:45:56 by nmartin           #+#    #+#             */
-/*   Updated: 2025/07/11 15:31:40 by igrousso         ###   ########.fr       */
+/*   Updated: 2025/07/11 23:19:35 by igrousso         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,8 +31,15 @@ void	set_data(t_data *data, t_map *map)
 		cub_exit(1, "Window initialization failed", data);
 	data->image = new_image(data->display, TAB_X, TAB_Y);
 	data->game = new_image(data->display, TAB_X, TAB_Y);
-	data->background = new_image(data->display, TAB_X, TAB_Y);
-	ft_bzero(data->keys, 10);
+	data->background = new_image(data->display, TAB_X, TAB_Y);	
+	for (size_t i = 0; i < 10; i++)
+	{
+		data->keys[i] = 0;
+	}
+	for (size_t i = 0; i < 10; i++)
+	{
+		printf("%d\n", data->keys[i]);
+	}
 	// int		x;//TODO enlever fond blanc
 	// int		y;
 	// char	*pxl;
@@ -74,14 +81,15 @@ int render(t_data *data)
 	static int frame_count = 0;
 	__uint64_t		now = get_time_ms();
 
-	memset(data->minimap->direction->adress, 0, data->minimap->direction->tab_y * data->minimap->direction->l_len);
-	memset(data->minimap->raycasting->adress, 0, data->minimap->raycasting->tab_y * data->minimap->raycasting->l_len);
-	memset(data->game->adress, 0, data->game->tab_y * data->game->l_len);
-	memset(data->image->adress, 0, data->image->tab_y * data->image->l_len);
-	put_cursor_direction(data->minimap);
+	// memset(data->minimap->direction->adress, 0, data->minimap->direction->tab_y * data->minimap->direction->l_len);
+	// memset(data->minimap->raycasting->adress, 0, data->minimap->raycasting->tab_y * data->minimap->raycasting->l_len);
+	ft_memset(data->game->adress, 0, data->game->tab_y * data->game->l_len);
+	ft_memset(data->image->adress, 0, data->image->tab_y * data->image->l_len);
+	// put_cursor_direction(data->minimap);
 	put_raycasting(data->minimap, FOV, TAB_X, data);
 	put_img_to_img(data->image, data->background, 0, 0);
 	put_img_to_img(data->image, data->game, 0, 0);
+	put_img_to_img(data->image, data->crosshair, 0, 0);
 	// put_img_to_img(data->image, data->minimap->minimap, MINIMAP_SIZE / 15, MINIMAP_SIZE / 15);
 	// put_img_to_img(data->image, data->minimap->raycasting, MINIMAP_SIZE / 15, MINIMAP_SIZE / 15);
 	// put_img_to_img(data->image, data->minimap->direction, data->minimap->cursor_x - data->minimap->pxl_size * 2/3, data->minimap->cursor_y - data->minimap->pxl_size * 2/3);
@@ -102,39 +110,52 @@ int render(t_data *data)
 
 int key_press(int keycode, t_data *data)
 {
-	if (keycode == XK_Escape)
+	printf("key[4] %d, key[6] %d\n", data->keys[4], data->keys[6]);
+	if (keycode == XK_Escape && data->keys[0] == 0)
 		data->keys[0] = 1;
-	if (keycode == XK_w || keycode == XK_W || keycode == XK_z || keycode == XK_Z)
+	if ((keycode == XK_w || keycode == XK_W || keycode == XK_z || keycode == XK_Z) && data->keys[1] == 0)
 		data->keys[1] = 1;
-	if (keycode == XK_a || keycode == XK_A)
+	if ((keycode == XK_a || keycode == XK_A) && data->keys[2] == 0)
 		data->keys[2] = 1;
-	if (keycode == XK_s || keycode == XK_S || keycode == XK_q || keycode == XK_Q)
+	if ((keycode == XK_s || keycode == XK_S || keycode == XK_q || keycode == XK_Q) && data->keys[3] == 0)
 		data->keys[3] = 1;
-	if (keycode == XK_d || keycode == XK_D)
+	if ((keycode == XK_d || keycode == XK_D) && data->keys[4] == 0)
+	{
+		printf("set key[4] = 1\n");
 		data->keys[4] = 1;
-	if (keycode == XK_Left)
+	}
+	if (keycode == XK_Left && data->keys[5] == 0)
 		data->keys[5] = 1;
-	if (keycode == XK_Right)
+	if (keycode == XK_Right && data->keys[6] == 0)
+	{
+		printf("set key[6] = 1\n");
 		data->keys[6] = 1;
+	}
 	return (0);
 }
 
 int key_release(int keycode, t_data *data)
 {
-	if (keycode == XK_Escape)
+	if (keycode == XK_Escape && data->keys[0] == 1)
 		data->keys[0] = 0;
-	if (keycode == XK_w || keycode == XK_W || keycode == XK_z || keycode == XK_Z)
+	if ((keycode == XK_w || keycode == XK_W || keycode == XK_z || keycode == XK_Z) && data->keys[1] == 1)
 		data->keys[1] = 0;
-	if (keycode == XK_a || keycode == XK_A)
+	if ((keycode == XK_a || keycode == XK_A) && data->keys[2] == 1)
 		data->keys[2] = 0;
-	if (keycode == XK_s || keycode == XK_S || keycode == XK_q || keycode == XK_Q)
+	if ((keycode == XK_s || keycode == XK_S || keycode == XK_q || keycode == XK_Q) && data->keys[3] == 1)
 		data->keys[3] = 0;
-	if (keycode == XK_d || keycode == XK_D)
+	if ((keycode == XK_d || keycode == XK_D) && data->keys[4] == 1)
+	{
+		printf("set key[4] = 0\n");
 		data->keys[4] = 0;
-	if (keycode == XK_Left)
+	}
+	if (keycode == XK_Left && data->keys[5] == 1)
 		data->keys[5] = 0;
-	if (keycode == XK_Right)
+	if (keycode == XK_Right && data->keys[6] == 1)
+	{
+		printf("set key[6] = 0\n");
 		data->keys[6] = 0;
+	}	
 	return (0);
 }
 
@@ -160,6 +181,8 @@ int update(t_data *data)
 void	game(t_data *data, t_map *map)
 {
 	set_data(data, map);
+	if (init_crosshair(data))
+		exit(1);
 	minimap(data);
 	// loading screen ?
 	mlx_mouse_hide_no_leak(data->display, data->window);

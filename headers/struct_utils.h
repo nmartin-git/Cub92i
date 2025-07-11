@@ -6,7 +6,7 @@
 /*   By: igrousso <igrousso@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/06 16:52:00 by nmartin           #+#    #+#             */
-/*   Updated: 2025/07/09 19:34:30 by igrousso         ###   ########.fr       */
+/*   Updated: 2025/07/11 22:47:28 by igrousso         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -68,6 +68,7 @@ typedef struct s_ray
 	int			x_y;
 	double		angle;
 	long		dst;
+	int			percent;
 }				t_ray;
 
 typedef struct s_data
@@ -75,6 +76,7 @@ typedef struct s_data
 	void		*display;
 	void		*window;
 	t_image		*background;
+	t_image		*crosshair;
 	t_image		*image;
 	t_map		*map;
 	t_minimap	*minimap;

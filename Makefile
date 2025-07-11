@@ -6,7 +6,7 @@
 #    By: igrousso <igrousso@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2025/02/05 15:41:03 by nmartin           #+#    #+#              #
-#    Updated: 2025/07/11 15:22:54 by igrousso         ###   ########.fr        #
+#    Updated: 2025/07/11 22:42:57 by igrousso         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -39,13 +39,17 @@ STRUCT_UTILS := $(addprefix $(STRUCT_UTILS_PATH), $(STRUCT_UTILS_FILES))
 BACKGROUND_PATH = ./background/
 BACKGROUND_FILES = background.c merge_img.c easter_eggs.c background_utils.c
 BACKGROUND := $(addprefix $(BACKGROUND_PATH), $(BACKGROUND_FILES))
+CROSSHAIR_PATH = ./crosshair/
+CROSSHAIR_FILES = crosshair.c
+CROSSHAIR := $(addprefix $(CROSSHAIR_PATH), $(CROSSHAIR_FILES))
 OBJ_PATH = ./objs/
 OBJ := $(addprefix $(OBJ_PATH), $(CUB_FILES:.c=.o)) \
 		$(addprefix $(OBJ_PATH), $(PARSING_FILES:.c=.o)) \
 			$(addprefix $(OBJ_PATH), $(GAME_FILES:.c=.o)) \
 				$(addprefix $(OBJ_PATH), $(MINIMAP_FILES:.c=.o)) \
 					$(addprefix $(OBJ_PATH), $(STRUCT_UTILS_FILES:.c=.o)) \
-						$(addprefix $(OBJ_PATH), $(BACKGROUND_FILES:.c=.o))
+						$(addprefix $(OBJ_PATH), $(BACKGROUND_FILES:.c=.o)) \
+							$(addprefix $(OBJ_PATH), $(CROSSHAIR_FILES:.c=.o))
 SRC_BNS_PATH = ./srcs_bonus/
 SRC_BNS_FILES = 
 SRC_BNS := $(addprefix $(SRC_BNS_PATH), $(SRC_BNS_FILES))
@@ -110,6 +114,12 @@ $(OBJ_PATH)%.o : $(STRUCT_UTILS_PATH)%.c
 
 $(OBJ_PATH)%.o : $(BACKGROUND_PATH)%.c
 	@printf "$(BLUE)Compiling $(NAME) background: [$<] $(RESET)"
+	@mkdir -p $(OBJ_PATH)
+	@$(CC) $(CFLAGS) $(HEADERS) -c $< -o $@
+	@printf "\r\033[K"
+
+$(OBJ_PATH)%.o : $(CROSSHAIR_PATH)%.c
+	@printf "$(BLUE)Compiling $(NAME): [$<] $(RESET)"
 	@mkdir -p $(OBJ_PATH)
 	@$(CC) $(CFLAGS) $(HEADERS) -c $< -o $@
 	@printf "\r\033[K"

@@ -6,7 +6,7 @@
 /*   By: igrousso <igrousso@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/13 14:11:53 by nmartin           #+#    #+#             */
-/*   Updated: 2025/07/08 19:48:01 by igrousso         ###   ########.fr       */
+/*   Updated: 2025/07/11 22:47:17 by igrousso         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -152,6 +152,9 @@ t_ray	*raycast(t_minimap *minimap, t_ray *ray, t_data *data, t_pos *result)
 		result->y = ph.y;
 		ray->dst = dst1;
 		ray->x_y = HORIZONTAL;
+		ray->percent = (result->x - MINIMAP_SIZE / 15) / minimap->pxl_size;
+		ray->percent = (result->x - MINIMAP_SIZE / 15) - (ray->percent * minimap->pxl_size);
+		ray->percent = (ray->percent * QUALITY) / minimap->pxl_size;
 	}
 	else
 	{
@@ -159,6 +162,9 @@ t_ray	*raycast(t_minimap *minimap, t_ray *ray, t_data *data, t_pos *result)
 		result->y = pv.y;
 		ray->dst = dst2;
 		ray->x_y = VERTICAL;
+		ray->percent = (result->y - MINIMAP_SIZE / 15) / minimap->pxl_size;
+		ray->percent = (result->y - MINIMAP_SIZE / 15) - (ray->percent * minimap->pxl_size);
+		ray->percent = (ray->percent * QUALITY) / minimap->pxl_size;
 	}
 	result->x -= MINIMAP_SIZE / 15;
 	result->y -= MINIMAP_SIZE / 15;

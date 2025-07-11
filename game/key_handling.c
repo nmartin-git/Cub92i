@@ -6,7 +6,7 @@
 /*   By: igrousso <igrousso@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/07 15:26:13 by nmartin           #+#    #+#             */
-/*   Updated: 2025/07/11 15:31:26 by igrousso         ###   ########.fr       */
+/*   Updated: 2025/07/11 23:00:32 by igrousso         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -59,6 +59,8 @@ int	mouse_move(int x, int y, t_data *data)
 	int			dx;
 	(void)y;
 
+	if (x == TAB_X / 2)
+		return (0);	
 	dx = x - last_x;
 	data->minimap->p_angle += dx * ROTATION * 0.005;
 	if (data->minimap->p_angle > 2 * PI)

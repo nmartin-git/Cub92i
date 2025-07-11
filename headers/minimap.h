@@ -6,7 +6,7 @@
 /*   By: igrousso <igrousso@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/05 14:23:42 by nmartin           #+#    #+#             */
-/*   Updated: 2025/07/11 15:19:54 by igrousso         ###   ########.fr       */
+/*   Updated: 2025/07/11 22:47:44 by igrousso         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,6 +21,7 @@
 # include <limits.h>
 # define EMPTY_COLOR 0
 # define MINIMAP_SIZE 5000
+# define QUALITY 100
 # define WALL 1
 # define FLOOR 0
 # define EMPTY 8
