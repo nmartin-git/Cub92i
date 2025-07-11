@@ -6,7 +6,7 @@
 /*   By: igrousso <igrousso@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/04 12:43:53 by igrousso          #+#    #+#             */
-/*   Updated: 2025/07/04 17:56:13 by igrousso         ###   ########.fr       */
+/*   Updated: 2025/07/11 16:01:23 by igrousso         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -107,7 +107,7 @@ int	encode_rgb(int r, int g, int b)
 sauvegarde la couleur du sol et du plafond dans la structure t_map
 */
 
-void	fill_rgb(char **str, t_map *map, char c)
+int	fill_rgb(char **str, t_map *map, char c)
 {
 	int	r;
 	int	g;
@@ -116,6 +116,9 @@ void	fill_rgb(char **str, t_map *map, char c)
 	r = ft_atoi(str[0]);
 	g = ft_atoi(str[1]);
 	b = ft_atoi(str[2]);
+	if ((r > 255 || r < 0) && (g > 255 || g < 0) && (b > 255 || b < 0))
+		return (write(2, "Error\nCeiling and floor \
+			colors must be in RGB format ([0-255],[0-255],[0-255])\n", 29));
 	if (c == 'C')
 	{
 		if (r == 0 && g == 0 && b == 0)
@@ -129,4 +132,5 @@ void	fill_rgb(char **str, t_map *map, char c)
 	}
 	if (c == 'F')
 		map->f_rgb = encode_rgb(r, g, b);
+	return (0);
 }
