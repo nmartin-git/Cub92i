@@ -6,7 +6,7 @@
 /*   By: nmartin <nmartin@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/07 15:26:13 by nmartin           #+#    #+#             */
-/*   Updated: 2025/07/10 18:46:31 by nmartin          ###   ########.fr       */
+/*   Updated: 2025/07/11 15:02:16 by nmartin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,22 +14,23 @@
 
 void	check_items(t_data *data, t_minimap *minimap)
 {
-	int	player_x;
-	int	player_y;
+	t_pos	pixel;
 	
-	player_x = (minimap->cursor_x + minimap->pxl_size / 3 - MINIMAP_SIZE / 15) / minimap->pxl_size;
-	player_y = (minimap->cursor_y + minimap->pxl_size / 3 - MINIMAP_SIZE / 15) / minimap->pxl_size;
-	if (data->map->map[player_y][player_x] == MORDJENE && data->health > 0)
+	pixel.x = (minimap->cursor_x + minimap->pxl_size / 3 - MINIMAP_SIZE / 15) / minimap->pxl_size;
+	pixel.y = (minimap->cursor_y + minimap->pxl_size / 3 - MINIMAP_SIZE / 15) / minimap->pxl_size;
+	if (data->map->map[pixel.y][pixel.x] == MORDJENE && data->health > 0)
 	{
 		data->health += HEAL;
 		if (data->health > 100)
 			data->health = 100;
-		data->map->map[player_y][player_x] = FLOOR;
+		data->map->map[pixel.y][pixel.x] = FLOOR;
+		clear_image(data->pv);
+		pv_bar(data);
 	}
-	else if (data->map->map[player_y][player_x] == PUFF)
+	else if (data->map->map[pixel.y][pixel.x] == PUFF)
 	{
 		data->puff++;
-		data->map->map[player_y][player_x] = FLOOR;
+		data->map->map[pixel.y][pixel.x] = FLOOR;
 		if (data->puff >= data->map->puff)
 		{
 			free_data(data);
@@ -38,10 +39,7 @@ void	check_items(t_data *data, t_minimap *minimap)
 	}
 	else
 		return ;
-	clear_image(data->minimap->minimap);
-	clear_image(data->pv);
-	pv_bar(data);
-	minimap_create(data->minimap, data);
+	pixel_put_square(data->minimap, pixel, data->minimap->f_color);
 }
 
 void	clear_image(t_image *image)

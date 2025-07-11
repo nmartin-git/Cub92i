@@ -6,7 +6,7 @@
 /*   By: nmartin <nmartin@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/05 14:23:42 by nmartin           #+#    #+#             */
-/*   Updated: 2025/07/10 17:37:39 by nmartin          ###   ########.fr       */
+/*   Updated: 2025/07/11 17:32:50 by nmartin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,6 +21,7 @@
 
 # define EMPTY_COLOR 0
 # define MINIMAP_SIZE 1400
+# define QUALITY 100
 
 # define WALL 1
 # define FLOOR 0
@@ -30,7 +31,7 @@
 # define ROTATION 0.1
 # define PI 3.1415926535
 # define FOV 60
-# define RAY_NBR /*60*/ 600
+# define RAY_NBR /*60*/ 6
 # define TAN_ERR 9999
 # define HORIZONTAL 1
 # define VERTICAL 2

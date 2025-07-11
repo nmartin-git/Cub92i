@@ -6,7 +6,7 @@
 /*   By: nmartin <nmartin@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/02 11:45:56 by nmartin           #+#    #+#             */
-/*   Updated: 2025/07/10 18:02:02 by nmartin          ###   ########.fr       */
+/*   Updated: 2025/07/11 15:03:01 by nmartin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,7 +47,6 @@ void	pv_bar(t_data *data)
 	int		x;
 	int		y;
 
-	printf("---%d---\n", data->health);
 	y = 0;
 	while (y < TAB_Y / 20)
 	{
