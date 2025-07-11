@@ -6,7 +6,7 @@
 /*   By: igrousso <igrousso@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/06 16:52:00 by nmartin           #+#    #+#             */
-/*   Updated: 2025/07/08 16:46:45 by igrousso         ###   ########.fr       */
+/*   Updated: 2025/07/09 19:34:30 by igrousso         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -65,10 +65,10 @@ typedef struct s_pos
 
 typedef struct s_ray
 {
-	int		x_y;
-	double	angle;
-	long	dst;
-}	t_ray;
+	int			x_y;
+	double		angle;
+	long		dst;
+}				t_ray;
 
 typedef struct s_data
 {
@@ -80,6 +80,7 @@ typedef struct s_data
 	t_minimap	*minimap;
 	t_image		*game;
 	t_minimap	*raycast;
+	int			keys[10];
 }				t_data;
 
 t_image			*new_image(void *display, int tab_x, int tab_y);

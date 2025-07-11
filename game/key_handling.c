@@ -6,7 +6,7 @@
 /*   By: igrousso <igrousso@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/07 15:26:13 by nmartin           #+#    #+#             */
-/*   Updated: 2025/06/30 20:16:43 by igrousso         ###   ########.fr       */
+/*   Updated: 2025/07/11 15:31:26 by igrousso         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,30 +35,22 @@ void	clear_image(t_image *image)
 void	moove_player(t_data *data, int input)
 {
 	if (input == A)
-		go_left(data);
+		left_step(data);
 	else if (input == D)
-		go_right(data);
+		right_step(data);
 	else if (input == W)
-		go_up(data);
+		forward_step(data);
 	else
-		go_down(data);
-	// clear_image(data->minimap->direction);
-	// clear_image(data->minimap->raycasting);
-	// clear_image(data->game);
-	// clear_image(data->image);
-	// put_cursor_direction(data->minimap);
-	// put_raycasting(data->minimap, FOV, TAB_X, data);
+		backward_step(data);
 }
 
 void	moove_cursor(t_data *data, int direction)
 {
 	data->minimap->p_angle += ROTATION * direction;
-	// clear_image(data->minimap->direction);
-	// clear_image(data->minimap->raycasting);
-	// clear_image(data->game);
-	// clear_image(data->image);
-	// put_cursor_direction(data->minimap);
-	// put_raycasting(data->minimap, FOV, TAB_X, data);
+	if (data->minimap->p_angle > 2 * PI)
+		data->minimap->p_angle = 0;
+	if (data->minimap->p_angle < 0)
+		data->minimap->p_angle = 2 * PI;
 }
 
 int	mouse_move(int x, int y, t_data *data)
@@ -68,7 +60,11 @@ int	mouse_move(int x, int y, t_data *data)
 	(void)y;
 
 	dx = x - last_x;
-	data->minimap->p_angle += dx * ROTATION * 0.01;
+	data->minimap->p_angle += dx * ROTATION * 0.005;
+	if (data->minimap->p_angle > 2 * PI)
+		data->minimap->p_angle = 0;
+	if (data->minimap->p_angle < 0)
+		data->minimap->p_angle = 2 * PI;
 	mlx_mouse_move(data->display, data->window, TAB_X / 2, TAB_Y / 2);
 	return (0);
 }

@@ -6,7 +6,7 @@
 /*   By: igrousso <igrousso@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/02 11:45:56 by nmartin           #+#    #+#             */
-/*   Updated: 2025/07/09 17:57:35 by igrousso         ###   ########.fr       */
+/*   Updated: 2025/07/11 15:31:40 by igrousso         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,7 +32,7 @@ void	set_data(t_data *data, t_map *map)
 	data->image = new_image(data->display, TAB_X, TAB_Y);
 	data->game = new_image(data->display, TAB_X, TAB_Y);
 	data->background = new_image(data->display, TAB_X, TAB_Y);
-
+	ft_bzero(data->keys, 10);
 	// int		x;//TODO enlever fond blanc
 	// int		y;
 	// char	*pxl;
@@ -65,8 +65,11 @@ __uint64_t get_time_ms()
 	return (__uint64_t)(tv.tv_sec * 1000 + tv.tv_usec / 1000);
 }
 
+int update(t_data *data);
+
 int render(t_data *data)
 {
+	update(data);
 	static __uint64_t last_fps_time = 0;
 	static int frame_count = 0;
 	__uint64_t		now = get_time_ms();
@@ -78,11 +81,11 @@ int render(t_data *data)
 	put_cursor_direction(data->minimap);
 	put_raycasting(data->minimap, FOV, TAB_X, data);
 	put_img_to_img(data->image, data->background, 0, 0);
+	put_img_to_img(data->image, data->game, 0, 0);
 	// put_img_to_img(data->image, data->minimap->minimap, MINIMAP_SIZE / 15, MINIMAP_SIZE / 15);
 	// put_img_to_img(data->image, data->minimap->raycasting, MINIMAP_SIZE / 15, MINIMAP_SIZE / 15);
 	// put_img_to_img(data->image, data->minimap->direction, data->minimap->cursor_x - data->minimap->pxl_size * 2/3, data->minimap->cursor_y - data->minimap->pxl_size * 2/3);
 	// put_img_to_img(data->image, data->minimap->cursor, data->minimap->cursor_x, data->minimap->cursor_y);
-	put_img_to_img(data->image, data->game, 0, 0);
 	mlx_put_image_to_window(data->display, data->window, data->image->image, 0, 0);
 	frame_count++;
 	if (now - last_fps_time >= 1000)
@@ -94,6 +97,63 @@ int render(t_data *data)
 	// __uint64_t after = get_time_ms();
 	// printf("render time = %lums\n", (after - now));
 	
+	return (0);
+}
+
+int key_press(int keycode, t_data *data)
+{
+	if (keycode == XK_Escape)
+		data->keys[0] = 1;
+	if (keycode == XK_w || keycode == XK_W || keycode == XK_z || keycode == XK_Z)
+		data->keys[1] = 1;
+	if (keycode == XK_a || keycode == XK_A)
+		data->keys[2] = 1;
+	if (keycode == XK_s || keycode == XK_S || keycode == XK_q || keycode == XK_Q)
+		data->keys[3] = 1;
+	if (keycode == XK_d || keycode == XK_D)
+		data->keys[4] = 1;
+	if (keycode == XK_Left)
+		data->keys[5] = 1;
+	if (keycode == XK_Right)
+		data->keys[6] = 1;
+	return (0);
+}
+
+int key_release(int keycode, t_data *data)
+{
+	if (keycode == XK_Escape)
+		data->keys[0] = 0;
+	if (keycode == XK_w || keycode == XK_W || keycode == XK_z || keycode == XK_Z)
+		data->keys[1] = 0;
+	if (keycode == XK_a || keycode == XK_A)
+		data->keys[2] = 0;
+	if (keycode == XK_s || keycode == XK_S || keycode == XK_q || keycode == XK_Q)
+		data->keys[3] = 0;
+	if (keycode == XK_d || keycode == XK_D)
+		data->keys[4] = 0;
+	if (keycode == XK_Left)
+		data->keys[5] = 0;
+	if (keycode == XK_Right)
+		data->keys[6] = 0;
+	return (0);
+}
+
+int update(t_data *data)
+{
+	if (data->keys[0] == 1)
+		cub_exit(0, "Window closed successfully", data);
+	if (data->keys[1] == 1)
+		moove_player(data, W);
+	if (data->keys[2] == 1)
+		moove_player(data, A);
+	if (data->keys[3] == 1)
+		moove_player(data, S);
+	if (data->keys[4] == 1)
+		moove_player(data, D);
+	if (data->keys[5] == 1)
+		moove_cursor(data, -1);
+	if (data->keys[6] == 1)
+		moove_cursor(data, 1);
 	return (0);
 }
 
@@ -110,7 +170,9 @@ void	game(t_data *data, t_map *map)
 	}
 	mlx_put_image_to_window(data->display, data->window, data->image->image, 0, 0);
 	mlx_hook(data->window, 6, (1L<<6), &mouse_move, data);
-	mlx_key_hook(data->window, key_handler, data);
+	mlx_hook(data->window, 2, 1L<<0, key_press, data);
+	mlx_hook(data->window, 3, 1L<<1, key_release, data);
+	// mlx_key_hook(data->window, key_handler, data);
 	mlx_hook(data->window, 17, 1L >> 0, close_window, data);
 	mlx_loop_hook(data->display, &render, data);
 	mlx_loop(data->display);

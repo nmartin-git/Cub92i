@@ -6,7 +6,7 @@
 /*   By: igrousso <igrousso@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/05 14:23:42 by nmartin           #+#    #+#             */
-/*   Updated: 2025/07/09 17:54:15 by igrousso         ###   ########.fr       */
+/*   Updated: 2025/07/11 15:19:54 by igrousso         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,10 +53,17 @@ void	put_cursor_direction(t_minimap *minimap);
 void	pixel_put_cursor(t_image *cursor, int color, int size, int radius);
 
 /*---collision.c*/
-void	go_left(t_data *data);
-void	go_right(t_data *data);
-void	go_up(t_data *data);
-void	go_down(t_data *data);
+void	go_left(t_data *data, int pixels);
+void	go_right(t_data *data, int pixels);
+void	go_up(t_data *data, int pixels);
+void	go_down(t_data *data, int pixels);
+
+/*---step.c---*/
+
+void	left_step(t_data *data);
+void	right_step(t_data *data);
+void	forward_step(t_data *data);
+void	backward_step(t_data *data);
 
 /*---raycasting.c---*/
 void	pixel_put(t_image *raycasting, t_pos pixel, int color);

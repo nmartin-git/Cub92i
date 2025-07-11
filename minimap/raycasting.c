@@ -6,7 +6,7 @@
 /*   By: igrousso <igrousso@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/10 15:59:29 by nmartin           #+#    #+#             */
-/*   Updated: 2025/07/09 17:52:09 by igrousso         ###   ########.fr       */
+/*   Updated: 2025/07/11 15:46:21 by igrousso         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -81,27 +81,42 @@ void	big_angle(t_image *raycasting, t_pos pixel, int dx, int dy)
 	}
 }
 
-void	test(t_data *data, float distance, int i)
+void	test(t_data *data, t_ray *ray, int i)
 {
 	t_pos	pixel;
 	float	hauteur;
 	int		j;
+	int		color;
 
 	pixel.x = i;
-	if (distance <= 0)
-		distance = 1;	
-	hauteur = TAB_Y * (MINIMAP_SIZE / 20) / distance ;
+	// if (ray->dst <= 0)
+	// 	ray->dst = 1;	
+	hauteur = TAB_Y * (MINIMAP_SIZE / 20) / ray->dst ;
 	if (hauteur > TAB_Y)
 		hauteur = TAB_Y;
 	if (hauteur < 0)
 		hauteur = 0;
+	if (ray->x_y == 1)
+	{
+		if (sin(ray->angle) > 0)
+			color = encode_rgb(255, 255, 255);
+		else
+			color = encode_rgb(200, 200, 200);		
+	}	
+	else
+	{
+		if (cos(ray->angle) > 0)
+			color = encode_rgb(125, 125, 125);
+		else
+			color = encode_rgb(50, 50, 50);		
+	}
 	while (pixel.x < i + 1)	
 	{	
 		j = (TAB_Y - hauteur) / 2;
 		while (j < ((TAB_Y - hauteur) / 2) + hauteur)
 		{
 			pixel.y = j++;
-			pixel_put(data->game, pixel, encode_rgb(255, 255, 255));
+			pixel_put(data->game, pixel, color);
 		}
 		pixel.x++;
 	}
@@ -129,17 +144,12 @@ void	put_raycasting(t_minimap *minimap, double fov, int ray_nbr, t_data *data)
 			i = i - 1 + 1;//gerer tan err
 		dx = point_b.x - point_a.x;
 		dy = point_b.y - point_a.y;
-		float distance = sqrt(pow(dx, 2) + pow(dy, 2));
-		float distance_corrigée = distance * cos(ray.angle - minimap->p_angle);
-		// printf("numero de colonne: %d, ray_angle %f, player_angle %f\n", i, ray.angle, minimap->p_angle);
-		// printf("delta_angle %f, ray.angle - p_angle %f, i %d\n", delta_angle, ray.angle - minimap->p_angle, i);
-		// if (i < 25 || (i >= 948 && i <= 973) || i > 1895)
-			// printf("distance %f, cos %f, distance corrigée %f, hauteur %f, %d\n", distance, cos(delta_angle), distance_corrigée, TAB_Y * (MINIMAP_SIZE / 20) / distance_corrigée, i);		
- 		test(data, distance_corrigée, i);
+		ray.dst = sqrt(ray.dst) * cos(ray.angle - minimap->p_angle);
+		test(data, &ray, i);
 		// if (ft_abs(dx) > ft_abs(dy))
-			// small_angle(minimap->raycasting, point_a, dx, dy);
+		// 	small_angle(minimap->raycasting, point_a, dx, dy);
 		// else
-			// big_angle(minimap->raycasting, point_a, dx, dy);
+		// 	big_angle(minimap->raycasting, point_a, dx, dy);
 		i++;
 	}
 }
