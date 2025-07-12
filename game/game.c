@@ -6,7 +6,7 @@
 /*   By: igrousso <igrousso@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/02 11:45:56 by nmartin           #+#    #+#             */
-/*   Updated: 2025/07/11 23:19:35 by igrousso         ###   ########.fr       */
+/*   Updated: 2025/07/12 15:57:16 by igrousso         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -110,7 +110,6 @@ int render(t_data *data)
 
 int key_press(int keycode, t_data *data)
 {
-	printf("key[4] %d, key[6] %d\n", data->keys[4], data->keys[6]);
 	if (keycode == XK_Escape && data->keys[0] == 0)
 		data->keys[0] = 1;
 	if ((keycode == XK_w || keycode == XK_W || keycode == XK_z || keycode == XK_Z) && data->keys[1] == 0)
@@ -120,17 +119,11 @@ int key_press(int keycode, t_data *data)
 	if ((keycode == XK_s || keycode == XK_S || keycode == XK_q || keycode == XK_Q) && data->keys[3] == 0)
 		data->keys[3] = 1;
 	if ((keycode == XK_d || keycode == XK_D) && data->keys[4] == 0)
-	{
-		printf("set key[4] = 1\n");
 		data->keys[4] = 1;
-	}
 	if (keycode == XK_Left && data->keys[5] == 0)
 		data->keys[5] = 1;
 	if (keycode == XK_Right && data->keys[6] == 0)
-	{
-		printf("set key[6] = 1\n");
 		data->keys[6] = 1;
-	}
 	return (0);
 }
 
@@ -145,17 +138,11 @@ int key_release(int keycode, t_data *data)
 	if ((keycode == XK_s || keycode == XK_S || keycode == XK_q || keycode == XK_Q) && data->keys[3] == 1)
 		data->keys[3] = 0;
 	if ((keycode == XK_d || keycode == XK_D) && data->keys[4] == 1)
-	{
-		printf("set key[4] = 0\n");
 		data->keys[4] = 0;
-	}
 	if (keycode == XK_Left && data->keys[5] == 1)
 		data->keys[5] = 0;
 	if (keycode == XK_Right && data->keys[6] == 1)
-	{
-		printf("set key[6] = 0\n");
 		data->keys[6] = 0;
-	}	
 	return (0);
 }
 
