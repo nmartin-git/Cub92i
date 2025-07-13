@@ -6,7 +6,7 @@
 /*   By: igrousso <igrousso@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/02 17:15:18 by igrousso          #+#    #+#             */
-/*   Updated: 2025/07/11 22:44:12 by igrousso         ###   ########.fr       */
+/*   Updated: 2025/07/13 02:51:52 by igrousso         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,18 +20,17 @@ void	vertical_crosshair(t_image *crosshair, int color)
 	t_pos	pixel;
 
 	k = -1;
-	pixel.y = TAB_Y / 2 - (LENGHT_C + GAP_C / 2);
+	pixel.y = 1;
 	while (++k < 2)
 	{
 		j = -1;
 		while (++j < LENGHT_C)
 		{
 			i = -1;
-			pixel.x = TAB_X / 2 - WIDTH_C / 2;
 			while (++i < WIDTH_C)
 			{
+				pixel.x = IMG_SIZE / 2 - WIDTH_C / 2 + i;
 				pixel_put(crosshair, pixel, color);
-				pixel.x++;
 			}
 			pixel.y++;
 		}
@@ -47,18 +46,17 @@ void	horizontal_crosshair(t_image *crosshair, int color)
 	t_pos	pixel;
 
 	k = -1;
-	pixel.x = TAB_X / 2 - (LENGHT_C + GAP_C / 2);
+	pixel.x = 1;
 	while (++k < 2)
 	{
 		j = -1;
 		while (++j < LENGHT_C)
 		{
 			i = -1;
-			pixel.y = TAB_Y / 2 - WIDTH_C / 2;
 			while (++i < WIDTH_C)
 			{
+				pixel.y = IMG_SIZE / 2 - WIDTH_C / 2 + i;
 				pixel_put(crosshair, pixel, color);
-				pixel.y++;
 			}
 			pixel.x++;
 		}
@@ -71,10 +69,10 @@ int	init_crosshair(t_data *data)
 	t_image	*crosshair;
 	int		color;
 
-	crosshair = new_image(data->display, TAB_X, TAB_Y);
+	crosshair = new_image(data->display, IMG_SIZE, IMG_SIZE);
 	if (!crosshair)
 		return (1);
-	color = CYAN;
+	color = RED;
 	vertical_crosshair(crosshair, color);
 	horizontal_crosshair(crosshair, color);
 	data->crosshair = crosshair;

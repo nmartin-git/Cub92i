@@ -6,7 +6,7 @@
 #    By: igrousso <igrousso@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2025/02/05 15:41:03 by nmartin           #+#    #+#              #
-#    Updated: 2025/07/11 22:42:57 by igrousso         ###   ########.fr        #
+#    Updated: 2025/07/13 03:39:55 by igrousso         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -17,7 +17,7 @@ BLUE = \033[34m
 RESET = \033[0m
 
 CC = cc
-CFLAGS = -g -Wall -Werror -Wextra -MMD -MP
+CFLAGS = -Wall -Werror -Wextra -MMD -MP
 MLXFLAGS = -Lminilibx-linux -lmlx_Linux -lX11 -lXext -lm
 NAME = cub3d
 CUB_PATH = ./cub/

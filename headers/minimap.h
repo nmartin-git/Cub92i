@@ -6,7 +6,7 @@
 /*   By: igrousso <igrousso@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/05 14:23:42 by nmartin           #+#    #+#             */
-/*   Updated: 2025/07/11 22:47:44 by igrousso         ###   ########.fr       */
+/*   Updated: 2025/07/13 03:34:46 by igrousso         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,12 +20,12 @@
 # include <math.h>
 # include <limits.h>
 # define EMPTY_COLOR 0
-# define MINIMAP_SIZE 5000
+# define MINIMAP_SIZE 10000
 # define QUALITY 100
 # define WALL 1
 # define FLOOR 0
 # define EMPTY 8
-# define STEP MINIMAP_SIZE / 250
+# define STEP 0.5f
 # define ROTATION 0.1
 # define PI 3.1415926535
 # define FOV 60
@@ -61,22 +61,22 @@ void	go_down(t_data *data, int pixels);
 
 /*---step.c---*/
 
-void	left_step(t_data *data);
-void	right_step(t_data *data);
-void	forward_step(t_data *data);
-void	backward_step(t_data *data);
+void	left_step(t_data *data, __uint64_t step);
+void	right_step(t_data *data, __uint64_t step);
+void	forward_step(t_data *data, __uint64_t step);
+void	backward_step(t_data *data, __uint64_t step);
 
 /*---raycasting.c---*/
 void	pixel_put(t_image *raycasting, t_pos pixel, int color);
 void	small_angle(t_image *raycasting, t_pos pixel, int dx, int dy);
 void	big_angle(t_image *raycasting, t_pos pixel, int dx, int dy);
-void	put_raycasting(t_minimap *minimap, double fov, int ray_nbr, t_data *data);
+void	put_raycasting(t_minimap *minimap, float fov, int ray_nbr, t_data *data);
 
 /*---rays.c---*/
 int		is_wall(t_minimap *minimap, t_data *data, t_pos *pos);
-void	vertical_wall(t_minimap *minimap, t_data *data, t_pos *pos, double angle);
-void	horizontal_wall(t_minimap *minimap, t_data *data, t_pos *pos, double angle);
-void	set_nearest(t_minimap *minimap, t_pos *p1, t_pos *p2, double angle);
+void	vertical_wall(t_minimap *minimap, t_data *data, t_pos *pos, float angle);
+void	horizontal_wall(t_minimap *minimap, t_data *data, t_pos *pos, float angle);
+void	set_nearest(t_minimap *minimap, t_pos *p1, t_pos *p2, float angle);
 t_ray	*raycast(t_minimap *minimap, t_ray *ray, t_data *data, t_pos *result);
 
 #endif

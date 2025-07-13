@@ -6,7 +6,7 @@
 /*   By: igrousso <igrousso@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/10 15:59:29 by nmartin           #+#    #+#             */
-/*   Updated: 2025/07/11 15:46:21 by igrousso         ###   ########.fr       */
+/*   Updated: 2025/07/13 03:23:47 by igrousso         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -116,15 +116,15 @@ void	test(t_data *data, t_ray *ray, int i)
 		while (j < ((TAB_Y - hauteur) / 2) + hauteur)
 		{
 			pixel.y = j++;
-			pixel_put(data->game, pixel, color);
+			pixel_put(data->image, pixel, color);
 		}
 		pixel.x++;
 	}
 }
 
-void	put_raycasting(t_minimap *minimap, double fov, int ray_nbr, t_data *data)
+void	put_raycasting(t_minimap *minimap, float fov, int ray_nbr, t_data *data)
 {
-	double	diff;
+	float	diff;
 	int		i;
 	int		dx;
 	int		dy;

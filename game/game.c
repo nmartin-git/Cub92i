@@ -6,7 +6,7 @@
 /*   By: igrousso <igrousso@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/02 11:45:56 by nmartin           #+#    #+#             */
-/*   Updated: 2025/07/12 15:57:16 by igrousso         ###   ########.fr       */
+/*   Updated: 2025/07/13 03:32:50 by igrousso         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -72,29 +72,35 @@ __uint64_t get_time_ms()
 	return (__uint64_t)(tv.tv_sec * 1000 + tv.tv_usec / 1000);
 }
 
-int update(t_data *data);
+int update(t_data *data, __uint64_t delta_time);
 
 int render(t_data *data)
 {
-	update(data);
+	static __uint64_t last_time = 0;
 	static __uint64_t last_fps_time = 0;
 	static int frame_count = 0;
 	__uint64_t		now = get_time_ms();
-
+	__uint64_t	delta_time = now - last_time;
+	update(data, delta_time);
 	// memset(data->minimap->direction->adress, 0, data->minimap->direction->tab_y * data->minimap->direction->l_len);
 	// memset(data->minimap->raycasting->adress, 0, data->minimap->raycasting->tab_y * data->minimap->raycasting->l_len);
-	ft_memset(data->game->adress, 0, data->game->tab_y * data->game->l_len);
-	ft_memset(data->image->adress, 0, data->image->tab_y * data->image->l_len);
+	// ft_memset(data->game->adress, 0, data->game->tab_y * data->game->l_len);
+	// ft_memset(data->image->adress, 0, data->image->tab_y * data->image->l_len);
+	// put_img_to_img(data->game, data->background, 0, 0);
 	// put_cursor_direction(data->minimap);
-	put_raycasting(data->minimap, FOV, TAB_X, data);
+	// paint_floor_and_ceiling(data->image, data)
 	put_img_to_img(data->image, data->background, 0, 0);
-	put_img_to_img(data->image, data->game, 0, 0);
-	put_img_to_img(data->image, data->crosshair, 0, 0);
+	put_raycasting(data->minimap, FOV, TAB_X, data);
+	// put_img_to_img(data->image, data->game, 0, 0);
+	put_img_to_img(data->image, data->crosshair, POS_C_X, POS_C_Y);
 	// put_img_to_img(data->image, data->minimap->minimap, MINIMAP_SIZE / 15, MINIMAP_SIZE / 15);
 	// put_img_to_img(data->image, data->minimap->raycasting, MINIMAP_SIZE / 15, MINIMAP_SIZE / 15);
 	// put_img_to_img(data->image, data->minimap->direction, data->minimap->cursor_x - data->minimap->pxl_size * 2/3, data->minimap->cursor_y - data->minimap->pxl_size * 2/3);
 	// put_img_to_img(data->image, data->minimap->cursor, data->minimap->cursor_x, data->minimap->cursor_y);
 	mlx_put_image_to_window(data->display, data->window, data->image->image, 0, 0);
+	// printf("bpp = %d, l_len = %d, tab_x = %d, tab_y = %d\n",
+	// data->image->bpp, data->image->l_len,
+	// data->image->tab_x, data->image->tab_y);
 	frame_count++;
 	if (now - last_fps_time >= 1000)
 	{
@@ -104,7 +110,7 @@ int render(t_data *data)
 	}
 	// __uint64_t after = get_time_ms();
 	// printf("render time = %lums\n", (after - now));
-	
+	last_time = now;
 	return (0);
 }
 
@@ -146,18 +152,18 @@ int key_release(int keycode, t_data *data)
 	return (0);
 }
 
-int update(t_data *data)
+int update(t_data *data, __uint64_t delta_time)
 {
 	if (data->keys[0] == 1)
 		cub_exit(0, "Window closed successfully", data);
 	if (data->keys[1] == 1)
-		moove_player(data, W);
+		moove_player(data, W, delta_time);
 	if (data->keys[2] == 1)
-		moove_player(data, A);
+		moove_player(data, A, delta_time);
 	if (data->keys[3] == 1)
-		moove_player(data, S);
+		moove_player(data, S, delta_time);
 	if (data->keys[4] == 1)
-		moove_player(data, D);
+		moove_player(data, D, delta_time);
 	if (data->keys[5] == 1)
 		moove_cursor(data, -1);
 	if (data->keys[6] == 1)

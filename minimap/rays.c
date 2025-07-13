@@ -6,7 +6,7 @@
 /*   By: igrousso <igrousso@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/13 14:11:53 by nmartin           #+#    #+#             */
-/*   Updated: 2025/07/11 22:47:17 by igrousso         ###   ########.fr       */
+/*   Updated: 2025/07/12 16:18:21 by igrousso         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,7 +30,7 @@ int	is_wall(t_minimap *minimap, t_data *data, t_pos *pos)
 		return (0);
 }
 
-void	vertical_wall(t_minimap *minimap, t_data *data, t_pos *pos, double angle)
+void	vertical_wall(t_minimap *minimap, t_data *data, t_pos *pos, float angle)
 {
 	int	x;
 	int	y;
@@ -47,7 +47,7 @@ void	vertical_wall(t_minimap *minimap, t_data *data, t_pos *pos, double angle)
 	}
 }
 
-void	horizontal_wall(t_minimap *minimap, t_data *data, t_pos *pos, double angle)
+void	horizontal_wall(t_minimap *minimap, t_data *data, t_pos *pos, float angle)
 {
 	int	x;
 	int	y;
@@ -79,7 +79,7 @@ void	horizontal_wall(t_minimap *minimap, t_data *data, t_pos *pos, double angle)
 	}
 }
 
-void	set_nearest(t_minimap *minimap, t_pos *ph, t_pos *pv, double angle)
+void	set_nearest(t_minimap *minimap, t_pos *ph, t_pos *pv, float angle)
 {
 	int	player_x;
 	int	player_y;

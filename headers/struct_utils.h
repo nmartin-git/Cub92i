@@ -6,7 +6,7 @@
 /*   By: igrousso <igrousso@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/06 16:52:00 by nmartin           #+#    #+#             */
-/*   Updated: 2025/07/11 22:47:28 by igrousso         ###   ########.fr       */
+/*   Updated: 2025/07/12 16:18:21 by igrousso         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,7 +44,7 @@ typedef struct s_minimap
 	t_image		*cursor;
 	t_image		*direction;
 	t_image		*raycasting;
-	double		p_angle;
+	float		p_angle;
 	int			cursor_x;
 	int			cursor_y;
 	int			pxl_size;
@@ -66,7 +66,7 @@ typedef struct s_pos
 typedef struct s_ray
 {
 	int			x_y;
-	double		angle;
+	float		angle;
 	long		dst;
 	int			percent;
 }				t_ray;

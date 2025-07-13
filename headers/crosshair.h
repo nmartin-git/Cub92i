@@ -6,7 +6,7 @@
 /*   By: igrousso <igrousso@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/02 17:48:43 by igrousso          #+#    #+#             */
-/*   Updated: 2025/07/11 22:44:24 by igrousso         ###   ########.fr       */
+/*   Updated: 2025/07/13 02:53:47 by igrousso         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,9 +16,13 @@
 # include "game.h"
 # include "struct_utils.h"
 
-# define WIDTH_C 4
-# define LENGHT_C 10
-# define GAP_C 10
+# define WIDTH_C 2
+# define LENGHT_C 6
+# define GAP_C 6
+# define IMG_SIZE ((LENGHT_C * 2) + GAP_C + 2)
+
+# define POS_C_X (TAB_X / 2 - (IMG_SIZE) / 2)
+# define POS_C_Y (TAB_Y / 2 - (IMG_SIZE) / 2)
 
 # define GREEN 65280
 # define RED 16711680

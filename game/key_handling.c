@@ -6,7 +6,7 @@
 /*   By: igrousso <igrousso@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/07 15:26:13 by nmartin           #+#    #+#             */
-/*   Updated: 2025/07/12 15:51:43 by igrousso         ###   ########.fr       */
+/*   Updated: 2025/07/13 03:10:55 by igrousso         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,16 +32,16 @@ void	clear_image(t_image *image)
 	}
 }
 
-void	moove_player(t_data *data, int input)
+void	moove_player(t_data *data, int input, __uint64_t delta_time)
 {
 	if (input == A)
-		left_step(data);
+		left_step(data, STEP * delta_time);
 	else if (input == D)
-		right_step(data);
+		right_step(data, STEP * delta_time);
 	else if (input == W)
-		forward_step(data);
+		forward_step(data, STEP * delta_time);
 	else
-		backward_step(data);
+		backward_step(data, STEP * delta_time);
 }
 
 void	moove_cursor(t_data *data, int direction)
@@ -71,22 +71,22 @@ int	mouse_move(int x, int y, t_data *data)
 	return (0);
 }
 
-int	key_handler(int key, t_data *data)
-{
-	// mettre flag azerty / qwerty modifiable
-	if (key == XK_Escape)
-		cub_exit(0, "Window closed successfully", data);
-	if (key == XK_w || key == XK_W || key == XK_z || key == XK_Z)
-		moove_player(data, W);
-	if (key == XK_a || key == XK_A)
-		moove_player(data, A);
-	if (key == XK_s || key == XK_S || key == XK_q || key == XK_Q)
-		moove_player(data, S);
-	if (key == XK_d || key == XK_D)
-		moove_player(data, D);
-	if (key == XK_Left)
-		moove_cursor(data, -1);
-	if (key == XK_Right)
-		moove_cursor(data, 1);
-	return (0);
-}
+// int	key_handler(int key, t_data *data)
+// {
+// 	// mettre flag azerty / qwerty modifiable
+// 	if (key == XK_Escape)
+// 		cub_exit(0, "Window closed successfully", data);
+// 	if (key == XK_w || key == XK_W || key == XK_z || key == XK_Z)
+// 		moove_player(data, W);
+// 	if (key == XK_a || key == XK_A)
+// 		moove_player(data, A);
+// 	if (key == XK_s || key == XK_S || key == XK_q || key == XK_Q)
+// 		moove_player(data, S);
+// 	if (key == XK_d || key == XK_D)
+// 		moove_player(data, D);
+// 	if (key == XK_Left)
+// 		moove_cursor(data, -1);
+// 	if (key == XK_Right)
+// 		moove_cursor(data, 1);
+// 	return (0);
+// }
