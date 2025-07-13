@@ -6,7 +6,7 @@
 /*   By: igrousso <igrousso@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/06 16:52:00 by nmartin           #+#    #+#             */
-/*   Updated: 2025/07/12 16:18:21 by igrousso         ###   ########.fr       */
+/*   Updated: 2025/07/13 15:33:20 by igrousso         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -80,8 +80,11 @@ typedef struct s_data
 	t_image		*image;
 	t_map		*map;
 	t_minimap	*minimap;
-	t_image		*game;
 	t_minimap	*raycast;
+	t_image		*texture_n;
+	t_image		*texture_s;
+	t_image		*texture_e;
+	t_image		*texture_w;
 	int			keys[10];
 }				t_data;
 

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parsing.h                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: nmartin <nmartin@student.42.fr>            +#+  +:+       +#+        */
+/*   By: igrousso <igrousso@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/03 08:20:44 by igrousso          #+#    #+#             */
-/*   Updated: 2025/06/12 17:21:09 by nmartin          ###   ########.fr       */
+/*   Updated: 2025/07/13 15:46:45 by igrousso         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,6 +22,8 @@
 # define S_DIR 3
 # define E_DIR 4
 # define W_DIR 5
+
+typedef struct s_data t_data;
 
 typedef struct s_map
 {
@@ -91,5 +93,7 @@ int			fill_map(int fd, t_map *map, char *av);
 void		pre_init(t_map *map);
 int			resize_map(t_map *map);
 int			parsing(char *av, t_map *map);
+
+int			load_texutres(t_data *data);
 
 #endif

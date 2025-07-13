@@ -6,7 +6,7 @@
 /*   By: igrousso <igrousso@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/02 11:45:56 by nmartin           #+#    #+#             */
-/*   Updated: 2025/07/13 03:32:50 by igrousso         ###   ########.fr       */
+/*   Updated: 2025/07/13 16:46:05 by igrousso         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,29 +30,13 @@ void	set_data(t_data *data, t_map *map)
 	if (!data->window)
 		cub_exit(1, "Window initialization failed", data);
 	data->image = new_image(data->display, TAB_X, TAB_Y);
-	data->game = new_image(data->display, TAB_X, TAB_Y);
-	data->background = new_image(data->display, TAB_X, TAB_Y);	
+	data->background = new_image(data->display, TAB_X, TAB_Y);
+	data->texture_n = malloc(sizeof(t_image));
+	data->texture_s = malloc(sizeof(t_image));
+	data->texture_e = malloc(sizeof(t_image));
+	data->texture_w = malloc(sizeof(t_image));
 	for (size_t i = 0; i < 10; i++)
-	{
-		data->keys[i] = 0;
-	}
-	for (size_t i = 0; i < 10; i++)
-	{
-		printf("%d\n", data->keys[i]);
-	}
-	// int		x;//TODO enlever fond blanc
-	// int		y;
-	// char	*pxl;
-
-	// for (y = 0; y < TAB_Y; y++)
-	// {
-	// 	for (x = 0; x < TAB_X; x++)
-	// 	{
-	// 		pxl = data->image->adress + (y * data->image->l_len + x * (data->image->bpp / 8));
-	// 		*(unsigned int *)pxl = 0xFFFFFF; // blanc
-	// 	}
-	// }
-
+		data->keys[i] = 0;	
 }
 
 int	minimap(t_data *data)
@@ -81,26 +65,25 @@ int render(t_data *data)
 	static int frame_count = 0;
 	__uint64_t		now = get_time_ms();
 	__uint64_t	delta_time = now - last_time;
+
+	if (delta_time < 16)
+	{
+		usleep((16 -  delta_time) * 1000);
+		now = get_time_ms();
+		delta_time = now - last_time; 
+	}
+	last_time = now;
+	
 	update(data, delta_time);
-	// memset(data->minimap->direction->adress, 0, data->minimap->direction->tab_y * data->minimap->direction->l_len);
-	// memset(data->minimap->raycasting->adress, 0, data->minimap->raycasting->tab_y * data->minimap->raycasting->l_len);
-	// ft_memset(data->game->adress, 0, data->game->tab_y * data->game->l_len);
-	// ft_memset(data->image->adress, 0, data->image->tab_y * data->image->l_len);
-	// put_img_to_img(data->game, data->background, 0, 0);
 	// put_cursor_direction(data->minimap);
-	// paint_floor_and_ceiling(data->image, data)
 	put_img_to_img(data->image, data->background, 0, 0);
 	put_raycasting(data->minimap, FOV, TAB_X, data);
-	// put_img_to_img(data->image, data->game, 0, 0);
 	put_img_to_img(data->image, data->crosshair, POS_C_X, POS_C_Y);
 	// put_img_to_img(data->image, data->minimap->minimap, MINIMAP_SIZE / 15, MINIMAP_SIZE / 15);
 	// put_img_to_img(data->image, data->minimap->raycasting, MINIMAP_SIZE / 15, MINIMAP_SIZE / 15);
 	// put_img_to_img(data->image, data->minimap->direction, data->minimap->cursor_x - data->minimap->pxl_size * 2/3, data->minimap->cursor_y - data->minimap->pxl_size * 2/3);
 	// put_img_to_img(data->image, data->minimap->cursor, data->minimap->cursor_x, data->minimap->cursor_y);
 	mlx_put_image_to_window(data->display, data->window, data->image->image, 0, 0);
-	// printf("bpp = %d, l_len = %d, tab_x = %d, tab_y = %d\n",
-	// data->image->bpp, data->image->l_len,
-	// data->image->tab_x, data->image->tab_y);
 	frame_count++;
 	if (now - last_fps_time >= 1000)
 	{
@@ -108,8 +91,6 @@ int render(t_data *data)
 		frame_count = 0;
 		last_fps_time = now;
 	}
-	// __uint64_t after = get_time_ms();
-	// printf("render time = %lums\n", (after - now));
 	last_time = now;
 	return (0);
 }
@@ -156,13 +137,21 @@ int update(t_data *data, __uint64_t delta_time)
 {
 	if (data->keys[0] == 1)
 		cub_exit(0, "Window closed successfully", data);
-	if (data->keys[1] == 1)
+	if (data->keys[1] == 1 && data->keys[2] == 1)
+		moove_player(data, 4, delta_time);
+	else if (data->keys[1] == 1 && data->keys[4] == 1)
+		moove_player(data, 5, delta_time);
+	else if (data->keys[3] == 1 && data->keys[2] == 1)
+		moove_player(data, 6, delta_time);
+	else if (data->keys[3] == 1 && data->keys[4] == 1)	
+		moove_player(data, 7, delta_time);
+	else if (data->keys[1] == 1)
 		moove_player(data, W, delta_time);
-	if (data->keys[2] == 1)
+	else if (data->keys[2] == 1)
 		moove_player(data, A, delta_time);
-	if (data->keys[3] == 1)
+	else if (data->keys[3] == 1)
 		moove_player(data, S, delta_time);
-	if (data->keys[4] == 1)
+	else if (data->keys[4] == 1)
 		moove_player(data, D, delta_time);
 	if (data->keys[5] == 1)
 		moove_cursor(data, -1);
@@ -175,6 +164,8 @@ void	game(t_data *data, t_map *map)
 {
 	set_data(data, map);
 	if (init_crosshair(data))
+		exit(1);
+	if (load_texutres(data))
 		exit(1);
 	minimap(data);
 	// loading screen ?

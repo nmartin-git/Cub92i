@@ -6,7 +6,7 @@
 /*   By: igrousso <igrousso@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/09 19:25:45 by igrousso          #+#    #+#             */
-/*   Updated: 2025/07/13 03:10:13 by igrousso         ###   ########.fr       */
+/*   Updated: 2025/07/13 16:43:29 by igrousso         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -76,6 +76,32 @@ void	backward_step(t_data *data, __uint64_t step)
     float   y;
 
     angle = data->minimap->p_angle - PI;
+    x = cos(angle);
+    y = sin(angle);
+    if (x < 0)
+        go_left(data, fabs(x) * step);
+    else
+        go_right(data, fabs(x) * step);
+    if (y < 0)
+        go_up(data, fabs(y) * step);
+    else
+        go_down(data, fabs(y) * step);
+}
+
+void    diag_step(t_data *data, __uint64_t step, int state)
+{
+    float   angle;
+    float   x;
+    float   y;
+
+    if (state == 4)
+        angle = data->minimap->p_angle - (PI / 4);
+    if (state == 5)
+        angle = data->minimap->p_angle + (PI / 4);
+    if (state == 6)
+        angle = data->minimap->p_angle - (3 * PI / 4);
+    if (state == 7)
+        angle = data->minimap->p_angle + (3 * PI / 4);
     x = cos(angle);
     y = sin(angle);
     if (x < 0)

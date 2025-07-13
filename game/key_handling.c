@@ -6,7 +6,7 @@
 /*   By: igrousso <igrousso@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/07 15:26:13 by nmartin           #+#    #+#             */
-/*   Updated: 2025/07/13 03:10:55 by igrousso         ###   ########.fr       */
+/*   Updated: 2025/07/13 16:38:47 by igrousso         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,8 +40,16 @@ void	moove_player(t_data *data, int input, __uint64_t delta_time)
 		right_step(data, STEP * delta_time);
 	else if (input == W)
 		forward_step(data, STEP * delta_time);
-	else
+	else if (input == S)
 		backward_step(data, STEP * delta_time);
+	else if (input == 4)
+		diag_step(data, STEP * delta_time, 4);
+	else if (input == 5)
+		diag_step(data, STEP * delta_time, 5);
+	else if (input == 6)
+		diag_step(data, STEP * delta_time, 6);
+	else if (input == 7)
+		diag_step(data, STEP * delta_time, 7);	
 }
 
 void	moove_cursor(t_data *data, int direction)
