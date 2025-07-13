@@ -6,7 +6,7 @@
 /*   By: igrousso <igrousso@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/02 11:45:56 by nmartin           #+#    #+#             */
-/*   Updated: 2025/07/13 16:46:05 by igrousso         ###   ########.fr       */
+/*   Updated: 2025/07/13 19:53:09 by igrousso         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,6 +16,24 @@
 int	close_window(t_data *data)
 {
 	cub_exit(0, "Window closed successfully", data);
+	return (0);
+}
+
+int		init_textures(t_data *data)
+{
+	data->texture_n = malloc(sizeof(t_image));
+	if	(!data->texture_n)
+		return (1);
+	data->texture_s = malloc(sizeof(t_image));
+	if	(!data->texture_s)
+		return (free(data->texture_n), 1);
+	data->texture_e = malloc(sizeof(t_image));
+	if	(!data->texture_e)
+		return (free(data->texture_n), free(data->texture_s), 1);
+	data->texture_w = malloc(sizeof(t_image));
+	if	(!data->texture_w)
+		return (free(data->texture_n), free(data->texture_s), \
+				free(data->texture_e), 1);
 	return (0);
 }
 
@@ -30,11 +48,13 @@ void	set_data(t_data *data, t_map *map)
 	if (!data->window)
 		cub_exit(1, "Window initialization failed", data);
 	data->image = new_image(data->display, TAB_X, TAB_Y);
-	data->background = new_image(data->display, TAB_X, TAB_Y);
-	data->texture_n = malloc(sizeof(t_image));
-	data->texture_s = malloc(sizeof(t_image));
-	data->texture_e = malloc(sizeof(t_image));
-	data->texture_w = malloc(sizeof(t_image));
+	if	(!data->image)
+		cub_exit(1, "Malloc fail\n", data);
+	data->background = malloc(sizeof(t_image));
+	if (!data->background)
+		cub_exit(1, "Malloc fail\n", data);		
+	if (init_textures(data))
+		cub_exit(1, "Malloc fail\n", data);	
 	for (size_t i = 0; i < 10; i++)
 		data->keys[i] = 0;	
 }
@@ -78,7 +98,7 @@ int render(t_data *data)
 	// put_cursor_direction(data->minimap);
 	put_img_to_img(data->image, data->background, 0, 0);
 	put_raycasting(data->minimap, FOV, TAB_X, data);
-	put_img_to_img(data->image, data->crosshair, POS_C_X, POS_C_Y);
+	put_img_to_img(data->image, data->crosshair->cross_img, data->crosshair->pos_c_x, data->crosshair->pos_c_y);
 	// put_img_to_img(data->image, data->minimap->minimap, MINIMAP_SIZE / 15, MINIMAP_SIZE / 15);
 	// put_img_to_img(data->image, data->minimap->raycasting, MINIMAP_SIZE / 15, MINIMAP_SIZE / 15);
 	// put_img_to_img(data->image, data->minimap->direction, data->minimap->cursor_x - data->minimap->pxl_size * 2/3, data->minimap->cursor_y - data->minimap->pxl_size * 2/3);
@@ -138,25 +158,25 @@ int update(t_data *data, __uint64_t delta_time)
 	if (data->keys[0] == 1)
 		cub_exit(0, "Window closed successfully", data);
 	if (data->keys[1] == 1 && data->keys[2] == 1)
-		moove_player(data, 4, delta_time);
+		move_player(data, 4, delta_time);
 	else if (data->keys[1] == 1 && data->keys[4] == 1)
-		moove_player(data, 5, delta_time);
+		move_player(data, 5, delta_time);
 	else if (data->keys[3] == 1 && data->keys[2] == 1)
-		moove_player(data, 6, delta_time);
+		move_player(data, 6, delta_time);
 	else if (data->keys[3] == 1 && data->keys[4] == 1)	
-		moove_player(data, 7, delta_time);
+		move_player(data, 7, delta_time);
 	else if (data->keys[1] == 1)
-		moove_player(data, W, delta_time);
+		move_player(data, W, delta_time);
 	else if (data->keys[2] == 1)
-		moove_player(data, A, delta_time);
+		move_player(data, A, delta_time);
 	else if (data->keys[3] == 1)
-		moove_player(data, S, delta_time);
+		move_player(data, S, delta_time);
 	else if (data->keys[4] == 1)
-		moove_player(data, D, delta_time);
+		move_player(data, D, delta_time);
 	if (data->keys[5] == 1)
-		moove_cursor(data, -1);
+		move_cursor(data, -1);
 	if (data->keys[6] == 1)
-		moove_cursor(data, 1);
+		move_cursor(data, 1);
 	return (0);
 }
 
@@ -169,7 +189,7 @@ void	game(t_data *data, t_map *map)
 		exit(1);
 	minimap(data);
 	// loading screen ?
-	mlx_mouse_hide_no_leak(data->display, data->window);
+	// mlx_mouse_hide_no_leak(data->display, data->window);
 	if (paint_floor_and_ceiling(data->background, data))
 	{
 		free_data(data);
@@ -179,7 +199,6 @@ void	game(t_data *data, t_map *map)
 	mlx_hook(data->window, 6, (1L<<6), &mouse_move, data);
 	mlx_hook(data->window, 2, 1L<<0, key_press, data);
 	mlx_hook(data->window, 3, 1L<<1, key_release, data);
-	// mlx_key_hook(data->window, key_handler, data);
 	mlx_hook(data->window, 17, 1L >> 0, close_window, data);
 	mlx_loop_hook(data->display, &render, data);
 	mlx_loop(data->display);

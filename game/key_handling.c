@@ -6,7 +6,7 @@
 /*   By: igrousso <igrousso@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/07 15:26:13 by nmartin           #+#    #+#             */
-/*   Updated: 2025/07/13 16:38:47 by igrousso         ###   ########.fr       */
+/*   Updated: 2025/07/13 18:08:56 by igrousso         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,7 +32,7 @@ void	clear_image(t_image *image)
 	}
 }
 
-void	moove_player(t_data *data, int input, __uint64_t delta_time)
+void	move_player(t_data *data, int input, __uint64_t delta_time)
 {
 	if (input == A)
 		left_step(data, STEP * delta_time);
@@ -52,9 +52,9 @@ void	moove_player(t_data *data, int input, __uint64_t delta_time)
 		diag_step(data, STEP * delta_time, 7);	
 }
 
-void	moove_cursor(t_data *data, int direction)
+void	move_cursor(t_data *data, int direction)
 {
-	data->minimap->p_angle += ROTATION * direction;
+	data->minimap->p_angle += ROTATION / 3 * direction;
 	if (data->minimap->p_angle > 2 * PI)
 		data->minimap->p_angle = 0;
 	if (data->minimap->p_angle < 0)
@@ -78,23 +78,3 @@ int	mouse_move(int x, int y, t_data *data)
 	mlx_mouse_move(data->display, data->window, TAB_X / 2, TAB_Y / 2);
 	return (0);
 }
-
-// int	key_handler(int key, t_data *data)
-// {
-// 	// mettre flag azerty / qwerty modifiable
-// 	if (key == XK_Escape)
-// 		cub_exit(0, "Window closed successfully", data);
-// 	if (key == XK_w || key == XK_W || key == XK_z || key == XK_Z)
-// 		moove_player(data, W);
-// 	if (key == XK_a || key == XK_A)
-// 		moove_player(data, A);
-// 	if (key == XK_s || key == XK_S || key == XK_q || key == XK_Q)
-// 		moove_player(data, S);
-// 	if (key == XK_d || key == XK_D)
-// 		moove_player(data, D);
-// 	if (key == XK_Left)
-// 		moove_cursor(data, -1);
-// 	if (key == XK_Right)
-// 		moove_cursor(data, 1);
-// 	return (0);
-// }

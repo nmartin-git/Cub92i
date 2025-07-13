@@ -6,7 +6,7 @@
 #    By: igrousso <igrousso@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2025/02/05 15:41:03 by nmartin           #+#    #+#              #
-#    Updated: 2025/07/13 15:45:13 by igrousso         ###   ########.fr        #
+#    Updated: 2025/07/13 19:53:24 by igrousso         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -17,8 +17,8 @@ BLUE = \033[34m
 RESET = \033[0m
 
 CC = cc
-CFLAGS = -Wall -Werror -Wextra -MMD -MP -O3
-MLXFLAGS = -Lminilibx-linux -lmlx_Linux -lX11 -lXext -lm
+CFLAGS = -Wall -Werror -Wextra -MMD -MP -g
+MLXFLAGS = -Lminilibx-linux -lmlx_Linux -lX11 -lXext -lXfixes -lm
 NAME = cub3d
 CUB_PATH = ./cub/
 CUB_FILES = cub.c
@@ -34,7 +34,7 @@ MINIMAP_PATH = ./minimap/
 MINIMAP_FILES = minimap.c cursor.c raycasting.c rays.c collision.c
 MINIMAP := $(addprefix $(MINIMAP_PATH), $(MINIMAP_FILES))
 STRUCT_UTILS_PATH = ./struct_utils/
-STRUCT_UTILS_FILES = struct_utils.c mlx_no_leaks.c
+STRUCT_UTILS_FILES = struct_utils.c
 STRUCT_UTILS := $(addprefix $(STRUCT_UTILS_PATH), $(STRUCT_UTILS_FILES))
 BACKGROUND_PATH = ./background/
 BACKGROUND_FILES = background.c merge_img.c easter_eggs.c background_utils.c

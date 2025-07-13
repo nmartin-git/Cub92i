@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   game_utils.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: nmartin <nmartin@student.42.fr>            +#+  +:+       +#+        */
+/*   By: igrousso <igrousso@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/02 18:33:29 by nmartin           #+#    #+#             */
-/*   Updated: 2025/06/15 21:50:28 by nmartin          ###   ########.fr       */
+/*   Updated: 2025/07/13 19:40:20 by igrousso         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,9 +18,14 @@ void	free_data(t_data *data)
 	{
 		free_image(data->minimap->minimap, data->display);
 		free_image(data->minimap->cursor, data->display);
+		free_image(data->minimap->direction, data->display);
+		free_image(data->minimap->raycasting, data->display);
+		free(data->minimap);
 	}
-	if (data->image)
-		free_image(data->image, data->display);
+	free_image(data->background, data->display);
+	free_image(data->image, data->display);
+	free_crosshair(data);
+	free_textures(data);
 	if (data->display && data->window)
 		mlx_destroy_window(data->display, data->window);
 	if (data->display)
@@ -30,8 +35,6 @@ void	free_data(t_data *data)
 	}
 	if (data->map)
 		free_map(data->map);
-	if (data->minimap)
-		free(data->minimap);
 }
 
 void	cub_exit(int err, char *str, t_data *data)

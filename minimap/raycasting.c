@@ -6,7 +6,7 @@
 /*   By: igrousso <igrousso@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/10 15:59:29 by nmartin           #+#    #+#             */
-/*   Updated: 2025/07/13 03:23:47 by igrousso         ###   ########.fr       */
+/*   Updated: 2025/07/13 19:47:34 by igrousso         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -81,12 +81,36 @@ void	big_angle(t_image *raycasting, t_pos pixel, int dx, int dy)
 	}
 }
 
+int get_pixel_color(t_image *texture, int x, int y)
+{
+	int bpp;
+	int offset;
+	unsigned int *pixel;
+	char *addr;
+
+	if (x < 0) 
+		x = 0;
+    if (x >= texture->tab_x) 
+		x = texture->tab_x - 1;
+    if (y < 0)
+		y = 0;
+    if (y >= texture->tab_y)
+		y = texture->tab_y - 1;
+	bpp = texture->bpp / 8;
+	offset = y * texture->l_len + x * bpp;
+	addr = texture->adress;
+	pixel = (unsigned int *)(addr + offset);
+	return (*pixel);
+}
+
 void	test(t_data *data, t_ray *ray, int i)
 {
 	t_pos	pixel;
 	float	hauteur;
 	int		j;
-	int		color;
+	t_image	*texture;
+	int		start;
+	int		tex_y;
 
 	pixel.x = i;
 	// if (ray->dst <= 0)
@@ -99,24 +123,26 @@ void	test(t_data *data, t_ray *ray, int i)
 	if (ray->x_y == 1)
 	{
 		if (sin(ray->angle) > 0)
-			color = encode_rgb(255, 255, 255);
+			texture = data->texture_n;
 		else
-			color = encode_rgb(200, 200, 200);		
+			texture = data->texture_s;
 	}	
 	else
 	{
 		if (cos(ray->angle) > 0)
-			color = encode_rgb(125, 125, 125);
+			texture = data->texture_e;
 		else
-			color = encode_rgb(50, 50, 50);		
+			texture = data->texture_w;
 	}
+	start = (TAB_Y - hauteur) / 2;
 	while (pixel.x < i + 1)	
 	{	
-		j = (TAB_Y - hauteur) / 2;
-		while (j < ((TAB_Y - hauteur) / 2) + hauteur)
+		j = start;
+		while (j < start + hauteur)
 		{
 			pixel.y = j++;
-			pixel_put(data->image, pixel, color);
+			tex_y = (int)((j - start) * (texture->tab_y) / hauteur);
+			pixel_put(data->image, pixel, get_pixel_color(texture, ray->percent, tex_y));
 		}
 		pixel.x++;
 	}
@@ -126,24 +152,28 @@ void	put_raycasting(t_minimap *minimap, float fov, int ray_nbr, t_data *data)
 {
 	float	diff;
 	int		i;
-	int		dx;
-	int		dy;
+	// int		dx;
+	// int		dy;
 	t_pos	point_a;
 	t_pos	point_b;
 	t_ray	ray;
+	float	fov_div_2;
+	int		point;
 
 	i = 0;
 	fov = (fov * PI) / 180;
 	diff = fov / (ray_nbr - 1);
+	fov_div_2 = fov / 2.0;
+	point = minimap->pxl_size / 3 - MINIMAP_SIZE / 15;
 	while (i < ray_nbr)
 	{
-		ray.angle = minimap->p_angle - (fov / 2.0) + i * diff;
-		point_a.x = minimap->cursor_x + minimap->pxl_size / 3 - MINIMAP_SIZE / 15;
-		point_a.y = minimap->cursor_y + minimap->pxl_size / 3 - MINIMAP_SIZE / 15;
+		ray.angle = minimap->p_angle - fov_div_2 + i * diff;
+		point_a.x = minimap->cursor_x + point;
+		point_a.y = minimap->cursor_y + point;
 		if (!raycast(minimap, &ray, data, &point_b))
 			i = i - 1 + 1;//gerer tan err
-		dx = point_b.x - point_a.x;
-		dy = point_b.y - point_a.y;
+		// dx = point_b.x - point_a.x;
+		// dy = point_b.y - point_a.y;
 		ray.dst = sqrt(ray.dst) * cos(ray.angle - minimap->p_angle);
 		test(data, &ray, i);
 		// if (ft_abs(dx) > ft_abs(dy))

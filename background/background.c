@@ -6,7 +6,7 @@
 /*   By: igrousso <igrousso@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/07 17:27:20 by igrousso          #+#    #+#             */
-/*   Updated: 2025/07/13 00:42:51 by igrousso         ###   ########.fr       */
+/*   Updated: 2025/07/13 19:11:50 by igrousso         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -106,3 +106,4 @@ int	paint_floor_and_ceiling(t_image *img, t_data *data)
 		gateway_paint(dst, img, data, i);
 	return (0);
 }
+

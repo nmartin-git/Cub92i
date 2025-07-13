@@ -6,7 +6,7 @@
 /*   By: igrousso <igrousso@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/02 14:55:19 by nmartin           #+#    #+#             */
-/*   Updated: 2025/07/13 15:44:24 by igrousso         ###   ########.fr       */
+/*   Updated: 2025/07/13 18:09:04 by igrousso         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,8 +36,8 @@ void	free_data(t_data *data);
 
 /*---key_handling.c---*/
 void	clear_image(t_image *image);
-void	moove_player(t_data *data, int input, __uint64_t delta_time);
-void	moove_cursor(t_data *data, int direction);
+void	move_player(t_data *data, int input, __uint64_t delta_time);
+void	move_cursor(t_data *data, int direction);
 // int		key_handler(int key, t_data *data);
 int		mouse_move(int x, int y, t_data *data);
 
