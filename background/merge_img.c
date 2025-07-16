@@ -6,7 +6,7 @@
 /*   By: igrousso <igrousso@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/07 17:41:33 by igrousso          #+#    #+#             */
-/*   Updated: 2025/07/13 17:49:49 by igrousso         ###   ########.fr       */
+/*   Updated: 2025/07/16 19:42:16 by igrousso         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -60,7 +60,7 @@ void	put_img_to_img(t_image *dst, t_image *src, int x_offset, int y_offset)
 	{
 		if (t.y + y_offset >= dst->tab_y)
 			break ;
-		t.x = 0;
+		t.x = -1;
 		while (++t.x < src->tab_x)
 		{
 			if (t.x + x_offset >= dst->tab_x)

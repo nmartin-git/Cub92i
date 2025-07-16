@@ -6,7 +6,7 @@
 /*   By: igrousso <igrousso@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/06 16:52:00 by nmartin           #+#    #+#             */
-/*   Updated: 2025/07/13 19:53:05 by igrousso         ###   ########.fr       */
+/*   Updated: 2025/07/16 20:14:28 by igrousso         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -59,6 +59,7 @@ typedef struct s_minimap
 	int						c_color;
 	int						x;
 	int						y;
+	int						minimap_size_by_15;
 }							t_minimap;
 
 typedef struct s_pos

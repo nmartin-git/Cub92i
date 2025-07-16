@@ -6,7 +6,7 @@
 /*   By: igrousso <igrousso@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/05 14:23:31 by nmartin           #+#    #+#             */
-/*   Updated: 2025/07/08 16:25:22 by igrousso         ###   ########.fr       */
+/*   Updated: 2025/07/16 20:14:57 by igrousso         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,6 +54,7 @@ void	minimap_data(t_minimap *minimap, t_data *data)
 		minimap->p_angle = PI;
 	else
 		minimap->p_angle = PI / 2;
+	minimap->minimap_size_by_15 = MINIMAP_SIZE / 15;
 	minimap->display = data->display;
 	minimap->minimap = new_image(data->display, minimap->pxl_size * minimap->x, minimap->pxl_size * minimap->y);//TODO gerer les leaks en cas derreurs
 	minimap->cursor = new_image(data->display, minimap->pxl_size / 1.5, minimap->pxl_size / 1.5);//TODO gerer les leaks en cas derreurs//TODO gerer la taille du cursuer (propotionnel)

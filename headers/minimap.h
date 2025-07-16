@@ -6,7 +6,7 @@
 /*   By: igrousso <igrousso@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/05 14:23:42 by nmartin           #+#    #+#             */
-/*   Updated: 2025/07/13 18:05:00 by igrousso         ###   ########.fr       */
+/*   Updated: 2025/07/16 20:11:12 by igrousso         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,13 +20,13 @@
 # include <limits.h>
 # include <math.h>
 # define EMPTY_COLOR 0
-# define MINIMAP_SIZE 10000
+# define MINIMAP_SIZE 20000
 # define QUALITY 100
 # define WALL 1
 # define FLOOR 0
 # define EMPTY 8
-# define STEP 1
-# define ROTATION 0.1
+# define STEP 3
+# define ROTATION 0.15
 # define PI 3.1415926535
 # define FOV 60
 # define RAY_NBR 1920

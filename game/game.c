@@ -6,7 +6,7 @@
 /*   By: igrousso <igrousso@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/02 11:45:56 by nmartin           #+#    #+#             */
-/*   Updated: 2025/07/13 19:53:09 by igrousso         ###   ########.fr       */
+/*   Updated: 2025/07/16 20:10:24 by igrousso         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -67,7 +67,6 @@ int	minimap(t_data *data)
 	minimap_create(data->minimap, data);
 	return (0);
 }
-#include <sys/time.h>
 
 __uint64_t get_time_ms()
 {
@@ -75,8 +74,6 @@ __uint64_t get_time_ms()
 	gettimeofday(&tv, NULL);
 	return (__uint64_t)(tv.tv_sec * 1000 + tv.tv_usec / 1000);
 }
-
-int update(t_data *data, __uint64_t delta_time);
 
 int render(t_data *data)
 {
@@ -115,70 +112,7 @@ int render(t_data *data)
 	return (0);
 }
 
-int key_press(int keycode, t_data *data)
-{
-	if (keycode == XK_Escape && data->keys[0] == 0)
-		data->keys[0] = 1;
-	if ((keycode == XK_w || keycode == XK_W || keycode == XK_z || keycode == XK_Z) && data->keys[1] == 0)
-		data->keys[1] = 1;
-	if ((keycode == XK_a || keycode == XK_A) && data->keys[2] == 0)
-		data->keys[2] = 1;
-	if ((keycode == XK_s || keycode == XK_S || keycode == XK_q || keycode == XK_Q) && data->keys[3] == 0)
-		data->keys[3] = 1;
-	if ((keycode == XK_d || keycode == XK_D) && data->keys[4] == 0)
-		data->keys[4] = 1;
-	if (keycode == XK_Left && data->keys[5] == 0)
-		data->keys[5] = 1;
-	if (keycode == XK_Right && data->keys[6] == 0)
-		data->keys[6] = 1;
-	return (0);
-}
 
-int key_release(int keycode, t_data *data)
-{
-	if (keycode == XK_Escape && data->keys[0] == 1)
-		data->keys[0] = 0;
-	if ((keycode == XK_w || keycode == XK_W || keycode == XK_z || keycode == XK_Z) && data->keys[1] == 1)
-		data->keys[1] = 0;
-	if ((keycode == XK_a || keycode == XK_A) && data->keys[2] == 1)
-		data->keys[2] = 0;
-	if ((keycode == XK_s || keycode == XK_S || keycode == XK_q || keycode == XK_Q) && data->keys[3] == 1)
-		data->keys[3] = 0;
-	if ((keycode == XK_d || keycode == XK_D) && data->keys[4] == 1)
-		data->keys[4] = 0;
-	if (keycode == XK_Left && data->keys[5] == 1)
-		data->keys[5] = 0;
-	if (keycode == XK_Right && data->keys[6] == 1)
-		data->keys[6] = 0;
-	return (0);
-}
-
-int update(t_data *data, __uint64_t delta_time)
-{
-	if (data->keys[0] == 1)
-		cub_exit(0, "Window closed successfully", data);
-	if (data->keys[1] == 1 && data->keys[2] == 1)
-		move_player(data, 4, delta_time);
-	else if (data->keys[1] == 1 && data->keys[4] == 1)
-		move_player(data, 5, delta_time);
-	else if (data->keys[3] == 1 && data->keys[2] == 1)
-		move_player(data, 6, delta_time);
-	else if (data->keys[3] == 1 && data->keys[4] == 1)	
-		move_player(data, 7, delta_time);
-	else if (data->keys[1] == 1)
-		move_player(data, W, delta_time);
-	else if (data->keys[2] == 1)
-		move_player(data, A, delta_time);
-	else if (data->keys[3] == 1)
-		move_player(data, S, delta_time);
-	else if (data->keys[4] == 1)
-		move_player(data, D, delta_time);
-	if (data->keys[5] == 1)
-		move_cursor(data, -1);
-	if (data->keys[6] == 1)
-		move_cursor(data, 1);
-	return (0);
-}
 
 void	game(t_data *data, t_map *map)
 {
