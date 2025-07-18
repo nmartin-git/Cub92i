@@ -6,11 +6,17 @@
 /*   By: igrousso <igrousso@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/13 14:11:53 by nmartin           #+#    #+#             */
-/*   Updated: 2025/07/16 20:27:27 by igrousso         ###   ########.fr       */
+/*   Updated: 2025/07/18 18:40:10 by igrousso         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minimap.h"
+
+void	tan_err(t_pos *pos)
+{
+	pos->x = TAN_ERR;
+	pos->y = TAN_ERR;
+}
 
 int	is_wall(t_minimap *minimap, t_data *data, t_pos *pos)
 {
@@ -30,60 +36,74 @@ int	is_wall(t_minimap *minimap, t_data *data, t_pos *pos)
 		return (0);
 }
 
-void	vertical_wall(t_minimap *minimap, t_data *data, t_pos *pos, float angle)
+void	corner(t_minimap *minimap, t_data *data, t_pos *pos, t_pos *step)
 {
-	int	x;
-	int	y;
-	int limit;
+	t_pos	precise;
+
+	while (!is_wall(minimap, data, pos))
+	{
+		pos->x += step->x / 4;
+		pos->y += step->y / 4;
+	}
+	precise.x = pos->x - step->x / 8;
+	precise.y = pos->y - step->y / 8;
+	if (is_wall(minimap, data, &precise))
+	{
+		pos->x -= step->x / 8;
+		pos->y -= step->y / 8;
+	}
+}
+
+void	vertical_wall(t_minimap *minimap, t_data *d, t_pos *pos, double angle)
+{
+	t_pos	step;
+	t_pos	verif;
+	int		neg;
 
 	if (cos(angle) > 0)
-		x = minimap->pxl_size;
+		neg = 1;
 	else
-		x = -minimap->pxl_size;
-	y = x * tan(angle);
-	limit = 1000;
-	while (!is_wall(minimap, data, pos) && limit-- > 0)
+		neg = -1;
+	step.x = minimap->pxl_size * neg;
+	step.y = step.x * tan(angle);
+	while (!is_wall(minimap, d, pos))
 	{
-		pos->x += x;
-		pos->y += y;
+		verif.x = pos->x + step.x / 2;
+		verif.y = pos->y + step.y / 2;
+		if (is_wall(minimap, d, &verif))
+			return (corner(minimap, d, pos, &step));
+		pos->x += step.x;
+		pos->y += step.y;
 	}
 }
 
-void	horizontal_wall(t_minimap *minimap, t_data *data, t_pos *pos, float angle)
+void	horizontal_wall(t_minimap *minimap, t_data *data, t_pos *pos, double angle)
 {
-	int	x;
-	int	y;
-	int	limit;
+	t_pos	step;
+	t_pos	verif;
+	int		neg;
 
 	if (sin(angle) > 0)
-		y = minimap->pxl_size;
+		neg = 1;
 	else
-		y = -minimap->pxl_size;
+		neg = -1;
+	step.y = minimap->pxl_size * neg;
 	if (fabs(tan(angle)) < 0.001)
-	{
-		pos->x = TAN_ERR;
-		pos->y = TAN_ERR;
-	}
+		tan_err(pos);
 	else
-		x = y / tan(angle);
-	// if (!is_wall(minimap, data, pos))
-	// {
-	// 	pos->x += 1;
-	// 	pos->y += 1;
-	// 	if (is_wall(minimap, data, pos))
-	// 		return ;
-	// 	pos->x -= 1;
-	// 	pos->y -= 1;
-	// }//fix corner bug
-	limit = 1000;
-	while (!is_wall(minimap, data, pos) && limit-- > 0)
+		step.x = step.y / tan(angle);
+	while (!is_wall(minimap, data, pos))
 	{
-		pos->x += x;
-		pos->y += y;
+		verif.x = pos->x + step.x / 2;
+		verif.y = pos->y + step.y / 2;
+		if (is_wall(minimap, data, &verif))
+			return (corner(minimap, data, pos, &step));
+		pos->x += step.x;
+		pos->y += step.y;
 	}
 }
 
-void	set_nearest(t_minimap *minimap, t_pos *ph, t_pos *pv, float angle)
+void	set_nearest(t_minimap *minimap, t_pos *ph, t_pos *pv, double angle)
 {
 	int	player_x;
 	int	player_y;
@@ -92,40 +112,30 @@ void	set_nearest(t_minimap *minimap, t_pos *ph, t_pos *pv, float angle)
 
 	player_x = minimap->cursor_x + minimap->pxl_size / 3;
 	player_y = minimap->cursor_y + minimap->pxl_size / 3;
-	grid_y = (int)floor((player_y - minimap->minimap_size_by_15) / minimap->pxl_size);
+	grid_y = (int)floor((player_y - MINIMAP_SIZE / 15) / minimap->pxl_size);
+	ph->x = 0;
+	pv->y = 0;
 	if (sin(angle) > 0)
-		ph->y = (grid_y + 1) * minimap->pxl_size + minimap->minimap_size_by_15;
+		ph->y = (grid_y + 1) * minimap->pxl_size + MINIMAP_SIZE / 15;
 	else if (sin(angle) < 0)
-		ph->y = grid_y * minimap->pxl_size + minimap->minimap_size_by_15 - 0.0001;
+		ph->y = grid_y * minimap->pxl_size + MINIMAP_SIZE / 15 - 1;
 	else
-	{
-		ph->x = TAN_ERR;
-		ph->y = TAN_ERR;
-	}
+		tan_err(ph);
 	if (ph->x != TAN_ERR && fabs(tan(angle)) > 0.001)
 		ph->x = player_x + (ph->y - player_y) / tan(angle);
 	else if (fabs(tan(angle)) <= 0.001)
-	{
-		ph->x = TAN_ERR;
-		ph->y = TAN_ERR;
-	}
-	grid_x = (int)floor((player_x - minimap->minimap_size_by_15) / minimap->pxl_size);
+		tan_err(ph);
+	grid_x = (int)floor((player_x - MINIMAP_SIZE / 15) / minimap->pxl_size);
 	if (cos(angle) > 0)
-		pv->x = (grid_x + 1) * minimap->pxl_size + minimap->minimap_size_by_15;
+		pv->x = (grid_x + 1) * minimap->pxl_size + MINIMAP_SIZE / 15;
 	else if (cos(angle) < 0)
-		pv->x = grid_x * minimap->pxl_size + minimap->minimap_size_by_15 - 1;
+		pv->x = grid_x * minimap->pxl_size + MINIMAP_SIZE / 15 - 1;
 	else
-	{
-		pv->x = TAN_ERR;
-		pv->y = TAN_ERR;
-	}
+		tan_err(pv);
 	if (pv->x != TAN_ERR && fabs(cos(angle)) > 0.0001)
 		pv->y = player_y + (pv->x - player_x) * tan(angle);
 	else if (fabs(cos(angle)) <= 0.0001)
-	{
-		pv->x = TAN_ERR;
-		pv->y = TAN_ERR;
-	}
+		tan_err(pv);
 }
 
 t_ray	*raycast(t_minimap *minimap, t_ray *ray, t_data *data, t_pos *result)

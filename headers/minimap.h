@@ -6,7 +6,7 @@
 /*   By: igrousso <igrousso@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/05 14:23:42 by nmartin           #+#    #+#             */
-/*   Updated: 2025/07/16 20:11:12 by igrousso         ###   ########.fr       */
+/*   Updated: 2025/07/18 18:42:08 by igrousso         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -85,14 +85,15 @@ void						put_raycasting(t_minimap *minimap, float fov,
 								int ray_nbr, t_data *data);
 
 /*---rays.c---*/
+void						tan_err(t_pos *pos);
 int							is_wall(t_minimap *minimap, t_data *data,
 								t_pos *pos);
-void						vertical_wall(t_minimap *minimap, t_data *data,
-								t_pos *pos, float angle);
+void						vertical_wall(t_minimap *minimap, t_data *d,
+								t_pos *pos, double angle);
 void						horizontal_wall(t_minimap *minimap, t_data *data,
-								t_pos *pos, float angle);
-void						set_nearest(t_minimap *minimap, t_pos *p1,
-								t_pos *p2, float angle);
+								t_pos *pos, double angle);
+void						set_nearest(t_minimap *minimap, t_pos *ph,
+								t_pos *pv, double angle);
 t_ray						*raycast(t_minimap *minimap, t_ray *ray,
 								t_data *data, t_pos *result);
 
