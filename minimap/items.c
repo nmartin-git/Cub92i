@@ -6,7 +6,7 @@
 /*   By: nmartin <nmartin@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/08 14:47:06 by nmartin           #+#    #+#             */
-/*   Updated: 2025/07/10 17:40:51 by nmartin          ###   ########.fr       */
+/*   Updated: 2025/07/18 17:26:25 by nmartin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,78 +30,65 @@ void	put_pxl(t_image *image, int x, int y, int color)
 
 void	put_puff(t_minimap *minimap, t_pos pos, int width, int height)
 {
-	int	x;
-	int	y;
-	int	x_center;
-	int	y_center;
-	int embout_size;
-	int	draw;
-	int	dx;
-	int	dy;
-	int	radius_bottom;
+	t_pos	id;
+	t_pos	c;
+	int		draw;
+	t_pos	dst;
 
-	x_center = pos.x * minimap->pxl_size + minimap->pxl_size / 2;
-	embout_size = width / 3;
-	y_center = pos.y * minimap->pxl_size + minimap->pxl_size / 2 + embout_size;
-	y = -height / 2 - embout_size;
-	while (y <= height / 2)
+	c.x = pos.x * minimap->pxl_size + minimap->pxl_size / 2;
+	c.y = pos.y * minimap->pxl_size + minimap->pxl_size / 2 + (width / 3);
+	id.y = -height / 2 - (width / 3);
+	while (id.y <= height / 2)
 	{
-		x = -width / 2;
-		while (x <= width / 2)
+		id.x = -width / 2;
+		while (id.x <= width / 2)
 		{
 			draw = 0;
-			if (y >= -height / 2 && y <= height / 6)
+			if (id.y >= -height / 2 && id.y <= height / 6)
 				draw = 1;
-			if (y >= -height / 2 - embout_size && y <= -height / 2 && 
-				x >= -embout_size / 2 && x <= embout_size / 2)
+			if (id.y >= -height / 2 - (width / 3) && id.y <= -height / 2
+				&& id.x >= -(width / 3) / 2 && id.x <= (width / 3) / 2)
 				draw = 1;
-			if (y >= height / 8)
+			if (id.y >= height / 8)
 			{
-				dx = ft_abs(x);
-				dy = y - height / 6;
-				radius_bottom = width / 2;
-				if (dx * dx + dy * dy <= radius_bottom * radius_bottom)
+				dst.x = ft_abs(id.x);
+				dst.y = id.y - height / 6;
+				if (dst.x * dst.x + dst.y * dst.y <= (width / 2) * (width / 2))
 					draw = 1;
 			}
 			if (draw)
-				put_pxl(minimap->minimap, x_center + x, y_center + y, PUFF_COLOR);
-			x++;
+				put_pxl(minimap->minimap, c.x + id.x, c.y + id.y, PUFF_COLOR);
+			id.x++;
 		}
-		y++;
+		id.y++;
 	}
 }
 
 void	put_mordjene(t_minimap *minimap, t_pos pos, int radius, int inner_radius)
 {
-	int	dst;
-	int	x;
-	int	y;
-	int	x_diff;
-	int	y_diff;
+	int		dst;
+	t_pos	index;
+	int		x_diff;
+	int		y_diff;
 
-	y = -radius;
+	index.y = -radius;
 	x_diff = pos.x * minimap->pxl_size + minimap->pxl_size / 2;
 	y_diff = pos.y * minimap->pxl_size + minimap->pxl_size / 2;
-	while (y <= radius)
+	while (index.y <= radius)
 	{
-		x = -radius;
-		while (x <= radius)
+		index.x = -radius;
+		while (index.x <= radius)
 		{
-			dst = ft_abs(x) + ft_abs(y);
+			dst = ft_abs(index.x) + ft_abs(index.y);
 			if (dst <= radius)
 			{
 				if (dst <= inner_radius)
-					put_pxl(minimap->minimap, x + x_diff, y + y_diff, MORDJENE_COLOR);
+					put_pxl(minimap->minimap, index.x + x_diff, index.y + y_diff, MORDJENE_COLOR);
 				else
-					put_pxl(minimap->minimap, x + x_diff, y + y_diff, MORDJENE_BG_COLOR);
+					put_pxl(minimap->minimap, index.x + x_diff, index.y + y_diff, MORDJENE_BG_COLOR);
 			}
-			x++;
+			index.x++;
 		}
-		y++;
+		index.y++;
 	}
 }
-
-// void	is_puff()
-// {
-	
-// }

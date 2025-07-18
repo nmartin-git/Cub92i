@@ -6,13 +6,12 @@
 /*   By: nmartin <nmartin@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/08 14:45:58 by nmartin           #+#    #+#             */
-/*   Updated: 2025/07/08 15:03:34 by nmartin          ###   ########.fr       */
+/*   Updated: 2025/07/18 17:05:52 by nmartin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-# include "minimap.h"
+#include "minimap.h"
 
 void	put_opps()
 {
-	
 }
