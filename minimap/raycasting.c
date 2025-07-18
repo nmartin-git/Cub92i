@@ -6,7 +6,7 @@
 /*   By: igrousso <igrousso@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/10 15:59:29 by nmartin           #+#    #+#             */
-/*   Updated: 2025/07/16 20:29:14 by igrousso         ###   ########.fr       */
+/*   Updated: 2025/07/18 21:54:38 by igrousso         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -144,7 +144,7 @@ void	test(t_data *data, t_ray *ray, int i)
 		{
 			pixel.y = j++;
 			tex_y = (int)((j - start) * (texture->tab_y) * invert_hauteur);
-			pixel_put(data->image, pixel, get_pixel_color(texture, ray->percent, tex_y));
+			pixel_put(data->image, pixel, get_pixel_color(texture, tex_x, tex_y));
 			// pixel_put(data->image, pixel, encode_rgb(255, 255, 255));
 		}
 		pixel.x++;
