@@ -6,7 +6,7 @@
 /*   By: igrousso <igrousso@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/03 08:20:44 by igrousso          #+#    #+#             */
-/*   Updated: 2025/07/11 16:01:35 by igrousso         ###   ########.fr       */
+/*   Updated: 2025/07/18 18:18:20 by igrousso         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,6 +14,7 @@
 # define PARSING_H
 
 # include "../libft/libft.h"
+# include "struct_utils.h"
 # include <fcntl.h>
 # include <stdio.h>
 # include <string.h>
@@ -36,6 +37,7 @@ typedef struct s_map
 	int		el_mordjene;
 	int		puff;
 	int		chicha;
+	int		door;
 }			t_map;
 
 typedef struct s_resize

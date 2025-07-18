@@ -6,7 +6,7 @@
 /*   By: igrousso <igrousso@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/02 11:45:35 by nmartin           #+#    #+#             */
-/*   Updated: 2025/07/08 16:03:04 by igrousso         ###   ########.fr       */
+/*   Updated: 2025/07/18 18:19:41 by igrousso         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -87,6 +87,7 @@ void	pre_init(t_map *map)
 	map->el_mordjene = 0;
 	map->puff = 0;
 	map->chicha = 0;
+	map->door = 0;
 }
 
 /*
@@ -151,19 +152,19 @@ int	parsing(char *av, t_map *map)
 // 	(void)ac;
 // 	if (parsing(av[1], &map))
 // 		return 1;
-// 	for (size_t i = 0; map.map[i] != 0; i++)
-// 	{
-// 		for (size_t j = 0; map.map[i][j] != 9; j++)
-// 			printf("%d", map.map[i][j]);
-// 		printf("\n");
-// 	}
-// 	printf("%d, %d\n", map.x_spawn, map.y_spawn);
-// 	printf("%d, %d\n", map.row, map.col);
-// 	printf("%d\n", map._92i);
-// 	printf("%d\n", map.paqueta);
-// 	printf("%d\n", map.el_mordjene);
-// 	printf("%d\n", map.puff);
-// 	printf("%d\n", map.chicha);
+// 	// for (size_t i = 0; map.map[i] != 0; i++)
+// 	// {
+// 	// 	for (size_t j = 0; map.map[i][j] != 9; j++)
+// 	// 		printf("%d", map.map[i][j]);
+// 	// 	printf("\n");
+// 	// }
+// 	// printf("%d, %d\n", map.x_spawn, map.y_spawn);
+// 	// printf("%d, %d\n", map.row, map.col);
+// 	// printf("%d\n", map._92i);
+// 	// printf("%d\n", map.paqueta);
+// 	// printf("%d\n", map.el_mordjene);
+// 	// printf("%d\n", map.puff);
+// 	// printf("%d\n", map.chicha);
 // 	// printf("%s\n", map.n_t);
 // 	// printf("%s\n", map.s_t);
 // 	// printf("%s\n", map.e_t);
@@ -174,6 +175,6 @@ int	parsing(char *av, t_map *map)
 // 	// 	decode_b(map.f_rgb));
 // 	// printf("r %d, g %d, b %d\n", decode_r(map.c_rgb), decode_g(map.c_rgb),
 // 	// 	decode_b(map.c_rgb));
-// 	free_map(&map);
+// 	// free_map(&map);
 // 	return (0);
 // }

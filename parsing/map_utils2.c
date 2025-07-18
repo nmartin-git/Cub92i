@@ -6,7 +6,7 @@
 /*   By: igrousso <igrousso@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/04 17:47:47 by igrousso          #+#    #+#             */
-/*   Updated: 2025/07/08 16:03:12 by igrousso         ###   ########.fr       */
+/*   Updated: 2025/07/18 18:18:45 by igrousso         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,6 +30,8 @@ int	ctoi2(char c)
 		return (11);
 	else if (c == 'C')
 		return (12);
+	else if (c == 'D')
+		return (13);
 	return (ft_putstr_fd("Error\nInvalid character\n", 2), -2);
 }
 
@@ -49,4 +51,6 @@ void	count_collectible(char c, t_map *map)
 		map->puff++;
 	if (c == 12)
 		map->chicha++;
+	if (c == 13)
+		map->door++;
 }
