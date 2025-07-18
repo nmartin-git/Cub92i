@@ -6,7 +6,7 @@
 /*   By: nmartin <nmartin@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/13 14:11:53 by nmartin           #+#    #+#             */
-/*   Updated: 2025/07/11 17:38:05 by nmartin          ###   ########.fr       */
+/*   Updated: 2025/07/18 16:01:46 by nmartin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,52 +30,73 @@ int	is_wall(t_minimap *minimap, t_data *data, t_pos *pos)
 		return (0);
 }
 
-void	vertical_wall(t_minimap *minimap, t_data *data, t_pos *pos, double angle)
+void	corner(t_minimap *minimap, t_data *data, t_pos *pos, t_pos *step)
 {
-	int	x;
-	int	y;
-
-	if (cos(angle) > 0)
-		x = minimap->pxl_size;
-	else
-		x = -minimap->pxl_size;
-	y = x * tan(angle);
+	t_pos	precise;
+	
 	while (!is_wall(minimap, data, pos))
 	{
-		pos->x += x;
-		pos->y += y;
+		pos->x += step->x / 4;
+		pos->y += step->y / 4;
+	}
+	precise.x = pos->x - step->x / 8;
+	precise.y = pos->y - step->y / 8;
+	if (is_wall(minimap, data, &precise))
+	{
+		pos->x -= step->x / 8;
+		pos->y -= step->y / 8;
+	}
+}
+
+void	vertical_wall(t_minimap *minimap, t_data *data, t_pos *pos, double angle)
+{
+	t_pos	step;
+	t_pos	verif;
+	int		neg;
+
+	if (cos(angle) > 0)
+		neg = 1;
+	else
+		neg = -1;
+	step.x = minimap->pxl_size * neg;
+	step.y = step.x * tan(angle);
+	while (!is_wall(minimap, data, pos))
+	{
+		verif.x = pos->x + step.x / 2;
+		verif.y = pos->y + step.y / 2;
+		if (is_wall(minimap, data, &verif))
+			return (corner(minimap, data, pos, &step));
+		pos->x += step.x;
+		pos->y += step.y;
 	}
 }
 
 void	horizontal_wall(t_minimap *minimap, t_data *data, t_pos *pos, double angle)
 {
-	int	x;
-	int	y;
+	t_pos	step;
+	t_pos	verif;
+	int		neg;
 
 	if (sin(angle) > 0)
-		y = minimap->pxl_size;
+		neg = 1;
 	else
-		y = -minimap->pxl_size;
+		neg = -1;
+	step.y = minimap->pxl_size * neg;
 	if (fabs(tan(angle)) < 0.001)
 	{
 		pos->x = TAN_ERR;
 		pos->y = TAN_ERR;
 	}
 	else
-		x = y / tan(angle);
-	// if (!is_wall(minimap, data, pos))
-	// {
-	// 	pos->x += 1;
-	// 	pos->y += 1;
-	// 	if (is_wall(minimap, data, pos))
-	// 		return ;
-	// 	pos->x -= 1;
-	// 	pos->y -= 1;
-	// }//fix corner bug
+		step.x = step.y / tan(angle);
 	while (!is_wall(minimap, data, pos))
 	{
-		pos->x += x;
-		pos->y += y;
+		verif.x = pos->x + step.x / 2;
+		verif.y = pos->y + step.y / 2;
+		if (is_wall(minimap, data, &verif))
+			return (corner(minimap, data, pos, &step));
+		pos->x += step.x;
+		pos->y += step.y;
 	}
 }
 
