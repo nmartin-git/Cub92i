@@ -6,7 +6,7 @@
 /*   By: nmartin <nmartin@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/06 16:52:00 by nmartin           #+#    #+#             */
-/*   Updated: 2025/07/18 18:29:48 by nmartin          ###   ########.fr       */
+/*   Updated: 2025/07/19 12:34:28 by nmartin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,6 +47,7 @@ typedef struct s_minimap
 	int		c_color;
 	int		x;
 	int		y;
+	t_ennemy	*ennemies;
 }	t_minimap;
 
 typedef struct s_pos
@@ -78,11 +79,11 @@ typedef struct s_data
 
 typedef struct s_ennemy
 {
-	t_image	*s_ennemy;
-	int		damages;
-	int		pos_x;
-	int		pos_y;
-}	s_ennemy;
+	t_image		*s_ennemy;
+	int			pos_x;
+	int			pos_y;
+	t_ennemy	*next;
+}	t_ennemy;
 
 t_image	*new_image(void *display, int tab_x, int tab_y);
 void	free_image(t_image *image, void *display);

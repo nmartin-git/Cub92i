@@ -6,7 +6,7 @@
 /*   By: nmartin <nmartin@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/05 14:23:31 by nmartin           #+#    #+#             */
-/*   Updated: 2025/07/10 15:47:21 by nmartin          ###   ########.fr       */
+/*   Updated: 2025/07/19 12:34:38 by nmartin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -57,6 +57,7 @@ void	minimap_data(t_minimap *minimap, t_data *data)
 	minimap->cursor = new_image(data->display, minimap->pxl_size / 1.5, minimap->pxl_size / 1.5);//TODO gerer les leaks en cas derreurs//TODO gerer la taille du cursuer (propotionnel)
 	minimap->direction = new_image(data->display, minimap->pxl_size * 2, minimap->pxl_size * 2);//TODO gerer les leaks en cas derreurs//TODO gerer la taille du cursuer (propotionnel)
 	minimap->raycasting = new_image(data->display, minimap->pxl_size * minimap->x, minimap->pxl_size * minimap->y);//TODO gerer les leaks en cas derreurs//TODO gerer la taille du cursuer (propotionnel)
+	minimap->ennemies = NULL;
 }
 
 void	pixel_put_square(t_minimap *minimap, t_pos pixel, int color)
