@@ -6,7 +6,7 @@
 /*   By: nmartin <nmartin@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/05 14:23:42 by nmartin           #+#    #+#             */
-/*   Updated: 2025/07/18 15:20:20 by nmartin          ###   ########.fr       */
+/*   Updated: 2025/07/19 19:33:15 by nmartin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,13 +14,14 @@
 # define MINIMAP_H
 
 # include "struct_utils.h"
+# include "background.h"
 # include "../minilibx-linux/mlx.h"
 # include <X11/keysym.h>
 # include <math.h>
 # include <limits.h>
 
 # define EMPTY_COLOR 0
-# define MINIMAP_SIZE 1800
+# define MINIMAP_SIZE 3800
 # define QUALITY 100
 
 # define WALL 1
@@ -31,7 +32,7 @@
 # define ROTATION 0.1
 # define PI 3.1415926535
 # define FOV 60
-# define RAY_NBR /*60*/ 600
+# define RAY_NBR /*60*/ 300
 # define TAN_ERR 9999
 # define HORIZONTAL 1
 # define VERTICAL 2
@@ -74,7 +75,7 @@ void	big_angle(t_image *raycasting, t_pos pixel, int dx, int dy);
 void	put_raycasting(t_minimap *minimap, double fov, int ray_nbr, t_data *data);
 
 /*---rays.c---*/
-int		is_wall(t_minimap *minimap, t_data *data, t_pos *pos);
+int		is_wall(t_minimap *minimap, t_data *data, t_pos *pos, t_pos *diff);
 void	vertical_wall(t_minimap *minimap, t_data *data, t_pos *pos, double angle);
 void	horizontal_wall(t_minimap *minimap, t_data *data, t_pos *pos, double angle);
 void	set_nearest(t_minimap *minimap, t_pos *p1, t_pos *p2, double angle);

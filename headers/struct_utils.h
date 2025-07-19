@@ -6,7 +6,7 @@
 /*   By: nmartin <nmartin@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/06 16:52:00 by nmartin           #+#    #+#             */
-/*   Updated: 2025/07/19 12:34:28 by nmartin          ###   ########.fr       */
+/*   Updated: 2025/07/19 14:31:29 by nmartin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,25 +29,33 @@ typedef struct s_image
 	int			tab_y;
 }	t_image;
 
+typedef struct s_ennemy
+{
+	t_image			*s_ennemy;
+	int				pos_x;
+	int				pos_y;
+	struct s_ennemy	*next;
+}	t_ennemy;
+
 typedef struct s_minimap
 {
-	void	*display;
-	t_image	*minimap;
-	t_image	*cursor;
-	t_image	*direction;
-	t_image	*raycasting;
-	double	p_angle;
-	int		cursor_x;
-	int		cursor_y;
-	int		pxl_size;
-	int		p_color;
-	int		w_color;
-	int		f_color;
-	int		b_color;
-	int		c_color;
-	int		x;
-	int		y;
-	t_ennemy	*ennemies;
+	void				*display;
+	t_image				*minimap;
+	t_image				*cursor;
+	t_image				*direction;
+	t_image				*raycasting;
+	double				p_angle;
+	int					cursor_x;
+	int					cursor_y;
+	int					pxl_size;
+	unsigned int		p_color;
+	unsigned int		w_color;
+	unsigned int		f_color;
+	unsigned int		b_color;
+	unsigned int		c_color;
+	int					x;
+	int					y;
+	t_ennemy			*ennemies;
 }	t_minimap;
 
 typedef struct s_pos
@@ -76,14 +84,6 @@ typedef struct s_data
 	t_minimap	*minimap;
 	t_minimap	*raycast;
 }	t_data;
-
-typedef struct s_ennemy
-{
-	t_image		*s_ennemy;
-	int			pos_x;
-	int			pos_y;
-	t_ennemy	*next;
-}	t_ennemy;
 
 t_image	*new_image(void *display, int tab_x, int tab_y);
 void	free_image(t_image *image, void *display);
