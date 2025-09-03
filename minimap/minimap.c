@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minimap.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: nmartin <nmartin@student.42.fr>            +#+  +:+       +#+        */
+/*   By: igrousso <igrousso@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/05 14:23:31 by nmartin           #+#    #+#             */
-/*   Updated: 2025/06/18 13:45:09 by nmartin          ###   ########.fr       */
+/*   Updated: 2025/07/16 20:14:57 by igrousso         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,8 +42,9 @@ void	minimap_data(t_minimap *minimap, t_data *data)
 		minimap->pxl_size = MINIMAP_SIZE / minimap->x;
 	else
 		minimap->pxl_size = MINIMAP_SIZE / minimap->y;
-	minimap->cursor_x = data->map->x_spawn * data->minimap->pxl_size + MINIMAP_SIZE / 14;
-	minimap->cursor_y = data->map->y_spawn * data->minimap->pxl_size + MINIMAP_SIZE / 14;
+// printf("size : %d (%d)  x = %d, y = %d\n", MINIMAP_SIZE, MINIMAP_SIZE % minimap->pxl_size, MINIMAP_SIZE % minimap->x, MINIMAP_SIZE % minimap->y);
+	minimap->cursor_x = data->map->x_spawn * data->minimap->pxl_size + MINIMAP_SIZE / 15 + data->minimap->pxl_size / 6;
+	minimap->cursor_y = data->map->y_spawn * data->minimap->pxl_size + MINIMAP_SIZE / 15 + data->minimap->pxl_size / 6;
 	//printf("[%d][%d] * %d\n", data->map->y_spawn, data->map->x_spawn, data->minimap->pxl_size);
 	if (data->map->map[data->map->y_spawn][data->map->x_spawn] == E_DIR)
 		minimap->p_angle = 0;
@@ -53,6 +54,7 @@ void	minimap_data(t_minimap *minimap, t_data *data)
 		minimap->p_angle = PI;
 	else
 		minimap->p_angle = PI / 2;
+	minimap->minimap_size_by_15 = MINIMAP_SIZE / 15;
 	minimap->display = data->display;
 	minimap->minimap = new_image(data->display, minimap->pxl_size * minimap->x, minimap->pxl_size * minimap->y);//TODO gerer les leaks en cas derreurs
 	minimap->cursor = new_image(data->display, minimap->pxl_size / 1.5, minimap->pxl_size / 1.5);//TODO gerer les leaks en cas derreurs//TODO gerer la taille du cursuer (propotionnel)
@@ -112,6 +114,4 @@ void	minimap_create(t_minimap *minimap, t_data *data)
 		pixel.y++;
 	}
 	pixel_put_cursor(minimap->cursor, minimap->c_color, minimap->pxl_size / 1.5, minimap->pxl_size / 3);
-	put_raycasting(minimap, FOV, RAY_NBR, data);
-	put_cursor_direction(minimap);
 }

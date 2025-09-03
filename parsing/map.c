@@ -6,7 +6,7 @@
 /*   By: igrousso <igrousso@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/04 12:42:56 by igrousso          #+#    #+#             */
-/*   Updated: 2025/07/08 15:58:31 by igrousso         ###   ########.fr       */
+/*   Updated: 2025/07/12 16:19:04 by igrousso         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -123,11 +123,6 @@ int	fill_tabmap(int fd, t_map *map, int *i)
 	return (0);
 }
 
-/*
-stock les coordonnées de spawn du joueur et compte le nombre 
-d'ennemis, de puffs et de el mordjene
-*/
-
 void	set_pos_spawn(t_map *map)
 {
 	int	i;
@@ -143,8 +138,8 @@ void	set_pos_spawn(t_map *map)
 			{
 				map->x_spawn = j;
 				map->y_spawn = i;
+				return ;
 			}
-			count_collectible(map->map[i][j], map);
 			j++;
 		}
 		i++;

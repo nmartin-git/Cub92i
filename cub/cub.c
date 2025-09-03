@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   cub.c                                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: nmartin <nmartin@student.42.fr>            +#+  +:+       +#+        */
+/*   By: igrousso <igrousso@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/02 11:45:10 by nmartin           #+#    #+#             */
-/*   Updated: 2025/06/14 15:02:50 by nmartin          ###   ########.fr       */
+/*   Updated: 2025/07/16 18:18:16 by igrousso         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,6 +20,7 @@ int	main(int ac, char **av)
 	(void)av;
 	if (ac != 2)
 		cub_exit(2, "too many arguments\nUsage : ./cub3d <map>", NULL);
-	parsing(av[1], &map);
+	if (parsing(av[1], &map))
+		return (1);
 	game(&data, &map);
 }
