@@ -1,13 +1,13 @@
-NO /home/nmartin/Documents/Cub92i/textures/default_texture.xpm
-SO /home/nmartin/Documents/Cub92i/textures/default_texture.xpm
-WE /home/nmartin/Documents/Cub92i/textures/default_texture.xpm
-EA /home/nmartin/Documents/Cub92i/textures/default_texture.xpm
+NO /home/nmartin/Documents/test/textures/dog4.xpm
+SO /home/nmartin/Documents/test/textures/dog5.xpm
+WE /home/nmartin/Documents/test/textures/dog2.xpm
+EA /home/nmartin/Documents/test/textures/dog3.xpm
 
 F 123,10,1
 C 200,200,200
 
         1111111111111111111111111
-        1000000000110000000000001
+        10000000001100000000000N1
         1011000001110000000000001
         1001000000000000000000001
 111111111011000001110000000000001
@@ -27,7 +27,7 @@ C 200,200,200
 1000000000000011
 1100000000000001
 1000000000000011
-110000N000000001
+1100000000000001
 1000000000000011
 1100000000000001
 1111111111111111

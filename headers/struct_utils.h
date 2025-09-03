@@ -6,86 +6,97 @@
 /*   By: nmartin <nmartin@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/06 16:52:00 by nmartin           #+#    #+#             */
-/*   Updated: 2025/07/19 14:31:29 by nmartin          ###   ########.fr       */
+/*   Updated: 2025/09/03 18:19:49 by nmartin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef STRUCT_UTILS_H
 # define STRUCT_UTILS_H
 
-# include "parsing.h"
-# include <unistd.h>
-# include <stdlib.h>
 # include "../minilibx-linux/mlx.h"
+# include "../minilibx-linux/mlx_int.h"
+# include "parsing.h"
+# include <X11/Xlib.h>
 # include <X11/keysym.h>
+# include <stdlib.h>
+# include <unistd.h>
+
+typedef struct s_crosshair	t_crosshair;
+
+typedef enum e_face
+{
+	NORTH,
+	SOUTH,
+	EAST,
+	WEST
+}							t_face;
 
 typedef struct s_image
 {
-	void		*image;
-	char		*adress;
-	int			bpp;
-	int			l_len;
-	int			tab_x;
-	int			tab_y;
-}	t_image;
-
-typedef struct s_ennemy
-{
-	t_image			*s_ennemy;
-	int				pos_x;
-	int				pos_y;
-	struct s_ennemy	*next;
-}	t_ennemy;
+	void					*image;
+	char					*adress;
+	int						bpp;
+	int						l_len;
+	int						tab_x;
+	int						tab_y;
+}							t_image;
 
 typedef struct s_minimap
 {
-	void				*display;
-	t_image				*minimap;
-	t_image				*cursor;
-	t_image				*direction;
-	t_image				*raycasting;
-	double				p_angle;
-	int					cursor_x;
-	int					cursor_y;
-	int					pxl_size;
-	unsigned int		p_color;
-	unsigned int		w_color;
-	unsigned int		f_color;
-	unsigned int		b_color;
-	unsigned int		c_color;
-	int					x;
-	int					y;
-	t_ennemy			*ennemies;
-}	t_minimap;
+	void					*display;
+	t_image					*minimap;
+	t_image					*cursor;
+	t_image					*direction;
+	t_image					*raycasting;
+	float					p_angle;
+	int						cursor_x;
+	int						cursor_y;
+	int						pxl_size;
+	int						p_color;
+	int						w_color;
+	int						f_color;
+	int						b_color;
+	int						c_color;
+	int						x;
+	int						y;
+	int						minimap_size_by_15;
+}							t_minimap;
 
 typedef struct s_pos
 {
-	int	x;
-	int	y;
-}	t_pos;
+	int						x;
+	int						y;
+}							t_pos;
 
 typedef struct s_ray
 {
-	int		x_y;
-	double	angle;
-	long	dst;
-	int		percent;
-}	t_ray;
+	int						x_y;
+	float					angle;
+	long					dst;
+	int						percent;
+}							t_ray;
 
 typedef struct s_data
 {
-	void		*display;
-	void		*window;
-	t_image		*image;
-	t_image		*pv;
-	int			health;
-	int			puff;
-	t_map		*map;
-	t_minimap	*minimap;
-	t_minimap	*raycast;
-}	t_data;
+	void					*display;
+	void					*window;
+	t_image					*background;
+	t_image					*image;
+	t_image					*pv;
+	int						health;
+	int						puff;
+	t_map					*map;
+	t_minimap				*minimap;
+	t_minimap				*raycast;
+	t_image					*texture_n;
+	t_image					*texture_s;
+	t_image					*texture_e;
+	t_image					*texture_w;
+	t_crosshair				*crosshair;
+	int						keys[10];
+}							t_data;
 
-t_image	*new_image(void *display, int tab_x, int tab_y);
-void	free_image(t_image *image, void *display);
+t_image						*new_image(void *display, int tab_x, int tab_y);
+void						free_image(t_image *image, void *display);
 
 #endif

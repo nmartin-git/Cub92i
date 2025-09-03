@@ -6,7 +6,7 @@
 /*   By: igrousso <igrousso@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/07 17:35:27 by igrousso          #+#    #+#             */
-/*   Updated: 2025/06/08 21:44:29 by igrousso         ###   ########.fr       */
+/*   Updated: 2025/06/30 22:04:19 by igrousso         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,4 +49,6 @@ void	init_image(t_image *img)
 	img->adress = NULL;
 	img->bpp = -1;
 	img->l_len = -1;
+	img->tab_x = -1;
+	img->tab_y = -1;
 }

@@ -6,11 +6,20 @@
 /*   By: nmartin <nmartin@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/13 14:11:53 by nmartin           #+#    #+#             */
-/*   Updated: 2025/07/19 19:38:24 by nmartin          ###   ########.fr       */
+/*   Updated: 2025/07/20 18:06:17 by nmartin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minimap.h"
+
+double	normalize_angle(double angle)
+{
+	while (angle < 0)
+		angle += 2 * PI;
+	while (angle >= 2 * PI)
+		angle -= 2 * PI;
+	return (angle);
+}
 
 void	tan_err(t_pos *pos)
 {
@@ -44,127 +53,175 @@ int	is_wall(t_minimap *minimap, t_data *data, t_pos *pos, t_pos *diff)
 		return (0);
 }
 
-int	is_inside_wall(t_minimap *minimap, t_pos *pos)
-{
-	int	x;
-	int	y;
+// int	is_inside_wall(t_minimap *minimap, t_pos *pos)
+// {
+// 	int	x;
+// 	int	y;
 
-	x = pos->x/* - MINIMAP_SIZE / 15*/;
-	y = pos->y/* - MINIMAP_SIZE / 15*/;
-	// printf("%d, %d\n", x, y);
-	if (x > minimap->minimap->tab_x || y > minimap->minimap->tab_y)
-		return (1);
-	if (get_pixel_img(minimap->minimap, x, y) == minimap->w_color)
-		return (1);
-	else
-		return (0);
-}
+// 	x = pos->x/* - MINIMAP_SIZE / 15*/;
+// 	y = pos->y/* - MINIMAP_SIZE / 15*/;
+// 	// printf("%d, %d\n", x, y);
+// 	if (x > minimap->minimap->tab_x || y > minimap->minimap->tab_y)
+// 		return (1);
+// 	if (get_pixel_img(minimap->minimap, x, y) == minimap->w_color)
+// 		return (1);
+// 	else
+// 		return (0);
+// }
 
 void	vertical_wall(t_minimap *minimap, t_data *d, t_pos *pos, double angle)
 {
-	t_pos	step;
-	t_pos	diff;
-	// t_pos	diff2;
-	int		neg;
+	double	n_tan;
+	double	x_off;
+	double	y_off;
+	double	rx;
+	double	ry;
+	int		map_x;
+	int		map_y;
+	int		depth_of_field;
 
-	if (cos(angle) >= 0)
-		neg = 1;
-	else
-		neg = -1;
-	// if (sin(angle) < 0)
-	// 	neg2 = 1;
-	// else
-	// 	neg2 = -1;
-	diff.x = neg;
-	diff.y = 0;
-	step.x = minimap->pxl_size * neg;
-	step.y = step.x * tan(angle);
-	while (!is_wall(minimap, d, pos, &diff))
+	angle = normalize_angle(angle);
+	depth_of_field = 0;
+	n_tan = -tan(angle);
+	
+	// Looking left
+	if (angle > PI / 2 && angle < 3 * PI / 2)
 	{
-		pos->x += step.x;
-		pos->y += step.y;
+		rx = (((int)(minimap->cursor_x + minimap->pxl_size / 3 - MINIMAP_SIZE / 15) / minimap->pxl_size) * minimap->pxl_size) - 1 + MINIMAP_SIZE / 15;
+		ry = (minimap->cursor_x + minimap->pxl_size / 3 - rx) * n_tan + minimap->cursor_y + minimap->pxl_size / 3;
+		x_off = -minimap->pxl_size;
+		y_off = -x_off * n_tan;
 	}
+	// Looking right
+	else if ((angle >= 0 && angle < PI / 2) || (angle > 3 * PI / 2 && angle < 2 * PI))
+	{
+		rx = (((int)(minimap->cursor_x + minimap->pxl_size / 3 - MINIMAP_SIZE / 15) / minimap->pxl_size) * minimap->pxl_size) + minimap->pxl_size + MINIMAP_SIZE / 15;
+		ry = (minimap->cursor_x + minimap->pxl_size / 3 - rx) * n_tan + minimap->cursor_y + minimap->pxl_size / 3;
+		x_off = minimap->pxl_size;
+		y_off = -x_off * n_tan;
+	}
+	// Looking straight up or down
+	else
+	{
+		tan_err(pos);
+		return ;
+	}
+
+	while (depth_of_field < d->map->col)
+	{
+		map_x = (int)(rx - MINIMAP_SIZE / 15) / minimap->pxl_size;
+		map_y = (int)(ry - MINIMAP_SIZE / 15) / minimap->pxl_size;
+		
+		// Hit a wall or out of bounds
+		if (map_x >= 0 && map_x < d->map->col && map_y >= 0 && map_y < d->map->row 
+			&& d->map->map[map_y][map_x] == WALL)
+		{
+			pos->x = (int)rx;
+			pos->y = (int)ry;
+			return ;
+		}
+		// Out of bounds
+		else if (map_x < 0 || map_x >= d->map->col || map_y < 0 || map_y >= d->map->row)
+		{
+			tan_err(pos);
+			return ;
+		}
+		// Continue the ray
+		else
+		{
+			rx += x_off;
+			ry += y_off;
+			depth_of_field++;
+		}
+	}
+	tan_err(pos);
 }
 
 void	horizontal_wall(t_minimap *minimap, t_data *d, t_pos *pos, double angle)
 {
-	t_pos	step;
-	t_pos	diff;
-	// t_pos	diff2;
-	int		neg;
+	double	a_tan;
+	double	x_off;
+	double	y_off;
+	double	rx;
+	double	ry;
+	int		map_x;
+	int		map_y;
+	int		depth_of_field;
 
-	if (sin(angle) >= 0)
-		neg = 1;
-	else
-		neg = -1;
-	// if (cos(angle) > 0)
-	// 	neg2 = 1;
-	// else
-	// 	neg2 = -1;
-	diff.x = 0;
-	diff.y = neg;
-	step.y = minimap->pxl_size * neg;
-	if (fabs(tan(angle)) < 0.001)
-		tan_err(pos);
-	else
-		step.x = step.y / tan(angle);
-	while (!is_wall(minimap, d, pos, &diff))
+	angle = normalize_angle(angle);
+	depth_of_field = 0;
+	a_tan = -1 / tan(angle);
+	
+	// Looking up
+	if (angle > PI)
 	{
-		pos->x += step.x;
-		pos->y += step.y;
+		ry = (((int)(minimap->cursor_y + minimap->pxl_size / 3 - MINIMAP_SIZE / 15) / minimap->pxl_size) * minimap->pxl_size) - 1 + MINIMAP_SIZE / 15;
+		rx = (minimap->cursor_y + minimap->pxl_size / 3 - ry) * a_tan + minimap->cursor_x + minimap->pxl_size / 3;
+		y_off = -minimap->pxl_size;
+		x_off = -y_off * a_tan;
 	}
+	// Looking down
+	else if (angle < PI && angle != 0)
+	{
+		ry = (((int)(minimap->cursor_y + minimap->pxl_size / 3 - MINIMAP_SIZE / 15) / minimap->pxl_size) * minimap->pxl_size) + minimap->pxl_size + MINIMAP_SIZE / 15;
+		rx = (minimap->cursor_y + minimap->pxl_size / 3 - ry) * a_tan + minimap->cursor_x + minimap->pxl_size / 3;
+		y_off = minimap->pxl_size;
+		x_off = -y_off * a_tan;
+	}
+	// Looking straight left or right
+	else
+	{
+		tan_err(pos);
+		return ;
+	}
+
+	while (depth_of_field < d->map->row)
+	{
+		map_x = (int)(rx - MINIMAP_SIZE / 15) / minimap->pxl_size;
+		map_y = (int)(ry - MINIMAP_SIZE / 15) / minimap->pxl_size;
+		
+		// Hit a wall or out of bounds
+		if (map_x >= 0 && map_x < d->map->col && map_y >= 0 && map_y < d->map->row 
+			&& d->map->map[map_y][map_x] == WALL)
+		{
+			pos->x = (int)rx;
+			pos->y = (int)ry;
+			return ;
+		}
+		// Out of bounds
+		else if (map_x < 0 || map_x >= d->map->col || map_y < 0 || map_y >= d->map->row)
+		{
+			tan_err(pos);
+			return ;
+		}
+		// Continue the ray
+		else
+		{
+			rx += x_off;
+			ry += y_off;
+			depth_of_field++;
+		}
+	}
+	tan_err(pos);
 }
 
-void	set_nearest(t_minimap *minimap, t_pos *ph, t_pos *pv, double angle)
-{
-	int	player_x;
-	int	player_y;
-	int	grid_x;
-	int	grid_y;
-
-	player_x = minimap->cursor_x + minimap->pxl_size / 3;
-	player_y = minimap->cursor_y + minimap->pxl_size / 3;
-	grid_y = (int)floor((player_y - MINIMAP_SIZE / 15) / minimap->pxl_size);
-	ph->x = 0;
-	pv->y = 0;
-	if (sin(angle) > 0)
-		ph->y = (grid_y + 1) * minimap->pxl_size + MINIMAP_SIZE / 15 - 1;
-	else if (sin(angle) < 0)
-		ph->y = grid_y * minimap->pxl_size + MINIMAP_SIZE / 15/* - 1*/;
-	else
-		tan_err(ph);
-	if (ph->x != TAN_ERR && fabs(tan(angle)) > 0.001)
-		ph->x = player_x + (ph->y - player_y) / tan(angle);
-	else if (fabs(tan(angle)) <= 0.001)
-		tan_err(ph);
-	grid_x = (int)floor((player_x - MINIMAP_SIZE / 15) / minimap->pxl_size);
-	if (cos(angle) > 0)
-		pv->x = (grid_x + 1) * minimap->pxl_size + MINIMAP_SIZE / 15 - 1;
-	else if (cos(angle) < 0)
-		pv->x = grid_x * minimap->pxl_size + MINIMAP_SIZE / 15/* - 1*/;
-	else
-		tan_err(pv);
-	if (pv->x != TAN_ERR && fabs(cos(angle)) > 0.0001)
-		pv->y = player_y + (pv->x - player_x) * tan(angle);
-	else if (fabs(cos(angle)) <= 0.0001)
-		tan_err(pv);
-}
 
 t_ray	*raycast(t_minimap *minimap, t_ray *ray, t_data *data, t_pos *result)
 {
 	t_pos	ph;
 	t_pos	pv;
+	// t_pos	verif;
 	long	dst1;
 	long	dst2;
 	int		x_origin;
 	int		y_origin;
 
-	set_nearest(minimap, &ph, &pv, ray->angle);
+	ray->angle = normalize_angle(ray->angle);
 	horizontal_wall(minimap, data, &ph, ray->angle);
 	vertical_wall(minimap, data, &pv, ray->angle);
 	x_origin = minimap->cursor_x + minimap->pxl_size / 3;
 	y_origin = minimap->cursor_y + minimap->pxl_size / 3;
-	// ph.x = TAN_ERR;
+	// ph.x = TAN_ERR;	
 	if (ph.x == TAN_ERR || ph.y == TAN_ERR)
 		dst1 = LONG_MAX;
 	else
@@ -173,6 +230,7 @@ t_ray	*raycast(t_minimap *minimap, t_ray *ray, t_data *data, t_pos *result)
 		dst2 = LONG_MAX;
 	else
 		dst2 = pow(pv.x - x_origin, 2) + pow(pv.y - y_origin, 2);
+
 	if (dst1 <= dst2)
 	{
 		result->x = ph.x;

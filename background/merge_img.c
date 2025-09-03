@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   merge_img.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: nmartin <nmartin@student.42.fr>            +#+  +:+       +#+        */
+/*   By: igrousso <igrousso@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/07 17:41:33 by igrousso          #+#    #+#             */
-/*   Updated: 2025/06/12 15:31:18 by nmartin          ###   ########.fr       */
+/*   Updated: 2025/07/16 19:42:16 by igrousso         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,8 +35,8 @@ renvoie la couleur du pixel
 
 unsigned int	get_pixel_img(t_image *img, int x, int y)
 {
-	return (*(unsigned int *)((img->adress + (y * img->l_len) + (x * img->bpp
-				/ 8))));
+	return (*(unsigned int *)((img->adress + (y * img->l_len) + \
+			(x * img->bpp / 8))));
 }
 
 /*
@@ -44,25 +44,31 @@ place une image au dessus d'une autre sans prendre en compte
 les pixels vides
 */
 
-void	put_img_to_img(t_image *dst, t_image *src, int x, int y)
+void	put_img_to_img(t_image *dst, t_image *src, int x_offset, int y_offset)
 {
-	int	i;
-	int	j;
+	unsigned int	px;
+	t_tmp			t;
 
-	i = 0;
+	t.s_len = src->tab_x;
+	t.d_len = dst->tab_x;
 	if (!dst || !src || !dst->adress || !src->adress)
+		return ;
+	if (x_offset < 0 || y_offset < 0)
+		return ;
+	t.y = -1;
+	while (++t.y < src->tab_y)
 	{
-		printf("Image pointer is NULL\n");
-		return;
-	}
-	while (i < src->tab_y)
-	{
-		j = 0;
-		while (j < src->tab_x)
+		if (t.y + y_offset >= dst->tab_y)
+			break ;
+		t.x = -1;
+		while (++t.x < src->tab_x)
 		{
-			put_pixel_img(dst, x + j, y + i, get_pixel_img(src, j, i));
-			j++;
+			if (t.x + x_offset >= dst->tab_x)
+				break ;
+			px = ((int *)src->adress)[t.y * t.s_len + t.x];
+			if (px != 0)
+				((int *)dst->adress)[(t.y + y_offset) * t.d_len + \
+					(t.x + x_offset)] = px;
 		}
-		i++;
 	}
 }

@@ -6,13 +6,13 @@
 /*   By: nmartin <nmartin@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/08 14:47:06 by nmartin           #+#    #+#             */
-/*   Updated: 2025/07/18 17:26:25 by nmartin          ###   ########.fr       */
+/*   Updated: 2025/07/20 16:54:41 by nmartin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minimap.h"
 
-void	put_pxl(t_image *image, int x, int y, int color)
+void	put_pxl(t_image *image, int x, int y, unsigned int color)
 {
 	char	*pxl;
 	int		b;
