@@ -6,7 +6,7 @@
 /*   By: nmartin <nmartin@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/02 14:55:19 by nmartin           #+#    #+#             */
-/*   Updated: 2025/09/03 18:20:43 by nmartin          ###   ########.fr       */
+/*   Updated: 2025/09/03 18:52:34 by nmartin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,6 +30,7 @@
 //---game.c---
 int		close_window(t_data *data);
 void	set_data(t_data *data, t_map *map);
+void	pv_bar(t_data *data);
 void	game(t_data *data, t_map *map);
 int		minimap(t_data *data);
 
@@ -38,6 +39,7 @@ void	cub_exit(int err, char *str, t_data *data);
 void	free_data(t_data *data);
 
 /*---key_handling.c---*/
+void	clear_image(t_image *image);
 void	move_player(t_data *data, int input, __uint64_t delta_time);
 void	move_cursor(t_data *data, int direction);
 int		mouse_move(int x, int y, t_data *data);
