@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parsing.h                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: nmartin <nmartin@student.42.fr>            +#+  +:+       +#+        */
+/*   By: igrousso <igrousso@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/03 08:20:44 by igrousso          #+#    #+#             */
-/*   Updated: 2025/09/03 18:48:58 by nmartin          ###   ########.fr       */
+/*   Updated: 2025/09/04 17:28:18 by igrousso         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,8 +23,9 @@
 # define E_DIR 4
 # define W_DIR 5
 
-# define MORDJENE 10
-# define PUFF 11
+# define MORDJENE 6
+# define PUFF 7
+# define DOOR 10
 
 typedef struct s_data	t_data;
 
@@ -43,6 +44,7 @@ typedef struct s_map
 	int					y_spawn;
 	int					el_mordjene;
 	int					puff;
+	int					doors;
 }						t_map;
 
 /* check_map */
@@ -106,6 +108,8 @@ int						parsing(char *av, t_map *map);
 
 int						ctoi2(char c);
 void					count_collectible(char c, t_map *map);
+int						check_doors(t_map *map, int x, int y);
+
 
 /*	load textures */
 

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   map_utils2.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: nmartin <nmartin@student.42.fr>            +#+  +:+       +#+        */
+/*   By: igrousso <igrousso@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/04 17:47:47 by igrousso          #+#    #+#             */
-/*   Updated: 2025/09/03 18:46:07 by nmartin          ###   ########.fr       */
+/*   Updated: 2025/09/04 17:32:33 by igrousso         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,6 +24,8 @@ int	ctoi2(char c)
 		return (MORDJENE);
 	else if (c == 'F')
 		return (PUFF);
+	else if (c == 'D')
+		return (DOOR);	
 	return (-2);
 }
 
@@ -37,4 +39,18 @@ void	count_collectible(char c, t_map *map)
 		map->el_mordjene++;
 	if (c == PUFF)
 		map->puff++;
+	if (c == DOOR)
+		map->doors++;	
+}
+
+int check_doors(t_map *map, int x, int y)
+{
+	if ((y - 1 >= 0 && map->map[y - 1][x] != 1 && \
+		 y + 1 <= map->row && map->map[y + 1][x] != 1) && \
+		(x - 1 >= 0 && map->map[y][x - 1] != 1 && \
+		 x + 1 <= map->row && map->map[y][x + 1] != 1))
+	{
+		return (1);
+	}
+	return (0);
 }

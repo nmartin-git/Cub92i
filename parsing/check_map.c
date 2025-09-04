@@ -6,7 +6,7 @@
 /*   By: igrousso <igrousso@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/04 12:31:38 by igrousso          #+#    #+#             */
-/*   Updated: 2025/06/06 16:03:06 by igrousso         ###   ########.fr       */
+/*   Updated: 2025/09/04 17:22:43 by igrousso         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,12 +56,13 @@ int	check_map(t_map *map)
 		x = 0;
 		while (map->map[y][x] != 9)
 		{
+			if (map->map[y][x] == 10)
+				if (check_doors(map, x, y))
+					return (write(2, \
+						"Error\nDoors must be between walls\n", 34));
 			if (map->map[y][x] == 8)
-			{
-				if (map->map[y][x] == 8)
-					if (check_neighbors(map, x, y))
-						return (1);
-			}
+				if (check_neighbors(map, x, y))
+					return (1);
 			x++;
 		}
 		y++;

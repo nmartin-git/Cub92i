@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   map.c                                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: nmartin <nmartin@student.42.fr>            +#+  +:+       +#+        */
+/*   By: igrousso <igrousso@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/04 12:42:56 by igrousso          #+#    #+#             */
-/*   Updated: 2025/09/03 18:58:43 by nmartin          ###   ########.fr       */
+/*   Updated: 2025/09/04 17:18:16 by igrousso         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,10 +30,11 @@ int	fill_row(int **row, char *line, int col, int *count_spawn)
 		{
 			(*row)[i] = ctoi(line[i - 1], count_spawn);
 			if ((*row)[i] == -2)
-				return (free(line), 1);
+				return (free(line), \
+					write(2, "Error\nMap contains invalid character\n", 38));
 			if (count_spawn < 0)
-				return (free(line), write(2, "Error\n \
-                    Map contains duplicates\n", 30));
+				return (free(line), \
+					write(2, "Error\nMap contains duplicates\n", 30));
 		}
 		else
 			(*row)[i] = 8;

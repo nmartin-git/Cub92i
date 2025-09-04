@@ -6,7 +6,7 @@
 /*   By: igrousso <igrousso@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/02 11:45:35 by nmartin           #+#    #+#             */
-/*   Updated: 2025/06/07 16:44:48 by igrousso         ###   ########.fr       */
+/*   Updated: 2025/09/04 16:59:36 by igrousso         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -82,6 +82,9 @@ void	pre_init(t_map *map)
 	map->col = -1;
 	map->x_spawn = -1;
 	map->y_spawn = -1;
+	map->puff = 0;
+	map->el_mordjene = 0;
+	map->doors = 0;
 }
 
 /*

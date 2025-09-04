@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   map_utils.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: nmartin <nmartin@student.42.fr>            +#+  +:+       +#+        */
+/*   By: igrousso <igrousso@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/04 12:43:53 by igrousso          #+#    #+#             */
-/*   Updated: 2025/09/03 18:47:11 by nmartin          ###   ########.fr       */
+/*   Updated: 2025/09/04 17:29:16 by igrousso         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -69,7 +69,7 @@ char to int avec les spécificités de la map
 
 int	ctoi(char c, int *count)
 {
-	if (c >= '0' && c <= '9')
+	if (c >= '0' && c <= '1')
 		return (c - '0');
 	else if (c == 'N')
 	{
