@@ -6,7 +6,7 @@
 /*   By: nmartin <nmartin@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/02 11:45:56 by nmartin           #+#    #+#             */
-/*   Updated: 2025/09/03 18:33:58 by nmartin          ###   ########.fr       */
+/*   Updated: 2025/09/04 15:22:29 by nmartin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,6 +41,7 @@ void	set_data(t_data *data, t_map *map)
 {
 	data->health = HEALTH - 40;
 	data->minimap = NULL;
+	data->screen_minimap = NULL;
 	data->map = map;
 	data->display = mlx_init();
 	if (!data->display)
@@ -63,9 +64,12 @@ void	set_data(t_data *data, t_map *map)
 int	minimap(t_data *data)
 {
 	data->minimap = malloc(sizeof(t_minimap));
+	data->screen_minimap = malloc(sizeof(t_minimap));
 	//if (!data->minimap)//TODO gerer lerreur
-	minimap_data(data->minimap, data);
+	minimap_data(data->minimap, data, MINIMAP_SIZE);
+	minimap_data(data->screen_minimap, data, SCREEN_MINIMAP_SIZE);
 	minimap_create(data->minimap, data);
+	minimap_create(data->screen_minimap, data);
 	return (0);
 }
 

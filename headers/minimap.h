@@ -6,7 +6,7 @@
 /*   By: nmartin <nmartin@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/05 14:23:42 by nmartin           #+#    #+#             */
-/*   Updated: 2025/09/03 18:23:56 by nmartin          ###   ########.fr       */
+/*   Updated: 2025/09/04 15:17:42 by nmartin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,7 +22,7 @@
 
 # define EMPTY_COLOR 0
 # define MINIMAP_SIZE 25000
-# define MINIMAP 400
+# define SCREEN_MINIMAP_SIZE 400
 # define QUALITY 100
 
 # define WALL 1
@@ -60,7 +60,7 @@ enum						e_input
 /*---minimap.c---*/
 void						set_minimap_color(t_minimap *minimap);
 int							get_minimap_color(t_minimap *minimap, int content);
-void						minimap_data(t_minimap *minimap, t_data *data);
+void						minimap_data(t_minimap *minimap, t_data *data, int size);
 void						pixel_put_square(t_minimap *minimap, t_pos pixel,
 								int color);
 void						minimap_create(t_minimap *minimap, t_data *data);

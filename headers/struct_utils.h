@@ -6,7 +6,7 @@
 /*   By: nmartin <nmartin@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/06 16:52:00 by nmartin           #+#    #+#             */
-/*   Updated: 2025/09/03 18:19:49 by nmartin          ###   ########.fr       */
+/*   Updated: 2025/09/04 15:14:48 by nmartin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -87,6 +87,7 @@ typedef struct s_data
 	int						puff;
 	t_map					*map;
 	t_minimap				*minimap;
+	t_minimap				*screen_minimap;
 	t_minimap				*raycast;
 	t_image					*texture_n;
 	t_image					*texture_s;
