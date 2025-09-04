@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   map_utils.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: igrousso <igrousso@student.42.fr>          +#+  +:+       +#+        */
+/*   By: nmartin <nmartin@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/04 12:43:53 by igrousso          #+#    #+#             */
-/*   Updated: 2025/07/13 01:50:18 by igrousso         ###   ########.fr       */
+/*   Updated: 2025/09/03 18:47:11 by nmartin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -91,9 +91,7 @@ int	ctoi(char c, int *count)
 		(*count)--;
 		return (W_DIR);
 	}
-	else if (c == ' ' || c == '\n')
-		return (8);
-	return (ft_putstr_fd("Error\nIncorect character\n", 2), -2);
+	return (ctoi2(c));
 }
 
 /*

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   map.c                                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: igrousso <igrousso@student.42.fr>          +#+  +:+       +#+        */
+/*   By: nmartin <nmartin@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/04 12:42:56 by igrousso          #+#    #+#             */
-/*   Updated: 2025/07/12 16:19:04 by igrousso         ###   ########.fr       */
+/*   Updated: 2025/09/03 18:58:43 by nmartin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -138,8 +138,8 @@ void	set_pos_spawn(t_map *map)
 			{
 				map->x_spawn = j;
 				map->y_spawn = i;
-				return ;
 			}
+			count_collectible(map->map[i][j], map);
 			j++;
 		}
 		i++;

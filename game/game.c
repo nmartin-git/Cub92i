@@ -6,7 +6,7 @@
 /*   By: nmartin <nmartin@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/02 11:45:56 by nmartin           #+#    #+#             */
-/*   Updated: 2025/07/20 17:07:52 by nmartin          ###   ########.fr       */
+/*   Updated: 2025/09/04 16:48:40 by nmartin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,7 +39,9 @@ int		init_textures(t_data *data)
 
 void	set_data(t_data *data, t_map *map)
 {
+	data->health = HEALTH - 40;
 	data->minimap = NULL;
+	data->screen_minimap = NULL;
 	data->map = map;
 	data->display = mlx_init();
 	if (!data->display)
@@ -62,9 +64,12 @@ void	set_data(t_data *data, t_map *map)
 int	minimap(t_data *data)
 {
 	data->minimap = malloc(sizeof(t_minimap));
+	data->screen_minimap = malloc(sizeof(t_minimap));
 	//if (!data->minimap)//TODO gerer lerreur
-	minimap_data(data->minimap, data);
+	minimap_data(data->minimap, data, MINIMAP_SIZE);
+	minimap_data(data->screen_minimap, data, SCREEN_MINIMAP_SIZE);
 	minimap_create(data->minimap, data);
+	minimap_create(data->screen_minimap, data);
 	return (0);
 }
 
@@ -92,19 +97,21 @@ int render(t_data *data)
 	last_time = now;
 	
 	update(data, delta_time);
-	// put_cursor_direction(data->minimap);
+	put_cursor_direction(data->screen_minimap);
 	put_img_to_img(data->image, data->background, 0, 0);
 	put_raycasting(data->minimap, FOV, TAB_X, data);
 	put_img_to_img(data->image, data->crosshair->cross_img, data->crosshair->pos_c_x, data->crosshair->pos_c_y);
-	// put_img_to_img(data->image, data->minimap->minimap, MINIMAP_SIZE / 15, MINIMAP_SIZE / 15);
+	put_img_to_img(data->image, data->screen_minimap->minimap, SCREEN_MINIMAP_SIZE / 15, SCREEN_MINIMAP_SIZE / 15);
 	// put_img_to_img(data->image, data->minimap->raycasting, MINIMAP_SIZE / 15, MINIMAP_SIZE / 15);
-	// put_img_to_img(data->image, data->minimap->direction, data->minimap->cursor_x - data->minimap->pxl_size * 2/3, data->minimap->cursor_y - data->minimap->pxl_size * 2/3);
-	// put_img_to_img(data->image, data->minimap->cursor, data->minimap->cursor_x, data->minimap->cursor_y);
+	put_img_to_img(data->image, data->screen_minimap->direction, data->screen_minimap->cursor_x, data->screen_minimap->cursor_y);
+	put_img_to_img(data->image, data->screen_minimap->cursor, data->screen_minimap->cursor_x , data->screen_minimap->cursor_y);
+	put_img_to_img(data->image, data->pv, TAB_X / 4, TAB_Y - TAB_Y / 6);
 	mlx_put_image_to_window(data->display, data->window, data->image->image, 0, 0);
 	frame_count++;
 	if (now - last_fps_time >= 1000)
 	{
 		printf("FPS : %d\n", frame_count);
+		printf("%d %d\n", data->screen_minimap->cursor_x, data->screen_minimap->cursor_y);
 		frame_count = 0;
 		last_fps_time = now;
 	}
@@ -112,7 +119,28 @@ int render(t_data *data)
 	return (0);
 }
 
+void	pv_bar(t_data *data)
+{
+	int		x;
+	int		y;
 
+	y = 0;
+	while (y < TAB_Y / 20)
+	{
+		x = 0;
+		while (x < TAB_X / 2)
+			put_pxl(data->pv, x++, y, HEALTH_BG_COLOR);
+		y++;
+	}
+	y = 0;
+	while (y < TAB_Y / 20)
+	{
+		x = 0;
+		while (x < (TAB_X / 2) * data->health / 100)
+			put_pxl(data->pv, x++, y, HEALTH_COLOR);
+		y++;
+	}
+}
 
 void	game(t_data *data, t_map *map)
 {
@@ -122,6 +150,8 @@ void	game(t_data *data, t_map *map)
 	if (load_texutres(data))
 		exit(1);
 	minimap(data);
+	data->pv = new_image(data->display, TAB_X / 2, TAB_Y / 20);
+	pv_bar(data);
 	// loading screen ?
 	// mlx_mouse_hide_no_leak(data->display, data->window);
 	if (paint_floor_and_ceiling(data->background, data))

@@ -6,7 +6,7 @@
 /*   By: nmartin <nmartin@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/05 14:23:42 by nmartin           #+#    #+#             */
-/*   Updated: 2025/07/20 16:00:09 by nmartin          ###   ########.fr       */
+/*   Updated: 2025/09/04 16:47:09 by nmartin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,13 +19,16 @@
 # include <X11/keysym.h>
 # include <limits.h>
 # include <math.h>
+
 # define EMPTY_COLOR 0
 # define MINIMAP_SIZE 25000
-# define MINIMAP 400
+# define SCREEN_MINIMAP_SIZE 400
 # define QUALITY 100
+
 # define WALL 1
 # define FLOOR 0
 # define EMPTY 8
+
 # define STEP 3
 # define ROTATION 0.15
 # define PI 3.1415926535
@@ -34,6 +37,12 @@
 # define TAN_ERR 9999
 # define HORIZONTAL 1
 # define VERTICAL 2
+
+# define HEAL 20
+
+# define MORDJENE_COLOR 0xE6D295
+# define MORDJENE_BG_COLOR 0xCDB577
+# define PUFF_COLOR 0xFF69B4
 
 typedef struct s_image		t_image;
 typedef struct s_minimap	t_minimap;
@@ -51,7 +60,7 @@ enum						e_input
 /*---minimap.c---*/
 void						set_minimap_color(t_minimap *minimap);
 int							get_minimap_color(t_minimap *minimap, int content);
-void						minimap_data(t_minimap *minimap, t_data *data);
+void						minimap_data(t_minimap *minimap, t_data *data, int size);
 void						pixel_put_square(t_minimap *minimap, t_pos pixel,
 								int color);
 void						minimap_create(t_minimap *minimap, t_data *data);
@@ -97,5 +106,11 @@ void						set_nearest(t_minimap *minimap, t_pos *ph,
 								t_pos *pv, double angle);
 t_ray						*raycast(t_minimap *minimap, t_ray *ray,
 								t_data *data, t_pos *result);
+
+
+/*---items.c---*/
+void	put_pxl(t_image *image, int x, int y, unsigned int color);
+void	put_mordjene(t_minimap *minimap, t_pos pos, int radius, int inner_radius);
+void	put_puff(t_minimap *minimap, t_pos pos, int width, int height);
 
 #endif
