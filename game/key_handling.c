@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   key_handling.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: nmartin <nmartin@student.42.fr>            +#+  +:+       +#+        */
+/*   By: igrousso <igrousso@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/07 15:26:13 by nmartin           #+#    #+#             */
-/*   Updated: 2025/09/04 16:36:22 by nmartin          ###   ########.fr       */
+/*   Updated: 2025/09/04 19:51:28 by igrousso         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -176,5 +176,13 @@ int	update(t_data *data, __uint64_t delta_time)
 		move_cursor(data, -1);
 	if (data->keys[6] == 1)
 		move_cursor(data, 1);
+	if (data->minimap->cursor_x / data->screen_minimap->cursor_x > 63)
+		data->screen_minimap->cursor_x = data->minimap->cursor_x / 63;
+	if (data->minimap->cursor_x / data->screen_minimap->cursor_x < 62)
+		data->screen_minimap->cursor_x = data->minimap->cursor_x / 62;	
+	if (data->minimap->cursor_y / data->screen_minimap->cursor_y > 63)
+		data->screen_minimap->cursor_y = data->minimap->cursor_y / 63;
+	if (data->minimap->cursor_y / data->screen_minimap->cursor_y < 62)
+		data->screen_minimap->cursor_y = data->minimap->cursor_y / 62;
 	return (0);
 }

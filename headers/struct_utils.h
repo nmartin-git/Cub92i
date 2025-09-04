@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   struct_utils.h                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: nmartin <nmartin@student.42.fr>            +#+  +:+       +#+        */
+/*   By: igrousso <igrousso@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/06 16:52:00 by nmartin           #+#    #+#             */
-/*   Updated: 2025/09/04 15:14:48 by nmartin          ###   ########.fr       */
+/*   Updated: 2025/09/04 18:44:57 by igrousso         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,8 +49,8 @@ typedef struct s_minimap
 	t_image					*direction;
 	t_image					*raycasting;
 	float					p_angle;
-	int						cursor_x;
-	int						cursor_y;
+	float					cursor_x;
+	float					cursor_y;
 	int						pxl_size;
 	int						p_color;
 	int						w_color;
@@ -60,6 +60,7 @@ typedef struct s_minimap
 	int						x;
 	int						y;
 	int						minimap_size_by_15;
+	float					scale;
 }							t_minimap;
 
 typedef struct s_pos

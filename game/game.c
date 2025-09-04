@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   game.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: nmartin <nmartin@student.42.fr>            +#+  +:+       +#+        */
+/*   By: igrousso <igrousso@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/02 11:45:56 by nmartin           #+#    #+#             */
-/*   Updated: 2025/09/04 16:48:40 by nmartin          ###   ########.fr       */
+/*   Updated: 2025/09/04 19:26:59 by igrousso         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -103,7 +103,7 @@ int render(t_data *data)
 	put_img_to_img(data->image, data->crosshair->cross_img, data->crosshair->pos_c_x, data->crosshair->pos_c_y);
 	put_img_to_img(data->image, data->screen_minimap->minimap, SCREEN_MINIMAP_SIZE / 15, SCREEN_MINIMAP_SIZE / 15);
 	// put_img_to_img(data->image, data->minimap->raycasting, MINIMAP_SIZE / 15, MINIMAP_SIZE / 15);
-	put_img_to_img(data->image, data->screen_minimap->direction, data->screen_minimap->cursor_x, data->screen_minimap->cursor_y);
+	// put_img_to_img(data->image, data->screen_minimap->direction, data->screen_minimap->cursor_x, data->screen_minimap->cursor_y);
 	put_img_to_img(data->image, data->screen_minimap->cursor, data->screen_minimap->cursor_x , data->screen_minimap->cursor_y);
 	put_img_to_img(data->image, data->pv, TAB_X / 4, TAB_Y - TAB_Y / 6);
 	mlx_put_image_to_window(data->display, data->window, data->image->image, 0, 0);
@@ -111,7 +111,11 @@ int render(t_data *data)
 	if (now - last_fps_time >= 1000)
 	{
 		printf("FPS : %d\n", frame_count);
-		printf("%d %d\n", data->screen_minimap->cursor_x, data->screen_minimap->cursor_y);
+		printf("%f %f\n", data->minimap->cursor_x, data->minimap->cursor_y);
+		printf("%f %f\n", data->screen_minimap->cursor_x, data->screen_minimap->cursor_y);
+		// printf("%d\n", data->screen_minimap->pxl_size);
+		// printf("step * delta time : %lu\nminimap size / screen minimap size : %d\n", (STEP * delta_time) , (MINIMAP_SIZE / SCREEN_MINIMAP_SIZE));
+		// printf("%f\n", (float)(STEP * delta_time) / (float)(MINIMAP_SIZE / SCREEN_MINIMAP_SIZE));
 		frame_count = 0;
 		last_fps_time = now;
 	}
