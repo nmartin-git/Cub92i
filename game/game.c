@@ -6,7 +6,7 @@
 /*   By: nmartin <nmartin@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/02 11:45:56 by nmartin           #+#    #+#             */
-/*   Updated: 2025/09/04 15:22:29 by nmartin          ###   ########.fr       */
+/*   Updated: 2025/09/04 16:48:40 by nmartin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -97,20 +97,21 @@ int render(t_data *data)
 	last_time = now;
 	
 	update(data, delta_time);
-	// put_cursor_direction(data->minimap);
+	put_cursor_direction(data->screen_minimap);
 	put_img_to_img(data->image, data->background, 0, 0);
 	put_raycasting(data->minimap, FOV, TAB_X, data);
 	put_img_to_img(data->image, data->crosshair->cross_img, data->crosshair->pos_c_x, data->crosshair->pos_c_y);
-	// put_img_to_img(data->image, data->minimap->minimap, MINIMAP_SIZE / 15, MINIMAP_SIZE / 15);
+	put_img_to_img(data->image, data->screen_minimap->minimap, SCREEN_MINIMAP_SIZE / 15, SCREEN_MINIMAP_SIZE / 15);
 	// put_img_to_img(data->image, data->minimap->raycasting, MINIMAP_SIZE / 15, MINIMAP_SIZE / 15);
-	// put_img_to_img(data->image, data->minimap->direction, data->minimap->cursor_x - data->minimap->pxl_size * 2/3, data->minimap->cursor_y - data->minimap->pxl_size * 2/3);
-	// put_img_to_img(data->image, data->minimap->cursor, data->minimap->cursor_x, data->minimap->cursor_y);
+	put_img_to_img(data->image, data->screen_minimap->direction, data->screen_minimap->cursor_x, data->screen_minimap->cursor_y);
+	put_img_to_img(data->image, data->screen_minimap->cursor, data->screen_minimap->cursor_x , data->screen_minimap->cursor_y);
 	put_img_to_img(data->image, data->pv, TAB_X / 4, TAB_Y - TAB_Y / 6);
 	mlx_put_image_to_window(data->display, data->window, data->image->image, 0, 0);
 	frame_count++;
 	if (now - last_fps_time >= 1000)
 	{
 		printf("FPS : %d\n", frame_count);
+		printf("%d %d\n", data->screen_minimap->cursor_x, data->screen_minimap->cursor_y);
 		frame_count = 0;
 		last_fps_time = now;
 	}

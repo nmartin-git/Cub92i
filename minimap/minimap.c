@@ -6,7 +6,7 @@
 /*   By: nmartin <nmartin@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/05 14:23:31 by nmartin           #+#    #+#             */
-/*   Updated: 2025/09/04 15:17:08 by nmartin          ###   ########.fr       */
+/*   Updated: 2025/09/04 16:40:03 by nmartin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,9 +43,9 @@ void	minimap_data(t_minimap *minimap, t_data *data, int size)
 	else
 		minimap->pxl_size = size / minimap->y;
 // printf("size : %d (%d)  x = %d, y = %d\n", MINIMAP_SIZE, MINIMAP_SIZE % minimap->pxl_size, MINIMAP_SIZE % minimap->x, MINIMAP_SIZE % minimap->y);
-	minimap->cursor_x = data->map->x_spawn * data->minimap->pxl_size + size / 15 + data->minimap->pxl_size / 6;
-	minimap->cursor_y = data->map->y_spawn * data->minimap->pxl_size + size / 15 + data->minimap->pxl_size / 6;
-	//printf("[%d][%d] * %d\n", data->map->y_spawn, data->map->x_spawn, data->minimap->pxl_size);
+	minimap->cursor_x = data->map->x_spawn * minimap->pxl_size + size / 15 + minimap->pxl_size / 6;
+	minimap->cursor_y = data->map->y_spawn * minimap->pxl_size + size / 15 + minimap->pxl_size / 6;
+	// printf("[%d][%d] * %d\n", data->map->y_spawn, data->map->x_spawn, data->minimap->pxl_size);
 	if (data->map->map[data->map->y_spawn][data->map->x_spawn] == E_DIR)
 		minimap->p_angle = 0;
 	else if (data->map->map[data->map->y_spawn][data->map->x_spawn] == N_DIR)
