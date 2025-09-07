@@ -6,7 +6,7 @@
 /*   By: nmartin <nmartin@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/02 11:45:56 by nmartin           #+#    #+#             */
-/*   Updated: 2025/09/04 16:48:40 by nmartin          ###   ########.fr       */
+/*   Updated: 2025/09/06 18:18:32 by nmartin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -97,7 +97,7 @@ int render(t_data *data)
 	last_time = now;
 	
 	update(data, delta_time);
-	put_cursor_direction(data->screen_minimap);
+	// put_cursor_direction(data->screen_minimap);
 	put_img_to_img(data->image, data->background, 0, 0);
 	put_raycasting(data->minimap, FOV, TAB_X, data);
 	put_img_to_img(data->image, data->crosshair->cross_img, data->crosshair->pos_c_x, data->crosshair->pos_c_y);
@@ -111,7 +111,6 @@ int render(t_data *data)
 	if (now - last_fps_time >= 1000)
 	{
 		printf("FPS : %d\n", frame_count);
-		printf("%d %d\n", data->screen_minimap->cursor_x, data->screen_minimap->cursor_y);
 		frame_count = 0;
 		last_fps_time = now;
 	}

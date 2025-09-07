@@ -6,7 +6,7 @@
 /*   By: nmartin <nmartin@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/05 14:23:31 by nmartin           #+#    #+#             */
-/*   Updated: 2025/09/04 16:40:03 by nmartin          ###   ########.fr       */
+/*   Updated: 2025/09/07 15:25:33 by nmartin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -94,6 +94,7 @@ void	pixel_put_square(t_minimap *minimap, t_pos pixel, int color)
 		pixel.y++;
 		y++;
 	}
+	// printf("put at %d %d\n", pixel.x, pixel.y);
 }
 
 void	minimap_create(t_minimap *minimap, t_data *data)
@@ -109,6 +110,10 @@ void	minimap_create(t_minimap *minimap, t_data *data)
 		{
 			color = get_minimap_color(minimap, data->map->map[pixel.y][pixel.x]);
 			pixel_put_square(minimap, pixel, color);
+			if (data->map->map[pixel.y][pixel.x] == MORDJENE)
+				put_mordjene(minimap, pixel, minimap->pxl_size / 3, minimap->pxl_size / 4);
+			else if (data->map->map[pixel.y][pixel.x] == PUFF)
+				put_puff(minimap, pixel, minimap->pxl_size / 3, minimap->pxl_size * 3 / 4);
 			pixel.x++;
 		}
 		pixel.y++;
