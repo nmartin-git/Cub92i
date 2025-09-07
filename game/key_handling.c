@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   key_handling.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: igrousso <igrousso@student.42.fr>          +#+  +:+       +#+        */
+/*   By: nmartin <nmartin@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/07 15:26:13 by nmartin           #+#    #+#             */
-/*   Updated: 2025/09/04 19:51:28 by igrousso         ###   ########.fr       */
+/*   Updated: 2025/09/07 18:32:11 by nmartin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,7 +39,7 @@ void	check_items(t_data *data, t_minimap *minimap)
 	}
 	else
 		return ;
-	pixel_put_square(data->minimap, pixel, data->minimap->f_color);
+	pixel_put_square(data->screen_minimap, pixel, data->minimap->f_color);
 }
 
 void	clear_image(t_image *image)

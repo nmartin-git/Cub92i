@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minimap.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: igrousso <igrousso@student.42.fr>          +#+  +:+       +#+        */
+/*   By: nmartin <nmartin@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/05 14:23:31 by nmartin           #+#    #+#             */
-/*   Updated: 2025/09/04 18:45:42 by igrousso         ###   ########.fr       */
+/*   Updated: 2025/09/07 18:35:30 by nmartin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -110,6 +110,10 @@ void	minimap_create(t_minimap *minimap, t_data *data)
 		{
 			color = get_minimap_color(minimap, data->map->map[pixel.y][pixel.x]);
 			pixel_put_square(minimap, pixel, color);
+			if (data->map->map[pixel.y][pixel.x] == MORDJENE)
+				put_mordjene(minimap, pixel, minimap->pxl_size / 3, minimap->pxl_size / 4);
+			else if (data->map->map[pixel.y][pixel.x] == PUFF)
+				put_puff(minimap, pixel, minimap->pxl_size / 3, minimap->pxl_size * 3 / 4);
 			pixel.x++;
 		}
 		pixel.y++;
