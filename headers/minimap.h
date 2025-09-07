@@ -6,7 +6,7 @@
 /*   By: igrousso <igrousso@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/05 14:23:42 by nmartin           #+#    #+#             */
-/*   Updated: 2025/09/04 19:42:59 by igrousso         ###   ########.fr       */
+/*   Updated: 2025/09/07 21:58:16 by igrousso         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,6 +49,15 @@ typedef struct s_minimap	t_minimap;
 typedef struct s_pos		t_pos;
 typedef struct s_ray		t_ray;
 
+typedef struct s_tmp2
+{
+	int						b;
+	int						l;
+	int						x;
+	int						i;
+	int						y;
+}							t_tmp2;
+
 enum						e_input
 {
 	W,
@@ -60,15 +69,26 @@ enum						e_input
 /*---minimap.c---*/
 void						set_minimap_color(t_minimap *minimap);
 int							get_minimap_color(t_minimap *minimap, int content);
-void						minimap_data(t_minimap *minimap, t_data *data, int size);
+void						minimap_data(t_minimap *minimap, t_data *data,
+								int size);
+void						minimap_create(t_minimap *minimap, t_data *data);
+
+/*---minimap_utils.c---*/
 void						pixel_put_square(t_minimap *minimap, t_pos pixel,
 								int color);
-void						minimap_create(t_minimap *minimap, t_data *data);
+int							load_image(t_minimap *minimap, t_data *data);
 
 /*---cursor.c---*/
 void						put_cursor_direction(t_minimap *minimap);
 void						pixel_put_cursor(t_image *cursor, int color,
 								int size, int radius);
+
+/*---collision_screen.c---*/
+
+void						go_left_screen(t_data *data, float pixels);
+void						go_right_screen(t_data *data, float pixels);
+void						go_up_screen(t_data *data, float pixels);
+void						go_down_screen(t_data *data, float pixels);
 
 /*---collision.c*/
 void						go_left(t_data *data, int pixels);
@@ -107,10 +127,12 @@ void						set_nearest(t_minimap *minimap, t_pos *ph,
 t_ray						*raycast(t_minimap *minimap, t_ray *ray,
 								t_data *data, t_pos *result);
 
-
 /*---items.c---*/
-void	put_pxl(t_image *image, int x, int y, unsigned int color);
-void	put_mordjene(t_minimap *minimap, t_pos pos, int radius, int inner_radius);
-void	put_puff(t_minimap *minimap, t_pos pos, int width, int height);
+void						put_pxl(t_image *image, int x, int y,
+								unsigned int color);
+void						put_mordjene(t_minimap *minimap, t_pos pos,
+								int radius, int inner_radius);
+void						put_puff(t_minimap *minimap, t_pos pos, int width,
+								int height);
 
 #endif

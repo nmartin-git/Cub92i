@@ -6,15 +6,11 @@
 /*   By: igrousso <igrousso@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/05 14:50:13 by igrousso          #+#    #+#             */
-/*   Updated: 2025/06/06 16:04:50 by igrousso         ###   ########.fr       */
+/*   Updated: 2025/09/07 20:08:46 by igrousso         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../headers/parsing.h"
-
-/*
-verifie si une colonne est un espace vide
-*/
 
 int	is_col_empty(int **map, int i)
 {
@@ -30,10 +26,6 @@ int	is_col_empty(int **map, int i)
 	return (0);
 }
 
-/*
-compte le nombre de colonnes vides à gauche de la map
-*/
-
 int	count_pre_col(int **map)
 {
 	int	i;
@@ -44,10 +36,6 @@ int	count_pre_col(int **map)
 	return (i);
 }
 
-/*
-compte le nombre de colonnes vides à droite de la map
-*/
-
 int	count_post_col(int **map, int size)
 {
 	int	i;
@@ -57,11 +45,6 @@ int	count_post_col(int **map, int size)
 		i++;
 	return (i);
 }
-
-/*
-va copier les lignes de la map parsé en supprimant les espaces
-vides à gauche et à droite
-*/
 
 int	resize_line(int *map, int **newmap, int start, int size)
 {

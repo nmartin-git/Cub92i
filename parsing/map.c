@@ -6,15 +6,11 @@
 /*   By: igrousso <igrousso@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/04 12:42:56 by igrousso          #+#    #+#             */
-/*   Updated: 2025/09/04 17:18:16 by igrousso         ###   ########.fr       */
+/*   Updated: 2025/09/07 20:07:59 by igrousso         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../headers/parsing.h"
-
-/*
-remplie une ligne de la map
-*/
 
 int	fill_row(int **row, char *line, int col, int *count_spawn)
 {
@@ -44,10 +40,6 @@ int	fill_row(int **row, char *line, int col, int *count_spawn)
 	return (free(line), 0);
 }
 
-/*
-initialise la map et rempli la premiere ligne d'espaces vides
-*/
-
 int	init_map(t_map *map, int fd, char *av)
 {
 	int	i;
@@ -73,10 +65,6 @@ int	init_map(t_map *map, int fd, char *av)
 	return (0);
 }
 
-/*
-rempli la dernière ligne d'espaces vides
-*/
-
 int	last_row(int **row, int col)
 {
 	int	i;
@@ -90,10 +78,6 @@ int	last_row(int **row, int col)
 	(*row)[i] = 9;
 	return (0);
 }
-
-/*
-va créer la map dans un double tableau int
-*/
 
 int	fill_tabmap(int fd, t_map *map, int *i)
 {

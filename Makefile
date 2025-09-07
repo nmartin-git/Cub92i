@@ -6,7 +6,7 @@
 #    By: igrousso <igrousso@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2025/02/05 15:41:03 by nmartin           #+#    #+#              #
-#    Updated: 2025/09/04 17:38:11 by igrousso         ###   ########.fr        #
+#    Updated: 2025/09/07 21:33:56 by igrousso         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -24,7 +24,7 @@ CUB_PATH = ./cub/
 CUB_FILES = cub.c
 CUB := $(addprefix $(CUB_PATH), $(CUB_FILES))
 GAME_PATH = ./game/
-GAME_FILES = game.c game_utils.c key_handling.c steps.c
+GAME_FILES = game.c game_utils.c key_handling.c key_handling_utils.c steps.c
 GAME := $(addprefix $(GAME_PATH), $(GAME_FILES))
 PARSING_PATH = ./parsing/
 PARSING_FILES = parsing.c texture.c map.c map_utils.c free_map.c \
@@ -32,7 +32,7 @@ PARSING_FILES = parsing.c texture.c map.c map_utils.c free_map.c \
 PARSING := $(addprefix $(PARSING_PATH), $(PARSING_FILES))
 MINIMAP_PATH = ./minimap/
 MINIMAP_FILES = minimap.c cursor.c raycasting.c rays.c collision.c \
-					items.c
+					items.c collision_screen.c minimap_utils.c
 MINIMAP := $(addprefix $(MINIMAP_PATH), $(MINIMAP_FILES))
 STRUCT_UTILS_PATH = ./struct_utils/
 STRUCT_UTILS_FILES = struct_utils.c

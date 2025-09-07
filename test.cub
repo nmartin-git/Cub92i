@@ -1,7 +1,7 @@
-NO /home/nmartin/Documents/Cub92i/textures/default_texture.xpm
-SO /home/nmartin/Documents/Cub92i/textures/default_texture.xpm
-WE /home/nmartin/Documents/Cub92i/textures/default_texture.xpm
-EA /home/nmartin/Documents/Cub92i/textures/default_texture.xpm
+NO textures/default_texture.xpm
+SO textures/default_texture.xpm
+WE textures/default_texture.xpm
+EA textures/default_texture.xpm
 
 F 123,10,1
 C 200,200,200

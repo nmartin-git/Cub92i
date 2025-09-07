@@ -6,7 +6,7 @@
 /*   By: igrousso <igrousso@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/03 08:20:44 by igrousso          #+#    #+#             */
-/*   Updated: 2025/09/04 17:28:18 by igrousso         ###   ########.fr       */
+/*   Updated: 2025/09/07 20:14:04 by igrousso         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -109,7 +109,6 @@ int						parsing(char *av, t_map *map);
 int						ctoi2(char c);
 void					count_collectible(char c, t_map *map);
 int						check_doors(t_map *map, int x, int y);
-
 
 /*	load textures */
 

@@ -6,7 +6,7 @@
 /*   By: igrousso <igrousso@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/06 16:52:00 by nmartin           #+#    #+#             */
-/*   Updated: 2025/09/04 18:44:57 by igrousso         ###   ########.fr       */
+/*   Updated: 2025/09/07 20:52:29 by igrousso         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -59,7 +59,7 @@ typedef struct s_minimap
 	int						c_color;
 	int						x;
 	int						y;
-	int						minimap_size_by_15;
+	int						SB15; //minimap_size_by_15
 	float					scale;
 }							t_minimap;
 
@@ -87,8 +87,8 @@ typedef struct s_data
 	int						health;
 	int						puff;
 	t_map					*map;
-	t_minimap				*minimap;
-	t_minimap				*screen_minimap;
+	t_minimap				*mmap; //minimap
+	t_minimap				*sc_mmap; //screen_minimap
 	t_minimap				*raycast;
 	t_image					*texture_n;
 	t_image					*texture_s;

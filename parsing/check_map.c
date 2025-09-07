@@ -6,15 +6,11 @@
 /*   By: igrousso <igrousso@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/04 12:31:38 by igrousso          #+#    #+#             */
-/*   Updated: 2025/09/04 17:22:43 by igrousso         ###   ########.fr       */
+/*   Updated: 2025/09/07 20:06:50 by igrousso         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../headers/parsing.h"
-
-/*
-vérifie si les contours de la map sont bien des murs
-*/
 
 int	check_neighbors(t_map *map, int x, int y)
 {
@@ -41,10 +37,6 @@ int	check_neighbors(t_map *map, int x, int y)
 	return (0);
 }
 
-/*
-vérifie si la map est valide
-*/
-
 int	check_map(t_map *map)
 {
 	int	x;
@@ -70,10 +62,6 @@ int	check_map(t_map *map)
 	return (0);
 }
 
-/*
-vérifie si le fichié passé en argument est sous la bonne extension
-*/
-
 int	check_av(char *av, int *fd)
 {
 	size_t	len;
@@ -91,10 +79,6 @@ int	check_av(char *av, int *fd)
 	return (0);
 }
 
-/*
-vérifie si il manque des informations poru la map
-*/
-
 int	check_infos(t_map *map)
 {
 	if (!map->n_t)
@@ -111,10 +95,6 @@ int	check_infos(t_map *map)
 		return (write(2, "Error\nMissing information for ceiling\n", 38));
 	return (0);
 }
-
-/*
-verifie si les rgb envoyés sont bien des chiffres
-*/
 
 int	check_colors(char **str)
 {

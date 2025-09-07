@@ -1,7 +1,7 @@
-NO /home/nmartin/Documents/test/textures/dog4.xpm
-SO /home/nmartin/Documents/test/textures/dog5.xpm
-WE /home/nmartin/Documents/test/textures/dog2.xpm
-EA /home/nmartin/Documents/test/textures/dog3.xpm
+NO textures/dog4.xpm
+SO textures/dog5.xpm
+WE textures/dog2.xpm
+EA textures/dog3.xpm
 
 F 123,10,1
 C 200,200,200

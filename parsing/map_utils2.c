@@ -6,15 +6,11 @@
 /*   By: igrousso <igrousso@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/04 17:47:47 by igrousso          #+#    #+#             */
-/*   Updated: 2025/09/04 17:32:33 by igrousso         ###   ########.fr       */
+/*   Updated: 2025/09/07 20:09:54 by igrousso         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../headers/parsing.h"
-
-/*
-suite de ctoi
-*/
 
 int	ctoi2(char c)
 {
@@ -25,13 +21,9 @@ int	ctoi2(char c)
 	else if (c == 'F')
 		return (PUFF);
 	else if (c == 'D')
-		return (DOOR);	
+		return (DOOR);
 	return (-2);
 }
-
-/*
-compte le nombre d'ennemis, de puffs et de el mordjene
-*/
 
 void	count_collectible(char c, t_map *map)
 {
@@ -40,15 +32,15 @@ void	count_collectible(char c, t_map *map)
 	if (c == PUFF)
 		map->puff++;
 	if (c == DOOR)
-		map->doors++;	
+		map->doors++;
 }
 
-int check_doors(t_map *map, int x, int y)
+int	check_doors(t_map *map, int x, int y)
 {
 	if ((y - 1 >= 0 && map->map[y - 1][x] != 1 && \
-		 y + 1 <= map->row && map->map[y + 1][x] != 1) && \
+		y + 1 <= map->row && map->map[y + 1][x] != 1) && \
 		(x - 1 >= 0 && map->map[y][x - 1] != 1 && \
-		 x + 1 <= map->row && map->map[y][x + 1] != 1))
+		x + 1 <= map->row && map->map[y][x + 1] != 1))
 	{
 		return (1);
 	}

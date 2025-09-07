@@ -6,16 +6,12 @@
 /*   By: igrousso <igrousso@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/08 21:44:50 by igrousso          #+#    #+#             */
-/*   Updated: 2025/07/13 17:48:18 by igrousso         ###   ########.fr       */
+/*   Updated: 2025/09/07 19:15:20 by igrousso         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../headers/background.h"
 #include "../headers/game.h"
-
-/*
-va remplir la string command pour l'execution
-*/
 
 void	fill_command(char **command, char *str, char *xlen, char *ylen)
 {
@@ -31,11 +27,6 @@ void	fill_command(char **command, char *str, char *xlen, char *ylen)
 	ft_strlcat((*command), "! ", len);
 	ft_strlcat((*command), str, len);
 }
-
-/*
-change la resolution du fichier xpm en fonction de la taille
-de la fenêtre
-*/
 
 int	convert_xpm(char *str)
 {
@@ -63,10 +54,6 @@ int	convert_xpm(char *str)
 	return (0);
 }
 
-/*
-ouvre le bon fichier xpm
-*/
-
 int	easter_egg_img(t_data *data, t_image *newimg)
 {
 	if (data->map->c_rgb == -10)
@@ -92,10 +79,6 @@ int	easter_egg_img(t_data *data, t_image *newimg)
 	}
 	return (0);
 }
-
-/*
-change la couleur du ciel
-*/
 
 int	easter_egg(t_image *img, t_data *data)
 {

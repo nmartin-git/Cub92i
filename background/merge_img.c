@@ -6,15 +6,11 @@
 /*   By: igrousso <igrousso@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/07 17:41:33 by igrousso          #+#    #+#             */
-/*   Updated: 2025/07/16 19:42:16 by igrousso         ###   ########.fr       */
+/*   Updated: 2025/09/07 19:15:31 by igrousso         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../headers/background.h"
-
-/*
-colorie le pixel dans la nouvelle image
-*/
 
 void	put_pixel_img(t_image *img, int x, int y, int color)
 {
@@ -29,20 +25,11 @@ void	put_pixel_img(t_image *img, int x, int y, int color)
 	}
 }
 
-/*
-renvoie la couleur du pixel
-*/
-
 unsigned int	get_pixel_img(t_image *img, int x, int y)
 {
 	return (*(unsigned int *)((img->adress + (y * img->l_len) + \
 			(x * img->bpp / 8))));
 }
-
-/*
-place une image au dessus d'une autre sans prendre en compte
-les pixels vides
-*/
 
 void	put_img_to_img(t_image *dst, t_image *src, int x_offset, int y_offset)
 {

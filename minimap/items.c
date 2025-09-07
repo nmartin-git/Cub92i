@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   items.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: nmartin <nmartin@student.42.fr>            +#+  +:+       +#+        */
+/*   By: igrousso <igrousso@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/08 14:47:06 by nmartin           #+#    #+#             */
-/*   Updated: 2025/07/20 16:54:41 by nmartin          ###   ########.fr       */
+/*   Updated: 2025/09/07 21:56:52 by igrousso         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -64,31 +64,31 @@ void	put_puff(t_minimap *minimap, t_pos pos, int width, int height)
 	}
 }
 
-void	put_mordjene(t_minimap *minimap, t_pos pos, int radius, int inner_radius)
+void	put_mordjene(t_minimap *minimap, t_pos pos, int radius, int Iradius)
 {
 	int		dst;
 	t_pos	index;
 	int		x_diff;
 	int		y_diff;
 
-	index.y = -radius;
+	index.y = -radius - 1;
 	x_diff = pos.x * minimap->pxl_size + minimap->pxl_size / 2;
 	y_diff = pos.y * minimap->pxl_size + minimap->pxl_size / 2;
-	while (index.y <= radius)
+	while (++index.y <= radius)
 	{
-		index.x = -radius;
-		while (index.x <= radius)
+		index.x = -radius - 1;
+		while (++index.x <= radius)
 		{
 			dst = ft_abs(index.x) + ft_abs(index.y);
 			if (dst <= radius)
 			{
-				if (dst <= inner_radius)
-					put_pxl(minimap->minimap, index.x + x_diff, index.y + y_diff, MORDJENE_COLOR);
+				if (dst <= Iradius)
+					put_pxl(minimap->minimap, index.x + x_diff, index.y \
+						+ y_diff, MORDJENE_COLOR);
 				else
-					put_pxl(minimap->minimap, index.x + x_diff, index.y + y_diff, MORDJENE_BG_COLOR);
+					put_pxl(minimap->minimap, index.x + x_diff, index.y \
+						+ y_diff, MORDJENE_BG_COLOR);
 			}
-			index.x++;
 		}
-		index.y++;
 	}
 }

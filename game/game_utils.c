@@ -6,21 +6,45 @@
 /*   By: igrousso <igrousso@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/02 18:33:29 by nmartin           #+#    #+#             */
-/*   Updated: 2025/07/13 19:40:20 by igrousso         ###   ########.fr       */
+/*   Updated: 2025/09/07 20:50:22 by igrousso         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "game.h"
 
+int	init_textures(t_data *data)
+{
+	data->texture_n = malloc(sizeof(t_image));
+	if (!data->texture_n)
+		return (1);
+	data->texture_s = malloc(sizeof(t_image));
+	if (!data->texture_s)
+		return (free(data->texture_n), 1);
+	data->texture_e = malloc(sizeof(t_image));
+	if (!data->texture_e)
+		return (free(data->texture_n), free(data->texture_s), 1);
+	data->texture_w = malloc(sizeof(t_image));
+	if (!data->texture_w)
+		return (free(data->texture_n), free(data->texture_s), \
+				free(data->texture_e), 1);
+	return (0);
+}
+
+int	close_window(t_data *data)
+{
+	cub_exit(0, "Window closed successfully", data);
+	return (0);
+}
+
 void	free_data(t_data *data)
 {
-	if (data->minimap)
+	if (data->mmap)
 	{
-		free_image(data->minimap->minimap, data->display);
-		free_image(data->minimap->cursor, data->display);
-		free_image(data->minimap->direction, data->display);
-		free_image(data->minimap->raycasting, data->display);
-		free(data->minimap);
+		free_image(data->mmap->minimap, data->display);
+		free_image(data->mmap->cursor, data->display);
+		free_image(data->mmap->direction, data->display);
+		free_image(data->mmap->raycasting, data->display);
+		free(data->mmap);
 	}
 	free_image(data->background, data->display);
 	free_image(data->image, data->display);
@@ -43,4 +67,12 @@ void	cub_exit(int err, char *str, t_data *data)
 	if (data)
 		free_data(data);
 	exit(err);
+}
+
+__uint64_t	get_time_ms(void)
+{
+	struct timeval	tv;
+
+	gettimeofday(&tv, NULL);
+	return ((__uint64_t)(tv.tv_sec * 1000 + tv.tv_usec / 1000));
 }
