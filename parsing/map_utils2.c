@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   map_utils2.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: igrousso <igrousso@student.42.fr>          +#+  +:+       +#+        */
+/*   By: nmartin <nmartin@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/04 17:47:47 by igrousso          #+#    #+#             */
-/*   Updated: 2025/09/07 20:09:54 by igrousso         ###   ########.fr       */
+/*   Updated: 2025/09/08 15:22:39 by nmartin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,7 +21,7 @@ int	ctoi2(char c)
 	else if (c == 'F')
 		return (PUFF);
 	else if (c == 'D')
-		return (DOOR);
+		return (C_DOOR);
 	return (-2);
 }
 
@@ -31,7 +31,7 @@ void	count_collectible(char c, t_map *map)
 		map->el_mordjene++;
 	if (c == PUFF)
 		map->puff++;
-	if (c == DOOR)
+	if (c == C_DOOR)
 		map->doors++;
 }
 

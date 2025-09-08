@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parsing.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: igrousso <igrousso@student.42.fr>          +#+  +:+       +#+        */
+/*   By: nmartin <nmartin@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/02 11:45:35 by nmartin           #+#    #+#             */
-/*   Updated: 2025/09/07 20:08:27 by igrousso         ###   ########.fr       */
+/*   Updated: 2025/09/08 16:38:41 by nmartin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -66,6 +66,7 @@ void	pre_init(t_map *map)
 	map->s_t = NULL;
 	map->e_t = NULL;
 	map->w_t = NULL;
+	map->d_t = NULL;
 	map->row = -1;
 	map->col = -1;
 	map->x_spawn = -1;
@@ -115,7 +116,16 @@ int	parsing(char *av, t_map *map)
 	if (check_map(map))
 		return (free_map(map), 1);
 	if (resize_map(map))
-		return (free_infos(map), 1);
+		return (free_infos(map), 1);//TODO pourquoi free_infos et pas free_map
 	set_pos_spawn(map);
+	if (map->doors)
+	{
+		map->d_t = ft_strdup(DOOR_TEXTURE);
+		if (!map->d_t)
+		{
+			write(2, "Error\nft_strdup failed\n", 23);
+			free_map(map);
+		}
+	}
 	return (0);
 }

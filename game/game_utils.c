@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   game_utils.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: igrousso <igrousso@student.42.fr>          +#+  +:+       +#+        */
+/*   By: nmartin <nmartin@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/02 18:33:29 by nmartin           #+#    #+#             */
-/*   Updated: 2025/09/07 20:50:22 by igrousso         ###   ########.fr       */
+/*   Updated: 2025/09/08 16:23:07 by nmartin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,6 +27,10 @@ int	init_textures(t_data *data)
 	if (!data->texture_w)
 		return (free(data->texture_n), free(data->texture_s), \
 				free(data->texture_e), 1);
+	data->texture_door = malloc(sizeof(t_image));
+	if (!data->texture_door)
+		return (free(data->texture_n), free(data->texture_s), \
+				free(data->texture_e), free(data->texture_w), 1);
 	return (0);
 }
 
@@ -46,8 +50,17 @@ void	free_data(t_data *data)
 		free_image(data->mmap->raycasting, data->display);
 		free(data->mmap);
 	}
+	if (data->sc_mmap)
+	{
+		free_image(data->sc_mmap->minimap, data->display);
+		free_image(data->sc_mmap->cursor, data->display);
+		free_image(data->sc_mmap->direction, data->display);
+		free_image(data->sc_mmap->raycasting, data->display);
+		free(data->sc_mmap);
+	}
 	free_image(data->background, data->display);
 	free_image(data->image, data->display);
+	free_image(data->pv, data->display);
 	free_crosshair(data);
 	free_textures(data);
 	if (data->display && data->window)

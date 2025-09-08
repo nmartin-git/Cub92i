@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   game.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: igrousso <igrousso@student.42.fr>          +#+  +:+       +#+        */
+/*   By: nmartin <nmartin@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/02 11:45:56 by nmartin           #+#    #+#             */
-/*   Updated: 2025/09/07 20:50:57 by igrousso         ###   ########.fr       */
+/*   Updated: 2025/09/08 15:38:03 by nmartin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -67,7 +67,7 @@ int	render(t_data *data)
 	}
 	last_time = now;
 	update(data, delta_time);
-	// put_cursor_direction(data->sc_mmap);
+	put_cursor_direction(data->sc_mmap, data->mmap->p_angle);
 	put_img_to_img(data->image, data->background, 0, 0);
 	put_raycasting(data->mmap, FOV, TAB_X, data);
 	put_img_to_img(data->image, data->crosshair->cross_img, \
@@ -76,6 +76,8 @@ int	render(t_data *data)
 		SCREEN_MINIMAP_SIZE / 15, SCREEN_MINIMAP_SIZE / 15);
 	// put_img_to_img(data->image, data->mmap->raycasting, MINIMAP_SIZE / 15, MINIMAP_SIZE / 15);
 	// put_img_to_img(data->image, data->sc_mmap->direction, data->sc_mmap->cursor_x, data->sc_mmap->cursor_y);
+	put_img_to_img(data->image, data->sc_mmap->direction, \
+		data->sc_mmap->cursor_x - data->sc_mmap->pxl_size / 1.5, data->sc_mmap->cursor_y - data->sc_mmap->pxl_size / 1.5);
 	put_img_to_img(data->image, data->sc_mmap->cursor, \
 		data->sc_mmap->cursor_x, data->sc_mmap->cursor_y);
 	put_img_to_img(data->image, data->pv, TAB_X / 4, TAB_Y - TAB_Y / 6);

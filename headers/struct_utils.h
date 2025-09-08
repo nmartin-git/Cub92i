@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   struct_utils.h                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: igrousso <igrousso@student.42.fr>          +#+  +:+       +#+        */
+/*   By: nmartin <nmartin@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/06 16:52:00 by nmartin           #+#    #+#             */
-/*   Updated: 2025/09/07 20:52:29 by igrousso         ###   ########.fr       */
+/*   Updated: 2025/09/08 16:17:50 by nmartin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -75,6 +75,7 @@ typedef struct s_ray
 	float					angle;
 	long					dst;
 	int						percent;
+	int						door;
 }							t_ray;
 
 typedef struct s_data
@@ -94,6 +95,7 @@ typedef struct s_data
 	t_image					*texture_s;
 	t_image					*texture_e;
 	t_image					*texture_w;
+	t_image					*texture_door;
 	t_crosshair				*crosshair;
 	int						keys[10];
 }							t_data;

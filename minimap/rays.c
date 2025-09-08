@@ -6,7 +6,7 @@
 /*   By: nmartin <nmartin@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/13 14:11:53 by nmartin           #+#    #+#             */
-/*   Updated: 2025/07/20 18:06:17 by nmartin          ###   ########.fr       */
+/*   Updated: 2025/09/08 16:45:29 by nmartin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,49 +27,7 @@ void	tan_err(t_pos *pos)
 	pos->y = TAN_ERR;
 }
 
-int	is_wall(t_minimap *minimap, t_data *data, t_pos *pos, t_pos *diff)
-{
-	int	x_wall;
-	int	y_wall;
-
-	if (pos->x == TAN_ERR || pos->y == TAN_ERR)
-		return (1);
-	if (diff)
-	{
-		x_wall = (pos->x + diff->x - MINIMAP_SIZE / 15) / minimap->pxl_size;
-		y_wall = (pos->y + diff->y - MINIMAP_SIZE / 15) / minimap->pxl_size;
-	}
-	else
-	{
-		x_wall = (pos->x - MINIMAP_SIZE / 15) / minimap->pxl_size;
-		y_wall = (pos->y - MINIMAP_SIZE / 15) / minimap->pxl_size;
-	}
-	if (x_wall >= data->map->col || y_wall >= data->map->row
-		|| x_wall < 0 || y_wall < 0)
-		return (1);
-	if (data->map->map[y_wall][x_wall] == WALL)
-		return (1);
-	else
-		return (0);
-}
-
-// int	is_inside_wall(t_minimap *minimap, t_pos *pos)
-// {
-// 	int	x;
-// 	int	y;
-
-// 	x = pos->x/* - MINIMAP_SIZE / 15*/;
-// 	y = pos->y/* - MINIMAP_SIZE / 15*/;
-// 	// printf("%d, %d\n", x, y);
-// 	if (x > minimap->minimap->tab_x || y > minimap->minimap->tab_y)
-// 		return (1);
-// 	if (get_pixel_img(minimap->minimap, x, y) == minimap->w_color)
-// 		return (1);
-// 	else
-// 		return (0);
-// }
-
-void	vertical_wall(t_minimap *minimap, t_data *d, t_pos *pos, double angle)
+int	vertical_wall(t_minimap *minimap, t_data *d, t_pos *pos, double angle)
 {
 	double	n_tan;
 	double	x_off;
@@ -104,7 +62,7 @@ void	vertical_wall(t_minimap *minimap, t_data *d, t_pos *pos, double angle)
 	else
 	{
 		tan_err(pos);
-		return ;
+		return (0);
 	}
 
 	while (depth_of_field < d->map->col)
@@ -114,17 +72,19 @@ void	vertical_wall(t_minimap *minimap, t_data *d, t_pos *pos, double angle)
 		
 		// Hit a wall or out of bounds
 		if (map_x >= 0 && map_x < d->map->col && map_y >= 0 && map_y < d->map->row 
-			&& d->map->map[map_y][map_x] == WALL)
+			&& (d->map->map[map_y][map_x] == WALL || d->map->map[map_y][map_x] == C_DOOR))
 		{
 			pos->x = (int)rx;
 			pos->y = (int)ry;
-			return ;
+			if (d->map->map[map_y][map_x] == C_DOOR)
+				return (1);
+			return (0);
 		}
 		// Out of bounds
 		else if (map_x < 0 || map_x >= d->map->col || map_y < 0 || map_y >= d->map->row)
 		{
 			tan_err(pos);
-			return ;
+			return (0);
 		}
 		// Continue the ray
 		else
@@ -135,9 +95,10 @@ void	vertical_wall(t_minimap *minimap, t_data *d, t_pos *pos, double angle)
 		}
 	}
 	tan_err(pos);
+	return (0);
 }
 
-void	horizontal_wall(t_minimap *minimap, t_data *d, t_pos *pos, double angle)
+int	horizontal_wall(t_minimap *minimap, t_data *d, t_pos *pos, double angle)
 {
 	double	a_tan;
 	double	x_off;
@@ -172,7 +133,7 @@ void	horizontal_wall(t_minimap *minimap, t_data *d, t_pos *pos, double angle)
 	else
 	{
 		tan_err(pos);
-		return ;
+		return (0);
 	}
 
 	while (depth_of_field < d->map->row)
@@ -182,17 +143,19 @@ void	horizontal_wall(t_minimap *minimap, t_data *d, t_pos *pos, double angle)
 		
 		// Hit a wall or out of bounds
 		if (map_x >= 0 && map_x < d->map->col && map_y >= 0 && map_y < d->map->row 
-			&& d->map->map[map_y][map_x] == WALL)
+			&& (d->map->map[map_y][map_x] == WALL || d->map->map[map_y][map_x] == C_DOOR))
 		{
 			pos->x = (int)rx;
 			pos->y = (int)ry;
-			return ;
+			if (d->map->map[map_y][map_x] == C_DOOR)
+				return (1);
+			return (0);
 		}
 		// Out of bounds
 		else if (map_x < 0 || map_x >= d->map->col || map_y < 0 || map_y >= d->map->row)
 		{
 			tan_err(pos);
-			return ;
+			return (0);
 		}
 		// Continue the ray
 		else
@@ -203,6 +166,7 @@ void	horizontal_wall(t_minimap *minimap, t_data *d, t_pos *pos, double angle)
 		}
 	}
 	tan_err(pos);
+	return (0);
 }
 
 
@@ -215,10 +179,12 @@ t_ray	*raycast(t_minimap *minimap, t_ray *ray, t_data *data, t_pos *result)
 	long	dst2;
 	int		x_origin;
 	int		y_origin;
+	int		h_door;
+	int		v_door;
 
 	ray->angle = normalize_angle(ray->angle);
-	horizontal_wall(minimap, data, &ph, ray->angle);
-	vertical_wall(minimap, data, &pv, ray->angle);
+	h_door = horizontal_wall(minimap, data, &ph, ray->angle);
+	v_door = vertical_wall(minimap, data, &pv, ray->angle);
 	x_origin = minimap->cursor_x + minimap->pxl_size / 3;
 	y_origin = minimap->cursor_y + minimap->pxl_size / 3;
 	// ph.x = TAN_ERR;	
@@ -230,13 +196,13 @@ t_ray	*raycast(t_minimap *minimap, t_ray *ray, t_data *data, t_pos *result)
 		dst2 = LONG_MAX;
 	else
 		dst2 = pow(pv.x - x_origin, 2) + pow(pv.y - y_origin, 2);
-
 	if (dst1 <= dst2)
 	{
 		result->x = ph.x;
 		result->y = ph.y;
 		ray->dst = dst1;
 		ray->x_y = HORIZONTAL;
+		ray->door = h_door;
 		ray->percent = (result->x - MINIMAP_SIZE / 15) / minimap->pxl_size;
 		ray->percent = (result->x - MINIMAP_SIZE / 15) - (ray->percent * minimap->pxl_size);
 		ray->percent = (ray->percent * QUALITY) / minimap->pxl_size;
@@ -247,6 +213,7 @@ t_ray	*raycast(t_minimap *minimap, t_ray *ray, t_data *data, t_pos *result)
 		result->y = pv.y;
 		ray->dst = dst2;
 		ray->x_y = VERTICAL;
+		ray->door = v_door;
 		ray->percent = (result->y - MINIMAP_SIZE / 15) / minimap->pxl_size;
 		ray->percent = (result->y - MINIMAP_SIZE / 15) - (ray->percent * minimap->pxl_size);
 		ray->percent = (ray->percent * QUALITY) / minimap->pxl_size;

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parsing.h                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: igrousso <igrousso@student.42.fr>          +#+  +:+       +#+        */
+/*   By: nmartin <nmartin@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/03 08:20:44 by igrousso          #+#    #+#             */
-/*   Updated: 2025/09/07 20:14:04 by igrousso         ###   ########.fr       */
+/*   Updated: 2025/09/08 16:32:56 by nmartin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,7 +25,10 @@
 
 # define MORDJENE 6
 # define PUFF 7
-# define DOOR 10
+# define O_DOOR 10
+# define C_DOOR 11
+
+# define DOOR_TEXTURE "/home/nmartin/Documents/main_newww/textures/default_texture.xpm"
 
 typedef struct s_data	t_data;
 
@@ -36,6 +39,7 @@ typedef struct s_map
 	char				*s_t;
 	char				*e_t;
 	char				*w_t;
+	char				*d_t;
 	int					f_rgb;
 	int					c_rgb;
 	int					row;

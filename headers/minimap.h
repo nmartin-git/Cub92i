@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minimap.h                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: igrousso <igrousso@student.42.fr>          +#+  +:+       +#+        */
+/*   By: nmartin <nmartin@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/05 14:23:42 by nmartin           #+#    #+#             */
-/*   Updated: 2025/09/07 21:58:16 by igrousso         ###   ########.fr       */
+/*   Updated: 2025/09/08 16:11:15 by nmartin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -79,7 +79,7 @@ void						pixel_put_square(t_minimap *minimap, t_pos pixel,
 int							load_image(t_minimap *minimap, t_data *data);
 
 /*---cursor.c---*/
-void						put_cursor_direction(t_minimap *minimap);
+void						put_cursor_direction(t_minimap *minimap, float p_angle);
 void						pixel_put_cursor(t_image *cursor, int color,
 								int size, int radius);
 
@@ -116,14 +116,10 @@ void						put_raycasting(t_minimap *minimap, float fov,
 
 /*---rays.c---*/
 void						tan_err(t_pos *pos);
-int							is_wall(t_minimap *minimap, t_data *data,
-								t_pos *pos, t_pos *diff);
-void						vertical_wall(t_minimap *minimap, t_data *d,
+int							vertical_wall(t_minimap *minimap, t_data *d,
 								t_pos *pos, double angle);
-void						horizontal_wall(t_minimap *minimap, t_data *data,
+int							horizontal_wall(t_minimap *minimap, t_data *data,
 								t_pos *pos, double angle);
-void						set_nearest(t_minimap *minimap, t_pos *ph,
-								t_pos *pv, double angle);
 t_ray						*raycast(t_minimap *minimap, t_ray *ray,
 								t_data *data, t_pos *result);
 

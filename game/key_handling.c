@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   key_handling.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: igrousso <igrousso@student.42.fr>          +#+  +:+       +#+        */
+/*   By: nmartin <nmartin@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/07 15:26:13 by nmartin           #+#    #+#             */
-/*   Updated: 2025/09/07 20:51:42 by igrousso         ###   ########.fr       */
+/*   Updated: 2025/09/08 17:21:43 by nmartin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -66,6 +66,29 @@ void	update_2(t_data *data)
 		data->sc_mmap->cursor_y = data->mmap->cursor_y / 62;
 }
 
+void	open_close_door(t_data *data)
+{
+	int	x;
+	int	y;
+
+	x = data->sc_mmap->cursor_x + cos(data->mmap->p_angle) * 3;
+	y = data->sc_mmap->cursor_y + sin(data->mmap->p_angle) * 3;
+	x /= data->sc_mmap->pxl_size;
+	y /= data->sc_mmap->pxl_size;
+	if (data->map->map[y][x] == C_DOOR)
+		data->map->map[y][x] == O_DOOR;
+	else if (data->map->map[y][x] == O_DOOR)
+		data->map->map[y][x] == C_DOOR;
+	x = data->sc_mmap->cursor_x + cos(data->mmap->p_angle) * data->sc_mmap->pxl_size;
+	y = data->sc_mmap->cursor_y + sin(data->mmap->p_angle) * data->sc_mmap->pxl_size;
+	x /= data->sc_mmap->pxl_size;
+	y /= data->sc_mmap->pxl_size;
+	if (data->map->map[y][x] == C_DOOR)
+		data->map->map[y][x] == O_DOOR;
+	else if (data->map->map[y][x] == O_DOOR)
+		data->map->map[y][x] == C_DOOR;
+}
+
 int	update(t_data *data, __uint64_t delta_time)
 {
 	if (data->keys[0] == 1)
@@ -86,6 +109,8 @@ int	update(t_data *data, __uint64_t delta_time)
 		move_player(data, S, delta_time);
 	else if (data->keys[4] == 1)
 		move_player(data, D, delta_time);
+	// else if (data->keys[] == )//TODO ouvrir porte
+	// 	open_close_door(data);
 	if (data->keys[5] == 1)
 		move_cursor(data, -1);
 	if (data->keys[6] == 1)

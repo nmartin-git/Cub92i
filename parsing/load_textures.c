@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   load_textures.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: igrousso <igrousso@student.42.fr>          +#+  +:+       +#+        */
+/*   By: nmartin <nmartin@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/13 15:24:31 by igrousso          #+#    #+#             */
-/*   Updated: 2025/07/18 18:10:24 by igrousso         ###   ########.fr       */
+/*   Updated: 2025/09/08 16:27:38 by nmartin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,6 +25,8 @@ int	open_xpm(t_data *data, t_image *texture, int state)
 		str = data->map->e_t;
 	if (state == 4)
 		str = data->map->w_t;
+	if (state == 5)
+		str = data->map->d_t;
 	texture->image = mlx_xpm_file_to_image(data->display, str, &texture->tab_x,
 			&texture->tab_y);
 	if (!texture->image)
@@ -46,6 +48,8 @@ int	load_texutres(t_data *data)
 		return (write(2, "Error\nFail to load S texture\n", 29));
 	if (open_xpm(data, data->texture_w, 4))
 		return (write(2, "Error\nFail to load S texture\n", 29));
+	if (open_xpm(data, data->texture_door, 5))
+		return (write(2, "Error\nFail to load S texture\n", 29));
 	return (0);
 }
 
@@ -59,4 +63,6 @@ void	free_textures(t_data *data)
 		free_image(data->texture_e, data->display);
 	if (data->texture_w)
 		free_image(data->texture_w, data->display);
+	if (data->texture_door)
+		free_image(data->texture_door, data->display);
 }

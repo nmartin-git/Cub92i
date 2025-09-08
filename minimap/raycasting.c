@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   raycasting.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: igrousso <igrousso@student.42.fr>          +#+  +:+       +#+        */
+/*   By: nmartin <nmartin@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/10 15:59:29 by nmartin           #+#    #+#             */
-/*   Updated: 2025/09/07 23:20:20 by igrousso         ###   ########.fr       */
+/*   Updated: 2025/09/08 16:42:43 by nmartin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,61 +27,61 @@ void	pixel_put(t_image *raycasting, t_pos pixel, int color)
 	}
 }
 
-// void	small_angle(t_image *raycasting, t_pos pixel, int dx, int dy)
-// {
-// 	int	i;
-// 	int	decision;
+void	small_angle(t_image *minimap, t_pos pixel, int dx, int dy)
+{
+	int	i;
+	int	decision;
 
-// 	i = 0;
-// 	decision = 2 * ft_abs(dy) - ft_abs(dx);
-// 	pixel_put(raycasting, pixel, 11111111);
-// 	while (i++ < ft_abs(dx))
-// 	{
-// 		if (dx > 0)
-// 			pixel.x++;
-// 		else
-// 			pixel.x--;
-// 		if (decision < 0)
-// 			decision += 2 * ft_abs(dy);
-// 		else
-// 		{
-// 			decision += 2 * ft_abs(dy) - 2 * ft_abs(dx);
-// 			if (dy > 0)
-// 				pixel.y++;
-// 			else
-// 				pixel.y--;
-// 		}
-// 		pixel_put(raycasting, pixel, 11111111);
-// 	}
-// }
+	i = 0;
+	decision = 2 * ft_abs(dy) - ft_abs(dx);
+	pixel_put(minimap, pixel, 11111111);
+	while (i++ < ft_abs(dx))
+	{
+		if (dx > 0)
+			pixel.x++;
+		else
+			pixel.x--;
+		if (decision < 0)
+			decision += 2 * ft_abs(dy);
+		else
+		{
+			decision += 2 * ft_abs(dy) - 2 * ft_abs(dx);
+			if (dy > 0)
+				pixel.y++;
+			else
+				pixel.y--;
+		}
+		pixel_put(minimap, pixel, 11111111);
+	}
+}
 
-// void	big_angle(t_image *raycasting, t_pos pixel, int dx, int dy)
-// {
-// 	int	i;
-// 	int	decision;
+void	big_angle(t_image *raycasting, t_pos pixel, int dx, int dy)
+{
+	int	i;
+	int	decision;
 
-// 	i = 0;
-// 	decision = 2 * ft_abs(dx) - ft_abs(dy);
-// 	pixel_put(raycasting, pixel, 11111111);
-// 	while (i++ < ft_abs(dy))
-// 	{
-// 		if (dy > 0)
-// 			pixel.y++;
-// 		else
-// 			pixel.y--;
-// 		if (decision < 0)
-// 			decision += 2 * ft_abs(dx);
-// 		else
-// 		{
-// 			decision += 2 * ft_abs(dx) - 2 * ft_abs(dy);
-// 			if (dx > 0)
-// 				pixel.x++;
-// 			else
-// 				pixel.x--;
-// 		}
-// 		pixel_put(raycasting, pixel, 11111111);
-// 	}
-// }
+	i = 0;
+	decision = 2 * ft_abs(dx) - ft_abs(dy);
+	pixel_put(raycasting, pixel, 11111111);
+	while (i++ < ft_abs(dy))
+	{
+		if (dy > 0)
+			pixel.y++;
+		else
+			pixel.y--;
+		if (decision < 0)
+			decision += 2 * ft_abs(dx);
+		else
+		{
+			decision += 2 * ft_abs(dx) - 2 * ft_abs(dy);
+			if (dx > 0)
+				pixel.x++;
+			else
+				pixel.x--;
+		}
+		pixel_put(raycasting, pixel, 11111111);
+	}
+}
 
 int	get_pixel_color(t_image *texture, int x, int y)
 {
@@ -124,7 +124,9 @@ void	draw_wall(t_data *data, t_ray *ray, int i)
 	hauteur = TAB_Y * (MINIMAP_SIZE / 20) / ray->dst;
 	if (hauteur < 0)
 		hauteur = 0;
-	if (ray->x_y == 1)
+	if (ray->door)
+		texture = data->texture_door;
+	else if (ray->x_y == 1)
 	{
 		if (sin(ray->angle) > 0)
 			texture = data->texture_s;

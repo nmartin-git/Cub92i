@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   free_map.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: igrousso <igrousso@student.42.fr>          +#+  +:+       +#+        */
+/*   By: nmartin <nmartin@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/04 12:37:25 by igrousso          #+#    #+#             */
-/*   Updated: 2025/09/07 20:07:05 by igrousso         ###   ########.fr       */
+/*   Updated: 2025/09/08 16:35:33 by nmartin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,6 +38,8 @@ void	free_infos(t_map *map)
 		free(map->e_t);
 	if (map->w_t)
 		free(map->w_t);
+	if (map->d_t)
+		free(map->d_t);
 }
 
 void	free_map(t_map *map)

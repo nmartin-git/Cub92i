@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   key_handling_utils.c                               :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: igrousso <igrousso@student.42.fr>          +#+  +:+       +#+        */
+/*   By: nmartin <nmartin@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/07 19:52:59 by igrousso          #+#    #+#             */
-/*   Updated: 2025/09/07 20:51:22 by igrousso         ###   ########.fr       */
+/*   Updated: 2025/09/08 15:00:34 by nmartin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,7 +34,7 @@ void	check_items(t_data *data, t_minimap *minimap)
 		data->puff++;
 		data->map->map[pixel.y][pixel.x] = FLOOR;
 		if (data->puff >= data->map->puff)
-			cub_exit(0, "", data);
+			cub_exit(0, "Bien joue, toutes les puffs de Paquetta ont ete recuperees", data);
 	}
 	else
 		return ;
