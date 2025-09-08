@@ -6,7 +6,7 @@
 #    By: igrousso <igrousso@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2025/02/05 15:41:03 by nmartin           #+#    #+#              #
-#    Updated: 2025/09/08 22:01:48 by igrousso         ###   ########.fr        #
+#    Updated: 2025/09/08 23:53:26 by igrousso         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -24,7 +24,7 @@ CUB_PATH = ./cub/
 CUB_FILES = cub.c
 CUB := $(addprefix $(CUB_PATH), $(CUB_FILES))
 GAME_PATH = ./game/
-GAME_FILES = game.c game_utils.c key_handling.c key_handling_utils.c steps.c free.c
+GAME_FILES = game.c game_utils.c key_handling.c key_handling_utils.c steps.c free.c else.c
 GAME := $(addprefix $(GAME_PATH), $(GAME_FILES))
 PARSING_PATH = ./parsing/
 PARSING_FILES = parsing.c texture.c map.c map_utils.c free_map.c \

@@ -1,7 +1,7 @@
-NO textures/dog.xpm
-SO textures/dog2.xpm
-WE textures/dog3.xpm
-EA textures/dog4.xpm
+NO textures_test/img_test2.xpm
+SO textures_test/img_test24.xpm
+WE textures_test/img_test4.xpm
+EA textures_test/img_test6.xpm
 
 F 123,10,1
 C 200,200,200

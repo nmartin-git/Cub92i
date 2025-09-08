@@ -6,7 +6,7 @@
 /*   By: igrousso <igrousso@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/03 08:20:44 by igrousso          #+#    #+#             */
-/*   Updated: 2025/09/08 21:33:36 by igrousso         ###   ########.fr       */
+/*   Updated: 2025/09/09 00:27:27 by igrousso         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,7 +28,7 @@
 # define O_DOOR 10
 # define C_DOOR 11
 
-# define DOOR_TEXTURE "textures/default_texture.xpm"
+# define DOOR_TEXTURE "textures/door.xpm"
 
 typedef struct s_data	t_data;
 

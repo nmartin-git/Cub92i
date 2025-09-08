@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   raycasting.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: nmartin <nmartin@student.42.fr>            +#+  +:+       +#+        */
+/*   By: igrousso <igrousso@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/10 15:59:29 by nmartin           #+#    #+#             */
-/*   Updated: 2025/09/08 16:42:43 by nmartin          ###   ########.fr       */
+/*   Updated: 2025/09/08 23:28:18 by igrousso         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -117,7 +117,9 @@ void	draw_wall(t_data *data, t_ray *ray, int i)
 	int		tex_y;
 	int		tex_x;
 	float	invert_hauteur;
+	int		invert;
 
+	invert = 0;
 	pixel.x = i;
 	if (ray->dst <= 0)
 		ray->dst = 1;
@@ -129,7 +131,10 @@ void	draw_wall(t_data *data, t_ray *ray, int i)
 	else if (ray->x_y == 1)
 	{
 		if (sin(ray->angle) > 0)
+		{
+			invert = 1;
 			texture = data->texture_s;
+		}
 		else
 			texture = data->texture_n;
 	}	
@@ -138,10 +143,15 @@ void	draw_wall(t_data *data, t_ray *ray, int i)
 		if (cos(ray->angle) > 0)
 			texture = data->texture_e;
 		else
+		{
+			invert = 1;
 			texture = data->texture_w;
+		}
 	}
 	start = (TAB_Y - hauteur) / 2;
 	tex_x = ray->percent * texture->tab_x / 100;
+	if (invert == 1)
+		tex_x = texture->tab_x - 1 - tex_x;
 	invert_hauteur = 1 / hauteur;
 	while (pixel.x < i + 1)	
 	{	

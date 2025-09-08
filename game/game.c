@@ -6,7 +6,7 @@
 /*   By: igrousso <igrousso@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/02 11:45:56 by nmartin           #+#    #+#             */
-/*   Updated: 2025/09/08 22:25:03 by igrousso         ###   ########.fr       */
+/*   Updated: 2025/09/08 23:40:27 by igrousso         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,8 +30,6 @@ void	set_data(t_data *data, t_map *map)
 
 	i = -1;
 	data->health = HEALTH - 40;
-	data->mmap = NULL;
-	data->sc_mmap = NULL;
 	data->map = map;
 	data->display = mlx_init();
 	if (!data->display)
@@ -42,6 +40,7 @@ void	set_data(t_data *data, t_map *map)
 	data->image = new_image(data->display, TAB_X, TAB_Y);
 	if (!data->image)
 		cub_exit(1, "Malloc fail\n", data);
+	loading_screen(data);
 	data->background = ft_calloc(sizeof(t_image), 1);
 	if (!data->background)
 		cub_exit(1, "Malloc fail\n", data);
@@ -88,36 +87,14 @@ int	render(t_data *data)
 	put_img_to_img(data->image, data->sc_mmap->minimap, \
 		SCREEN_MINIMAP_SIZE / 15, SCREEN_MINIMAP_SIZE / 15);
 	put_img_to_img(data->image, data->sc_mmap->direction, \
-		data->sc_mmap->cursor_x - data->sc_mmap->pxl_size / 1.5, data->sc_mmap->cursor_y - data->sc_mmap->pxl_size / 1.5);
+		data->sc_mmap->cursor_x - data->sc_mmap->pxl_size / 1.5, \
+		data->sc_mmap->cursor_y - data->sc_mmap->pxl_size / 1.5);
 	put_img_to_img(data->image, data->sc_mmap->cursor, \
 		data->sc_mmap->cursor_x, data->sc_mmap->cursor_y);
 	put_img_to_img(data->image, data->pv, TAB_X / 4, TAB_Y - TAB_Y / 6);
 	mlx_put_image_to_window(data->display, data->window, \
 		data->image->image, 0, 0);
 	return (0);
-}
-
-void	pv_bar(t_data *data)
-{
-	int		x;
-	int		y;
-
-	y = 0;
-	while (y < TAB_Y / 20)
-	{
-		x = 0;
-		while (x < TAB_X / 2)
-			put_pxl(data->pv, x++, y, HEALTH_BG_COLOR);
-		y++;
-	}
-	y = 0;
-	while (y < TAB_Y / 20)
-	{
-		x = 0;
-		while (x < (TAB_X / 2) * data->health / 100)
-			put_pxl(data->pv, x++, y, HEALTH_COLOR);
-		y++;
-	}
 }
 
 void	game(t_data *data, t_map *map)
@@ -133,7 +110,6 @@ void	game(t_data *data, t_map *map)
 	if (!data->pv)
 		cub_exit(1, "", data);
 	pv_bar(data);
-	// loading screen ?
 	// mlx_mouse_hide_no_leak(data->display, data->window);
 	if (paint_floor_and_ceiling(data->background, data))
 		cub_exit(1, "", data);
