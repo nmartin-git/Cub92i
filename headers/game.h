@@ -6,7 +6,7 @@
 /*   By: igrousso <igrousso@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/02 14:55:19 by nmartin           #+#    #+#             */
-/*   Updated: 2025/09/07 20:13:49 by igrousso         ###   ########.fr       */
+/*   Updated: 2025/09/08 22:27:01 by igrousso         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,6 +28,11 @@
 # define HEALTH_COLOR 123456
 # define HEALTH_BG_COLOR 12345678
 
+# define CONGRATS "Bien joué, toutes les puffs de Paquetta ont été récupérées"
+
+/*---free.c---*/
+void		free_data(t_data *data);
+
 /*---game.c---*/
 void		set_data(t_data *data, t_map *map);
 void		pv_bar(t_data *data);
@@ -39,7 +44,6 @@ __uint64_t	get_time_ms(void);
 int			init_textures(t_data *data);
 int			close_window(t_data *data);
 void		cub_exit(int err, char *str, t_data *data);
-void		free_data(t_data *data);
 
 /*---key_handling.c---*/
 int			key_press(int keycode, t_data *data);
@@ -52,6 +56,7 @@ void		clear_image(t_image *image);
 void		move_player(t_data *data, int input, __uint64_t delta_time);
 void		move_cursor(t_data *data, int direction);
 int			mouse_move(int x, int y, t_data *data);
+int	        mouse_hook(int button, int x, int y, t_data *data);
 
 /*---steps.c---*/
 void		left_step(t_data *data, __uint64_t step);

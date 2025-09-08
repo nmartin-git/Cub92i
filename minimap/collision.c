@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   collision.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: nmartin <nmartin@student.42.fr>            +#+  +:+       +#+        */
+/*   By: igrousso <igrousso@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/18 13:52:58 by nmartin           #+#    #+#             */
-/*   Updated: 2025/09/08 16:48:35 by nmartin          ###   ########.fr       */
+/*   Updated: 2025/09/08 22:36:29 by igrousso         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,8 +25,8 @@ void	go_left(t_data *data, int pixels)
 	y = (data->mmap->cursor_y - data->mmap->SB15) / data->mmap->pxl_size;
 	y2 = (data->mmap->cursor_y - data->mmap->SB15 + data->mmap->pxl_size / \
 		1.5 -1) / data->mmap->pxl_size;
-	if ((data->map->map[y][x] == WALL || data->map->map[y2][x] == WALL)
-			|| (data->map->map[y][x] == C_DOOR || data->map->map[y2][x] == C_DOOR))
+	if ((data->map->map[y][x] == WALL || data->map->map[y2][x] == WALL) || \
+		(data->map->map[y][x] == C_DOOR || data->map->map[y2][x] == C_DOOR))
 	{
 		wall_edge = (x + 1) * data->mmap->pxl_size + data->mmap->SB15;
 		diff = data->mmap->cursor_x - wall_edge;
@@ -48,8 +48,8 @@ void	go_right(t_data *data, int pixels)
 		1.5 - 1) / data->mmap->pxl_size;
 	x = (data->mmap->cursor_x + data->mmap->pxl_size / 1.5 - \
 			data->mmap->SB15 + pixels) / data->mmap->pxl_size;
-	if ((data->map->map[y][x] == WALL || data->map->map[y2][x] == WALL)
-			|| (data->map->map[y][x] == C_DOOR || data->map->map[y2][x] == C_DOOR))
+	if ((data->map->map[y][x] == WALL || data->map->map[y2][x] == WALL) || \
+		(data->map->map[y][x] == C_DOOR || data->map->map[y2][x] == C_DOOR))
 	{
 		data->mmap->cursor_x += (x * data->mmap->pxl_size + \
 			data->mmap->SB15) - (data->mmap->cursor_x + \
@@ -78,8 +78,8 @@ void	go_up(t_data *data, int pixels)
 		1.5 - 1) / data->mmap->pxl_size;
 	y = (data->mmap->cursor_y - data->mmap->SB15 - pixels) / \
 		data->mmap->pxl_size;
-	if ((data->map->map[y][x] == WALL || data->map->map[y][x2] == WALL)
-			|| (data->map->map[y][x] == C_DOOR || data->map->map[y][x2] == C_DOOR))
+	if ((data->map->map[y][x] == WALL || data->map->map[y][x2] == WALL) || \
+		(data->map->map[y][x] == C_DOOR || data->map->map[y][x2] == C_DOOR))
 	{
 		wall_edge = (y + 1) * data->mmap->pxl_size + data->mmap->SB15;
 		diff = data->mmap->cursor_y - wall_edge;
@@ -101,8 +101,8 @@ void	go_down(t_data *data, int pixels)
 		1.5 - 1) / data->mmap->pxl_size;
 	y = (data->mmap->cursor_y + data->mmap->pxl_size / 1.5 - data->mmap->SB15 \
 		+ pixels) / data->mmap->pxl_size;
-	if ((data->map->map[y][x] == WALL || data->map->map[y][x2] == WALL)
-			|| (data->map->map[y][x] == C_DOOR || data->map->map[y][x2] == C_DOOR))
+	if ((data->map->map[y][x] == WALL || data->map->map[y][x2] == WALL) || \
+		(data->map->map[y][x] == C_DOOR || data->map->map[y][x2] == C_DOOR))
 	{
 		data->mmap->cursor_y += (y * data->mmap->pxl_size + data->mmap->SB15) \
 			- (data->mmap->cursor_y + data->mmap->pxl_size / 1.5);

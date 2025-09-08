@@ -3,14 +3,26 @@
 /*                                                        :::      ::::::::   */
 /*   game.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: nmartin <nmartin@student.42.fr>            +#+  +:+       +#+        */
+/*   By: igrousso <igrousso@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/02 11:45:56 by nmartin           #+#    #+#             */
-/*   Updated: 2025/09/08 15:38:03 by nmartin          ###   ########.fr       */
+/*   Updated: 2025/09/08 22:25:03 by igrousso         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "game.h"
+
+void	set_image_to_null(t_data *data)
+{
+	data->background->image = NULL;
+	data->texture_n->image = NULL;
+	data->texture_s->image = NULL;
+	data->texture_e->image = NULL;
+	data->texture_w->image = NULL;
+	if (data->map->doors)
+		data->texture_door->image = NULL;
+	data->pv = NULL;
+}
 
 void	set_data(t_data *data, t_map *map)
 {
@@ -30,11 +42,12 @@ void	set_data(t_data *data, t_map *map)
 	data->image = new_image(data->display, TAB_X, TAB_Y);
 	if (!data->image)
 		cub_exit(1, "Malloc fail\n", data);
-	data->background = malloc(sizeof(t_image));
+	data->background = ft_calloc(sizeof(t_image), 1);
 	if (!data->background)
 		cub_exit(1, "Malloc fail\n", data);
 	if (init_textures(data))
 		cub_exit(1, "Malloc fail\n", data);
+	set_image_to_null(data);
 	while (++i < 10)
 		data->keys[i] = 0;
 }
@@ -55,8 +68,7 @@ int	render(t_data *data)
 	static __uint64_t	last_time = 0;
 	__uint64_t			now;
 	__uint64_t			delta_time;
-	// static __uint64_t last_fps_time = 0;
-	// static int frame_count = 0;
+
 	now = get_time_ms();
 	delta_time = now - last_time;
 	if (delta_time < 16)
@@ -66,7 +78,8 @@ int	render(t_data *data)
 		delta_time = now - last_time;
 	}
 	last_time = now;
-	update(data, delta_time);
+	if (delta_time < 200 && delta_time > 0)
+		update(data, delta_time);
 	put_cursor_direction(data->sc_mmap, data->mmap->p_angle);
 	put_img_to_img(data->image, data->background, 0, 0);
 	put_raycasting(data->mmap, FOV, TAB_X, data);
@@ -74,8 +87,6 @@ int	render(t_data *data)
 		data->crosshair->pos_c_x, data->crosshair->pos_c_y);
 	put_img_to_img(data->image, data->sc_mmap->minimap, \
 		SCREEN_MINIMAP_SIZE / 15, SCREEN_MINIMAP_SIZE / 15);
-	// put_img_to_img(data->image, data->mmap->raycasting, MINIMAP_SIZE / 15, MINIMAP_SIZE / 15);
-	// put_img_to_img(data->image, data->sc_mmap->direction, data->sc_mmap->cursor_x, data->sc_mmap->cursor_y);
 	put_img_to_img(data->image, data->sc_mmap->direction, \
 		data->sc_mmap->cursor_x - data->sc_mmap->pxl_size / 1.5, data->sc_mmap->cursor_y - data->sc_mmap->pxl_size / 1.5);
 	put_img_to_img(data->image, data->sc_mmap->cursor, \
@@ -83,18 +94,6 @@ int	render(t_data *data)
 	put_img_to_img(data->image, data->pv, TAB_X / 4, TAB_Y - TAB_Y / 6);
 	mlx_put_image_to_window(data->display, data->window, \
 		data->image->image, 0, 0);
-	// frame_count++;
-	// if (now - last_fps_time >= 1000)
-	// {
-	// 	printf("FPS : %d\n", frame_count);
-	// 	printf("%f %f\n", data->mmap->cursor_x, data->mmap->cursor_y);
-	// 	printf("%f %f\n", data->sc_mmap->cursor_x, data->sc_mmap->cursor_y);
-	// 	// printf("%d\n", data->sc_mmap->pxl_size);
-	// 	// printf("step * delta time : %lu\nminimap size / screen minimap size : %d\n", (STEP * delta_time) , (MINIMAP_SIZE / SCREEN_MINIMAP_SIZE));
-	// 	// printf("%f\n", (float)(STEP * delta_time) / (float)(MINIMAP_SIZE / SCREEN_MINIMAP_SIZE));
-	// 	frame_count = 0;
-	// 	last_fps_time = now;
-	// }
 	return (0);
 }
 
@@ -125,11 +124,11 @@ void	game(t_data *data, t_map *map)
 {
 	set_data(data, map);
 	if (init_crosshair(data))
-		cub_exit(1, "Crosshair failed to load\n", data);
+		cub_exit(1, "Crosshair failed to load", data);
 	if (load_texutres(data))
-		cub_exit(1, "Texture failed to load\n", data);
+		cub_exit(1, "Texture failed to load", data);
 	if (minimap(data))
-		cub_exit(1, "Minimap failed to load\n", data);
+		cub_exit(1, "Minimap failed to load", data);
 	data->pv = new_image(data->display, TAB_X / 2, TAB_Y / 20);
 	if (!data->pv)
 		cub_exit(1, "", data);
@@ -144,6 +143,7 @@ void	game(t_data *data, t_map *map)
 	mlx_hook(data->window, 2, 1L << 0, key_press, data);
 	mlx_hook(data->window, 3, 1L << 1, key_release, data);
 	mlx_hook(data->window, 17, 1L >> 0, close_window, data);
+	mlx_mouse_hook(data->window, mouse_hook, data);
 	mlx_loop_hook(data->display, &render, data);
 	mlx_loop(data->display);
 	free_data(data);

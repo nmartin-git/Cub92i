@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   struct_utils.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: nmartin <nmartin@student.42.fr>            +#+  +:+       +#+        */
+/*   By: igrousso <igrousso@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/06 16:56:02 by nmartin           #+#    #+#             */
-/*   Updated: 2025/06/14 15:00:01 by nmartin          ###   ########.fr       */
+/*   Updated: 2025/09/08 20:37:06 by igrousso         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,7 +43,7 @@ void	free_image(t_image *image, void *display)
 {
 	if (image)
 	{
-		if (image->image && display)
+		if (display && image->image)
 			mlx_destroy_image(display, image->image);
 		free(image);
 	}
