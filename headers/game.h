@@ -6,7 +6,7 @@
 /*   By: igrousso <igrousso@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/02 14:55:19 by nmartin           #+#    #+#             */
-/*   Updated: 2025/09/08 23:53:13 by igrousso         ###   ########.fr       */
+/*   Updated: 2025/09/09 00:37:39 by igrousso         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,6 +19,7 @@
 # include "libft.h"
 # include "minimap.h"
 # include "parsing.h"
+# include "time.h"
 # include <X11/keysym.h>
 # include <sys/time.h>
 
@@ -31,8 +32,8 @@
 # define CONGRATS "Bien joué, toutes les puffs de Paquetta ont été récupérées"
 
 /*---else.c---*/
-void        pv_bar(t_data *data);
-void        loading_screen(t_data *data);
+void		pv_bar(t_data *data);
+void		loading_screen(t_data *data);
 
 /*---free.c---*/
 void		free_data(t_data *data);
@@ -53,7 +54,7 @@ void		cub_exit(int err, char *str, t_data *data);
 int			key_press(int keycode, t_data *data);
 int			key_release(int keycode, t_data *data);
 int			update(t_data *data, __uint64_t delta_time);
-void        open_close_door(t_data *data);
+void		open_close_door(t_data *data);
 
 /*---key_handling_utils.c---*/
 void		check_items(t_data *data, t_minimap *minimap);
@@ -61,7 +62,7 @@ void		clear_image(t_image *image);
 void		move_player(t_data *data, int input, __uint64_t delta_time);
 void		move_cursor(t_data *data, int direction);
 int			mouse_move(int x, int y, t_data *data);
-int	        mouse_hook(int button, int x, int y, t_data *data);
+int			mouse_hook(int button, int x, int y, t_data *data);
 
 /*---steps.c---*/
 void		left_step(t_data *data, __uint64_t step);

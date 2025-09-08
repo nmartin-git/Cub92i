@@ -6,7 +6,7 @@
 /*   By: igrousso <igrousso@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/05 14:23:42 by nmartin           #+#    #+#             */
-/*   Updated: 2025/09/08 21:29:48 by igrousso         ###   ########.fr       */
+/*   Updated: 2025/09/09 00:48:30 by igrousso         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -58,6 +58,14 @@ typedef struct s_tmp2
 	int						y;
 }							t_tmp2;
 
+typedef struct s_tmp3
+{
+	t_pos					id;
+	t_pos					c;
+	t_pos					dst;
+	int						draw;
+}							t_tmp3;
+
 enum						e_input
 {
 	W,
@@ -79,7 +87,8 @@ void						pixel_put_square(t_minimap *minimap, t_pos pixel,
 int							load_image(t_minimap *minimap, t_data *data);
 
 /*---cursor.c---*/
-void						put_cursor_direction(t_minimap *minimap, float p_angle);
+void						put_cursor_direction(t_minimap *minimap,
+								float p_angle);
 void						pixel_put_cursor(t_image *cursor, int color,
 								int size, int radius);
 

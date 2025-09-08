@@ -6,7 +6,7 @@
 /*   By: igrousso <igrousso@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/08 14:47:06 by nmartin           #+#    #+#             */
-/*   Updated: 2025/09/07 21:56:52 by igrousso         ###   ########.fr       */
+/*   Updated: 2025/09/09 00:46:32 by igrousso         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,39 +28,43 @@ void	put_pxl(t_image *image, int x, int y, unsigned int color)
 	}
 }
 
+void	put_puff2(t_tmp3 *t, int width, int height, t_minimap *minimap)
+{
+	t->draw = 0;
+	if (t->id.y >= -height / 2 && t->id.y <= height / 6)
+		t->draw = 1;
+	if (t->id.y >= -height / 2 - (width / 3) && t->id.y <= -height / 2
+		&& t->id.x >= -(width / 3) / 2 && t->id.x <= (width / 3) / 2)
+		t->draw = 1;
+	if (t->id.y >= height / 8)
+	{
+		t->dst.x = ft_abs(t->id.x);
+		t->dst.y = t->id.y - height / 6;
+		if (t->dst.x * t->dst.x + t->dst.y * t->dst.y <= (width / 2) * \
+			(width / 2))
+			t->draw = 1;
+	}
+	if (t->draw)
+		put_pxl(minimap->minimap, t->c.x + t->id.x, t->c.y + t->id.y, \
+			PUFF_COLOR);
+}
+
 void	put_puff(t_minimap *minimap, t_pos pos, int width, int height)
 {
-	t_pos	id;
-	t_pos	c;
-	int		draw;
-	t_pos	dst;
+	t_tmp3	t;
 
-	c.x = pos.x * minimap->pxl_size + minimap->pxl_size / 2;
-	c.y = pos.y * minimap->pxl_size + minimap->pxl_size / 2 + (width / 3);
-	id.y = -height / 2 - (width / 3);
-	while (id.y <= height / 2)
+	t.c.x = pos.x * minimap->pxl_size + minimap->pxl_size / 2;
+	t.c.y = pos.y * minimap->pxl_size + minimap->pxl_size / 2 + (width / 3);
+	t.id.y = -height / 2 - (width / 3);
+	while (t.id.y <= height / 2)
 	{
-		id.x = -width / 2;
-		while (id.x <= width / 2)
+		t.id.x = -width / 2;
+		while (t.id.x <= width / 2)
 		{
-			draw = 0;
-			if (id.y >= -height / 2 && id.y <= height / 6)
-				draw = 1;
-			if (id.y >= -height / 2 - (width / 3) && id.y <= -height / 2
-				&& id.x >= -(width / 3) / 2 && id.x <= (width / 3) / 2)
-				draw = 1;
-			if (id.y >= height / 8)
-			{
-				dst.x = ft_abs(id.x);
-				dst.y = id.y - height / 6;
-				if (dst.x * dst.x + dst.y * dst.y <= (width / 2) * (width / 2))
-					draw = 1;
-			}
-			if (draw)
-				put_pxl(minimap->minimap, c.x + id.x, c.y + id.y, PUFF_COLOR);
-			id.x++;
+			put_puff2(&t, width, height, minimap);
+			t.id.x++;
 		}
-		id.y++;
+		t.id.y++;
 	}
 }
 

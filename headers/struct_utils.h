@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   struct_utils.h                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: nmartin <nmartin@student.42.fr>            +#+  +:+       +#+        */
+/*   By: igrousso <igrousso@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/06 16:52:00 by nmartin           #+#    #+#             */
-/*   Updated: 2025/09/08 16:17:50 by nmartin          ###   ########.fr       */
+/*   Updated: 2025/09/09 00:47:12 by igrousso         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -59,7 +59,7 @@ typedef struct s_minimap
 	int						c_color;
 	int						x;
 	int						y;
-	int						SB15; //minimap_size_by_15
+	int						sb15; //minimap_size_by_15
 	float					scale;
 }							t_minimap;
 

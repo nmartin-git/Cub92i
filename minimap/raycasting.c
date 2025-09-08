@@ -6,7 +6,7 @@
 /*   By: igrousso <igrousso@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/10 15:59:29 by nmartin           #+#    #+#             */
-/*   Updated: 2025/09/08 23:28:18 by igrousso         ###   ########.fr       */
+/*   Updated: 2025/09/09 00:47:42 by igrousso         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -177,7 +177,7 @@ void	put_raycasting(t_minimap *minimap, float fov, int ray_nb, t_data *data)
 	i = 0;
 	fov = (fov * PI) / 180;
 	diff = fov / (ray_nb - 1);
-	point = minimap->pxl_size / 3 - minimap->SB15;
+	point = minimap->pxl_size / 3 - minimap->sb15;
 	while (i < ray_nb)
 	{
 		ray.angle = minimap->p_angle - fov / 2.0 + i * diff;

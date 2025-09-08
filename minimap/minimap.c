@@ -6,7 +6,7 @@
 /*   By: igrousso <igrousso@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/05 14:23:31 by nmartin           #+#    #+#             */
-/*   Updated: 2025/09/07 22:01:36 by igrousso         ###   ########.fr       */
+/*   Updated: 2025/09/09 00:47:42 by igrousso         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,7 +52,7 @@ void	minimap_data(t_minimap *minimap, t_data *data, int size)
 		minimap->p_angle = PI;
 	else
 		minimap->p_angle = PI / 2;
-	minimap->SB15 = size / 15;
+	minimap->sb15 = size / 15;
 	minimap->display = data->display;
 	minimap->scale = (float)(MINIMAP_SIZE / SCREEN_MINIMAP_SIZE);
 	if (load_image(minimap, data))
