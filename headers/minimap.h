@@ -6,7 +6,7 @@
 /*   By: igrousso <igrousso@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/05 14:23:42 by nmartin           #+#    #+#             */
-/*   Updated: 2025/09/09 00:48:30 by igrousso         ###   ########.fr       */
+/*   Updated: 2025/09/09 21:49:51 by igrousso         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,7 +29,7 @@
 # define FLOOR 0
 # define EMPTY 8
 
-# define STEP 3
+# define STEP 100
 # define ROTATION 0.15
 # define PI 3.1415926535
 # define FOV 60

@@ -6,7 +6,7 @@
 /*   By: igrousso <igrousso@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/06 16:52:00 by nmartin           #+#    #+#             */
-/*   Updated: 2025/09/09 00:47:12 by igrousso         ###   ########.fr       */
+/*   Updated: 2025/09/09 21:44:05 by igrousso         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -98,6 +98,7 @@ typedef struct s_data
 	t_image					*texture_door;
 	t_crosshair				*crosshair;
 	int						keys[10];
+	int						scale;
 }							t_data;
 
 t_image						*new_image(void *display, int tab_x, int tab_y);

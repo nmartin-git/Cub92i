@@ -6,7 +6,7 @@
 /*   By: igrousso <igrousso@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/07 19:52:59 by igrousso          #+#    #+#             */
-/*   Updated: 2025/09/08 21:55:40 by igrousso         ###   ########.fr       */
+/*   Updated: 2025/09/09 21:45:10 by igrousso         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -64,21 +64,21 @@ void	clear_image(t_image *image)
 void	move_player(t_data *data, int input, __uint64_t delta_time)
 {
 	if (input == A)
-		left_step(data, STEP * delta_time);
+		left_step(data, STEP * delta_time / data->scale);
 	else if (input == D)
-		right_step(data, STEP * delta_time);
+		right_step(data, STEP * delta_time / data->scale);
 	else if (input == W)
-		forward_step(data, STEP * delta_time);
+		forward_step(data, STEP * delta_time / data->scale);
 	else if (input == S)
-		backward_step(data, STEP * delta_time);
+		backward_step(data, STEP * delta_time / data->scale);
 	else if (input == 4)
-		diag_step(data, STEP * delta_time, 4);
+		diag_step(data, STEP * delta_time / data->scale, 4);
 	else if (input == 5)
-		diag_step(data, STEP * delta_time, 5);
+		diag_step(data, STEP * delta_time / data->scale, 5);
 	else if (input == 6)
-		diag_step(data, STEP * delta_time, 6);
+		diag_step(data, STEP * delta_time / data->scale, 6);
 	else if (input == 7)
-		diag_step(data, STEP * delta_time, 7);
+		diag_step(data, STEP * delta_time / data->scale, 7);
 	check_items(data, data->mmap);
 }
 

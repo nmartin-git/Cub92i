@@ -6,7 +6,7 @@
 /*   By: igrousso <igrousso@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/10 15:59:29 by nmartin           #+#    #+#             */
-/*   Updated: 2025/09/09 00:47:42 by igrousso         ###   ########.fr       */
+/*   Updated: 2025/09/09 21:45:22 by igrousso         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -123,7 +123,7 @@ void	draw_wall(t_data *data, t_ray *ray, int i)
 	pixel.x = i;
 	if (ray->dst <= 0)
 		ray->dst = 1;
-	hauteur = TAB_Y * (MINIMAP_SIZE / 20) / ray->dst;
+	hauteur = TAB_Y * (MINIMAP_SIZE / data->scale) / ray->dst;
 	if (hauteur < 0)
 		hauteur = 0;
 	if (ray->door)

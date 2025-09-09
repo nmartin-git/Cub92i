@@ -6,7 +6,7 @@
 /*   By: igrousso <igrousso@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/02 11:45:10 by nmartin           #+#    #+#             */
-/*   Updated: 2025/09/09 21:29:31 by igrousso         ###   ########.fr       */
+/*   Updated: 2025/09/09 21:44:56 by igrousso         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,5 +43,9 @@ int	main(int ac, char **av)
 	set_data_to_null(&data);
 	if (parsing(av[1], &map))
 		return (1);
+	if (map.col > map.row)
+		data.scale = map.col;
+	else
+		data.scale = map.row;
 	game(&data, &map);
 }
