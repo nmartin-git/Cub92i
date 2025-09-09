@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   key_handling.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: igrousso <igrousso@student.42.fr>          +#+  +:+       +#+        */
+/*   By: nmartin <nmartin@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/07 15:26:13 by nmartin           #+#    #+#             */
-/*   Updated: 2025/09/08 22:30:45 by igrousso         ###   ########.fr       */
+/*   Updated: 2025/09/09 20:38:53 by nmartin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -79,19 +79,24 @@ void	open_close_door(t_data *data)
 	int	x;
 	int	y;
 
-	printf("test\n");
-	x = data->sc_mmap->cursor_x + cos(data->mmap->p_angle) * 3;
-	y = data->sc_mmap->cursor_y + sin(data->mmap->p_angle) * 3;
+	x = (data->sc_mmap->cursor_x - data->sc_mmap->sb15) / data->sc_mmap->pxl_size;
+	y = (data->sc_mmap->cursor_y - data->sc_mmap->sb15) / data->sc_mmap->pxl_size;
+	if (data->map->map[y][x] == O_DOOR || data->map->map[y][x] == C_DOOR)
+		return ;
+	x = data->sc_mmap->cursor_x - data->sc_mmap->sb15 + cos(data->mmap->p_angle) * 4;
+	y = data->sc_mmap->cursor_y - data->sc_mmap->sb15 + sin(data->mmap->p_angle) * 4;
 	x /= data->sc_mmap->pxl_size;
 	y /= data->sc_mmap->pxl_size;
 	if (data->map->map[y][x] == C_DOOR)
 		data->map->map[y][x] = O_DOOR;
 	else if (data->map->map[y][x] == O_DOOR)
 		data->map->map[y][x] = C_DOOR;
-	x = data->sc_mmap->cursor_x + cos(data->mmap->p_angle) * \
-		data->sc_mmap->pxl_size;
-	y = data->sc_mmap->cursor_y + sin(data->mmap->p_angle) * \
-		data->sc_mmap->pxl_size;
+	if (data->map->map[y][x] == O_DOOR || data->map->map[y][x] == C_DOOR)
+		return ;
+	x = data->sc_mmap->cursor_x - data->sc_mmap->sb15 + cos(data->mmap->p_angle) * \
+		data->sc_mmap->pxl_size * 1.5;
+	y = data->sc_mmap->cursor_y - data->sc_mmap->sb15 + sin(data->mmap->p_angle) * \
+		data->sc_mmap->pxl_size * 1.5;
 	x /= data->sc_mmap->pxl_size;
 	y /= data->sc_mmap->pxl_size;
 	if (data->map->map[y][x] == C_DOOR)
@@ -120,7 +125,7 @@ int	update(t_data *data, __uint64_t delta_time)
 		move_player(data, S, delta_time);
 	else if (data->keys[4] == 1)
 		move_player(data, D, delta_time);
-	if (data->keys[7] == 1)
+	if (data->map->doors && data->keys[7] == 1)
 		open_close_door(data); //TODO ouvrir porte
 	update_2(data);
 	return (0);
