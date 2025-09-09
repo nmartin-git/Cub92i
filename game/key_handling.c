@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   key_handling.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: nmartin <nmartin@student.42.fr>            +#+  +:+       +#+        */
+/*   By: igrousso <igrousso@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/07 15:26:13 by nmartin           #+#    #+#             */
-/*   Updated: 2025/09/09 20:38:53 by nmartin          ###   ########.fr       */
+/*   Updated: 2025/09/09 22:21:44 by igrousso         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -64,14 +64,19 @@ void	update_2(t_data *data)
 		move_cursor(data, -1);
 	if (data->keys[6] == 1)
 		move_cursor(data, 1);
-	if (data->mmap->cursor_x / data->sc_mmap->cursor_x > 67)
-		data->sc_mmap->cursor_x = data->mmap->cursor_x / 67;
-	if (data->mmap->cursor_x / data->sc_mmap->cursor_x < 65)
-		data->sc_mmap->cursor_x = data->mmap->cursor_x / 65;
-	if (data->mmap->cursor_y / data->sc_mmap->cursor_y > 67)
-		data->sc_mmap->cursor_y = data->mmap->cursor_y / 67;
-	if (data->mmap->cursor_y / data->sc_mmap->cursor_y < 65)
-		data->sc_mmap->cursor_y = data->mmap->cursor_y / 65;
+	printf("%f %d\n", data->sc_mmap->scale, data->scale);
+	if (data->mmap->cursor_x / data->sc_mmap->cursor_x > data->sc_mmap->scale \
+		+ data->scale / 3)
+		data->sc_mmap->cursor_x = data->mmap->cursor_x / data->sc_mmap->scale \
+			+ data->scale / 3;
+	if (data->mmap->cursor_x / data->sc_mmap->cursor_x < data->sc_mmap->scale)
+		data->sc_mmap->cursor_x = data->mmap->cursor_x / data->sc_mmap->scale;
+	if (data->mmap->cursor_y / data->sc_mmap->cursor_y > data->sc_mmap->scale \
+		+ data->scale / 3)
+		data->sc_mmap->cursor_y = data->mmap->cursor_y / data->sc_mmap->scale \
+			+ data->scale / 3;
+	if (data->mmap->cursor_y / data->sc_mmap->cursor_y < data->sc_mmap->scale)
+		data->sc_mmap->cursor_y = data->mmap->cursor_y / data->sc_mmap->scale;
 }
 
 void	open_close_door(t_data *data)
