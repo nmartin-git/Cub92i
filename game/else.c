@@ -6,7 +6,7 @@
 /*   By: igrousso <igrousso@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/08 23:40:01 by igrousso          #+#    #+#             */
-/*   Updated: 2025/09/09 00:49:10 by igrousso         ###   ########.fr       */
+/*   Updated: 2025/09/09 20:54:14 by igrousso         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,8 +35,11 @@ void	pv_bar(t_data *data)
 	}
 }
 
-void	loading_screen2(t_data *data, t_image *tmp)
+void	loading_screen2(t_data *data, t_image *tmp, int i)
 {
+	if (i == 7)
+		tmp->image = mlx_xpm_file_to_image(data->display, 
+			"tloading_screen/bassem.xpm", &tmp->tab_x, &tmp->tab_y);	
 	if (!tmp->image)
 		cub_exit(1, "loading screen failed to load", data);
 	mlx_put_image_to_window(data->display, data->window, tmp->image, (TAB_X
@@ -50,7 +53,7 @@ void	loading_screen(t_data *data)
 	t_image	tmp;
 
 	srand(time(0));
-	i = (rand() % 6) + 1;
+	i = (rand() % 7) + 1;
 	if (i == 1)
 		tmp.image = mlx_xpm_file_to_image(data->display,
 				"tloading_screen/1.xpm", &tmp.tab_x, &tmp.tab_y);
@@ -69,5 +72,5 @@ void	loading_screen(t_data *data)
 	if (i == 6)
 		tmp.image = mlx_xpm_file_to_image(data->display,
 				"tloading_screen/golem.xpm", &tmp.tab_x, &tmp.tab_y);
-	loading_screen2(data, &tmp);
+	loading_screen2(data, &tmp, i);
 }

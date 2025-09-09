@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   map_utils2.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: nmartin <nmartin@student.42.fr>            +#+  +:+       +#+        */
+/*   By: igrousso <igrousso@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/04 17:47:47 by igrousso          #+#    #+#             */
-/*   Updated: 2025/09/08 15:22:39 by nmartin          ###   ########.fr       */
+/*   Updated: 2025/09/09 21:29:16 by igrousso         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,12 +37,11 @@ void	count_collectible(char c, t_map *map)
 
 int	check_doors(t_map *map, int x, int y)
 {
-	if ((y - 1 >= 0 && map->map[y - 1][x] != 1 && \
-		y + 1 <= map->row && map->map[y + 1][x] != 1) && \
-		(x - 1 >= 0 && map->map[y][x - 1] != 1 && \
-		x + 1 <= map->row && map->map[y][x + 1] != 1))
-	{
-		return (1);
-	}
-	return (0);
+	if (y - 1 >= 0 && map->map[y - 1][x] == 1 && \
+		y + 1 <= map->row && map->map[y + 1][x] == 1)
+		return (0);
+	if (x - 1 >= 0 && map->map[y][x - 1] == 1 && \
+		x + 1 <= map->col && map->map[y][x + 1] == 1)
+		return (0);
+	return (1);
 }
