@@ -6,7 +6,7 @@
 /*   By: igrousso <igrousso@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/08 21:44:50 by igrousso          #+#    #+#             */
-/*   Updated: 2025/09/07 19:15:20 by igrousso         ###   ########.fr       */
+/*   Updated: 2025/09/09 23:49:55 by igrousso         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,6 +54,18 @@ int	convert_xpm(char *str)
 	return (0);
 }
 
+int easter_egg_img2(t_data *data, t_image *newimg)
+{
+	if (data->map->c_rgb == -13)
+	{
+		if (convert_xpm("tloading_screen/leon.xpm"))
+			return (1);
+		newimg->image = mlx_xpm_file_to_image(data->display, \
+			"tloading_screen/leon.xpm", &newimg->tab_x, &newimg->tab_y);
+	}
+	return (0);
+}
+
 int	easter_egg_img(t_data *data, t_image *newimg)
 {
 	if (data->map->c_rgb == -10)
@@ -77,6 +89,8 @@ int	easter_egg_img(t_data *data, t_image *newimg)
 		newimg->image = mlx_xpm_file_to_image(data->display, \
 			"background/.ceiling3.xpm", &newimg->tab_x, &newimg->tab_y);
 	}
+	if (easter_egg_img2(data, newimg))
+		return (1);
 	return (0);
 }
 

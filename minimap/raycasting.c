@@ -6,7 +6,7 @@
 /*   By: igrousso <igrousso@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/10 15:59:29 by nmartin           #+#    #+#             */
-/*   Updated: 2025/09/09 21:45:22 by igrousso         ###   ########.fr       */
+/*   Updated: 2025/09/10 04:27:38 by igrousso         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -153,16 +153,12 @@ void	draw_wall(t_data *data, t_ray *ray, int i)
 	if (invert == 1)
 		tex_x = texture->tab_x - 1 - tex_x;
 	invert_hauteur = 1 / hauteur;
-	while (pixel.x < i + 1)	
-	{	
-		j = start;
-		while (j < TAB_Y && j < start + hauteur)
-		{
-			pixel.y = j++;
-			tex_y = (int)((j - start) * (texture->tab_y) * invert_hauteur);
-			pixel_put(data->image, pixel, get_pixel_color(texture, tex_x, tex_y));
-		}
-		pixel.x++;
+	j = start;
+	while (j < TAB_Y && j < start + hauteur)
+	{
+		pixel.y = j++;
+		tex_y = (int)((j - start) * (texture->tab_y) * invert_hauteur);
+		pixel_put(data->image, pixel, get_pixel_color(texture, tex_x, tex_y));
 	}
 }
 
