@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   raycasting.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: igrousso <igrousso@student.42.fr>          +#+  +:+       +#+        */
+/*   By: nmartin <nmartin@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/10 15:59:29 by nmartin           #+#    #+#             */
-/*   Updated: 2025/09/10 04:53:20 by igrousso         ###   ########.fr       */
+/*   Updated: 2025/09/10 16:35:02 by nmartin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -192,4 +192,6 @@ void	put_raycasting(t_minimap *minimap, float fov, int ray_nb, t_data *data)
 		draw_wall(data, &ray, i);
 		i++;
 	}
+	if (data->map->puff || data->map->el_mordjene)
+		set_item_rayscast(data);
 }
