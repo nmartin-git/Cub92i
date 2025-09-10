@@ -6,7 +6,7 @@
 /*   By: igrousso <igrousso@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/07 15:26:13 by nmartin           #+#    #+#             */
-/*   Updated: 2025/09/09 22:21:44 by igrousso         ###   ########.fr       */
+/*   Updated: 2025/09/10 04:34:57 by igrousso         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -64,7 +64,6 @@ void	update_2(t_data *data)
 		move_cursor(data, -1);
 	if (data->keys[6] == 1)
 		move_cursor(data, 1);
-	printf("%f %d\n", data->sc_mmap->scale, data->scale);
 	if (data->mmap->cursor_x / data->sc_mmap->cursor_x > data->sc_mmap->scale \
 		+ data->scale / 3)
 		data->sc_mmap->cursor_x = data->mmap->cursor_x / data->sc_mmap->scale \
