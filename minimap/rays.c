@@ -6,7 +6,7 @@
 /*   By: nmartin <nmartin@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/13 14:11:53 by nmartin           #+#    #+#             */
-/*   Updated: 2025/09/08 16:45:29 by nmartin          ###   ########.fr       */
+/*   Updated: 2025/09/12 18:23:03 by nmartin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,15 +34,12 @@ int	vertical_wall(t_minimap *minimap, t_data *d, t_pos *pos, double angle)
 	double	y_off;
 	double	rx;
 	double	ry;
-	int		map_x;
-	int		map_y;
+	t_pos	map;
 	int		depth_of_field;
 
 	angle = normalize_angle(angle);
 	depth_of_field = 0;
 	n_tan = -tan(angle);
-	
-	// Looking left
 	if (angle > PI / 2 && angle < 3 * PI / 2)
 	{
 		rx = (((int)(minimap->cursor_x + minimap->pxl_size / 3 - MINIMAP_SIZE / 15) / minimap->pxl_size) * minimap->pxl_size) - 1 + MINIMAP_SIZE / 15;
@@ -50,7 +47,6 @@ int	vertical_wall(t_minimap *minimap, t_data *d, t_pos *pos, double angle)
 		x_off = -minimap->pxl_size;
 		y_off = -x_off * n_tan;
 	}
-	// Looking right
 	else if ((angle >= 0 && angle < PI / 2) || (angle > 3 * PI / 2 && angle < 2 * PI))
 	{
 		rx = (((int)(minimap->cursor_x + minimap->pxl_size / 3 - MINIMAP_SIZE / 15) / minimap->pxl_size) * minimap->pxl_size) + minimap->pxl_size + MINIMAP_SIZE / 15;
@@ -58,35 +54,29 @@ int	vertical_wall(t_minimap *minimap, t_data *d, t_pos *pos, double angle)
 		x_off = minimap->pxl_size;
 		y_off = -x_off * n_tan;
 	}
-	// Looking straight up or down
 	else
 	{
 		tan_err(pos);
 		return (0);
 	}
-
 	while (depth_of_field < d->map->col)
 	{
-		map_x = (int)(rx - MINIMAP_SIZE / 15) / minimap->pxl_size;
-		map_y = (int)(ry - MINIMAP_SIZE / 15) / minimap->pxl_size;
-		
-		// Hit a wall or out of bounds
-		if (map_x >= 0 && map_x < d->map->col && map_y >= 0 && map_y < d->map->row 
-			&& (d->map->map[map_y][map_x] == WALL || d->map->map[map_y][map_x] == C_DOOR))
+		map.x = (int)(rx - MINIMAP_SIZE / 15) / minimap->pxl_size;
+		map.y = (int)(ry - MINIMAP_SIZE / 15) / minimap->pxl_size;
+		if (map.x >= 0 && map.x < d->map->col && map.y >= 0 && map.y < d->map->row 
+			&& (d->map->map[map.y][map.x] == WALL || d->map->map[map.y][map.x] == C_DOOR))
 		{
 			pos->x = (int)rx;
 			pos->y = (int)ry;
-			if (d->map->map[map_y][map_x] == C_DOOR)
+			if (d->map->map[map.y][map.x] == C_DOOR)
 				return (1);
 			return (0);
 		}
-		// Out of bounds
-		else if (map_x < 0 || map_x >= d->map->col || map_y < 0 || map_y >= d->map->row)
+		else if (map.x < 0 || map.x >= d->map->col || map.y < 0 || map.y >= d->map->row)
 		{
 			tan_err(pos);
 			return (0);
 		}
-		// Continue the ray
 		else
 		{
 			rx += x_off;
@@ -105,15 +95,12 @@ int	horizontal_wall(t_minimap *minimap, t_data *d, t_pos *pos, double angle)
 	double	y_off;
 	double	rx;
 	double	ry;
-	int		map_x;
-	int		map_y;
+	t_pos	map;
 	int		depth_of_field;
 
 	angle = normalize_angle(angle);
 	depth_of_field = 0;
 	a_tan = -1 / tan(angle);
-	
-	// Looking up
 	if (angle > PI)
 	{
 		ry = (((int)(minimap->cursor_y + minimap->pxl_size / 3 - MINIMAP_SIZE / 15) / minimap->pxl_size) * minimap->pxl_size) - 1 + MINIMAP_SIZE / 15;
@@ -121,7 +108,6 @@ int	horizontal_wall(t_minimap *minimap, t_data *d, t_pos *pos, double angle)
 		y_off = -minimap->pxl_size;
 		x_off = -y_off * a_tan;
 	}
-	// Looking down
 	else if (angle < PI && angle != 0)
 	{
 		ry = (((int)(minimap->cursor_y + minimap->pxl_size / 3 - MINIMAP_SIZE / 15) / minimap->pxl_size) * minimap->pxl_size) + minimap->pxl_size + MINIMAP_SIZE / 15;
@@ -129,35 +115,29 @@ int	horizontal_wall(t_minimap *minimap, t_data *d, t_pos *pos, double angle)
 		y_off = minimap->pxl_size;
 		x_off = -y_off * a_tan;
 	}
-	// Looking straight left or right
 	else
 	{
 		tan_err(pos);
 		return (0);
 	}
-
 	while (depth_of_field < d->map->row)
 	{
-		map_x = (int)(rx - MINIMAP_SIZE / 15) / minimap->pxl_size;
-		map_y = (int)(ry - MINIMAP_SIZE / 15) / minimap->pxl_size;
-		
-		// Hit a wall or out of bounds
-		if (map_x >= 0 && map_x < d->map->col && map_y >= 0 && map_y < d->map->row 
-			&& (d->map->map[map_y][map_x] == WALL || d->map->map[map_y][map_x] == C_DOOR))
+		map.x = (int)(rx - MINIMAP_SIZE / 15) / minimap->pxl_size;
+		map.y = (int)(ry - MINIMAP_SIZE / 15) / minimap->pxl_size;
+		if (map.x >= 0 && map.x < d->map->col && map.y >= 0 && map.y < d->map->row 
+			&& (d->map->map[map.y][map.x] == WALL || d->map->map[map.y][map.x] == C_DOOR))
 		{
 			pos->x = (int)rx;
 			pos->y = (int)ry;
-			if (d->map->map[map_y][map_x] == C_DOOR)
+			if (d->map->map[map.y][map.x] == C_DOOR)
 				return (1);
 			return (0);
 		}
-		// Out of bounds
-		else if (map_x < 0 || map_x >= d->map->col || map_y < 0 || map_y >= d->map->row)
+		else if (map.x < 0 || map.x >= d->map->col || map.y < 0 || map.y >= d->map->row)
 		{
 			tan_err(pos);
 			return (0);
 		}
-		// Continue the ray
 		else
 		{
 			rx += x_off;
@@ -174,28 +154,25 @@ t_ray	*raycast(t_minimap *minimap, t_ray *ray, t_data *data, t_pos *result)
 {
 	t_pos	ph;
 	t_pos	pv;
-	// t_pos	verif;
 	long	dst1;
 	long	dst2;
-	int		x_origin;
-	int		y_origin;
+	t_pos	origin;
 	int		h_door;
 	int		v_door;
 
 	ray->angle = normalize_angle(ray->angle);
 	h_door = horizontal_wall(minimap, data, &ph, ray->angle);
 	v_door = vertical_wall(minimap, data, &pv, ray->angle);
-	x_origin = minimap->cursor_x + minimap->pxl_size / 3;
-	y_origin = minimap->cursor_y + minimap->pxl_size / 3;
-	// ph.x = TAN_ERR;	
+	origin.x = minimap->cursor_x + minimap->pxl_size / 3;
+	origin.y = minimap->cursor_y + minimap->pxl_size / 3;
 	if (ph.x == TAN_ERR || ph.y == TAN_ERR)
 		dst1 = LONG_MAX;
 	else
-		dst1 = pow(ph.x - x_origin, 2) + pow(ph.y - y_origin, 2);
+		dst1 = pow(ph.x - origin.x, 2) + pow(ph.y - origin.y, 2);
 	if (pv.x == TAN_ERR || pv.y == TAN_ERR)
 		dst2 = LONG_MAX;
 	else
-		dst2 = pow(pv.x - x_origin, 2) + pow(pv.y - y_origin, 2);
+		dst2 = pow(pv.x - origin.x, 2) + pow(pv.y - origin.y, 2);
 	if (dst1 <= dst2)
 	{
 		result->x = ph.x;

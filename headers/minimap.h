@@ -6,7 +6,7 @@
 /*   By: nmartin <nmartin@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/05 14:23:42 by nmartin           #+#    #+#             */
-/*   Updated: 2025/09/10 17:49:49 by nmartin          ###   ########.fr       */
+/*   Updated: 2025/09/12 18:25:16 by nmartin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -142,8 +142,8 @@ void						put_puff(t_minimap *minimap, t_pos pos, int width,
 
 /*---sprites.c---*/
 void						set_item_rayscast(t_data *data);
-void						small_cast(t_data *data, t_pos pixel, int dx, int dy);
-void						big_cast(t_data *data, t_pos pixel, int dx, int dy);
-void						item_raycast(t_data *data, t_pos pos, double fov);
+int							small_cast(t_data *d, t_pos pxl, int dx, int dy);
+int							big_cast(t_data *d, t_pos pxl, int dx, int dy);
+void						item_raycast(t_data *d, t_pos p, double f, int i);
 
 #endif

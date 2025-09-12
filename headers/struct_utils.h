@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   struct_utils.h                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: igrousso <igrousso@student.42.fr>          +#+  +:+       +#+        */
+/*   By: nmartin <nmartin@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/06 16:52:00 by nmartin           #+#    #+#             */
-/*   Updated: 2025/09/09 21:44:05 by igrousso         ###   ########.fr       */
+/*   Updated: 2025/09/12 18:25:46 by nmartin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -59,7 +59,7 @@ typedef struct s_minimap
 	int						c_color;
 	int						x;
 	int						y;
-	int						sb15; //minimap_size_by_15
+	int						sb15;
 	float					scale;
 }							t_minimap;
 
@@ -68,6 +68,12 @@ typedef struct s_pos
 	int						x;
 	int						y;
 }							t_pos;
+
+typedef struct s_float
+{
+	float					x;
+	float					y;
+}							t_float;
 
 typedef struct s_ray
 {
@@ -88,8 +94,8 @@ typedef struct s_data
 	int						health;
 	int						puff;
 	t_map					*map;
-	t_minimap				*mmap; //minimap
-	t_minimap				*sc_mmap; //screen_minimap
+	t_minimap				*mmap;
+	t_minimap				*sc_mmap;
 	t_minimap				*raycast;
 	t_image					*texture_n;
 	t_image					*texture_s;
