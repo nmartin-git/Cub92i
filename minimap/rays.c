@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   rays.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: nmartin <nmartin@student.42.fr>            +#+  +:+       +#+        */
+/*   By: igrousso <igrousso@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/13 14:11:53 by nmartin           #+#    #+#             */
-/*   Updated: 2025/09/12 18:23:03 by nmartin          ###   ########.fr       */
+/*   Updated: 2025/09/13 01:12:05 by igrousso         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -180,8 +180,8 @@ t_ray	*raycast(t_minimap *minimap, t_ray *ray, t_data *data, t_pos *result)
 		ray->dst = dst1;
 		ray->x_y = HORIZONTAL;
 		ray->door = h_door;
-		ray->percent = (result->x - MINIMAP_SIZE / 15) / minimap->pxl_size;
-		ray->percent = (result->x - MINIMAP_SIZE / 15) - (ray->percent * minimap->pxl_size);
+		ray->percent = (result->x - minimap->sb15) / minimap->pxl_size;
+		ray->percent = (result->x - minimap->sb15) - (ray->percent * minimap->pxl_size);
 		ray->percent = (ray->percent * QUALITY) / minimap->pxl_size;
 	}
 	else
@@ -191,12 +191,12 @@ t_ray	*raycast(t_minimap *minimap, t_ray *ray, t_data *data, t_pos *result)
 		ray->dst = dst2;
 		ray->x_y = VERTICAL;
 		ray->door = v_door;
-		ray->percent = (result->y - MINIMAP_SIZE / 15) / minimap->pxl_size;
-		ray->percent = (result->y - MINIMAP_SIZE / 15) - (ray->percent * minimap->pxl_size);
+		ray->percent = (result->y - minimap->sb15) / minimap->pxl_size;
+		ray->percent = (result->y - minimap->sb15) - (ray->percent * minimap->pxl_size);
 		ray->percent = (ray->percent * QUALITY) / minimap->pxl_size;
 	}
-	result->x -= MINIMAP_SIZE / 15;
-	result->y -= MINIMAP_SIZE / 15;
+	result->x -= minimap->sb15;
+	result->y -= minimap->sb15;
 	// if (result->x + MINIMAP_SIZE / 15 == TAN_ERR || result->y + MINIMAP_SIZE / 15 == TAN_ERR)
 	// 	return (NULL);
 	return (ray);
