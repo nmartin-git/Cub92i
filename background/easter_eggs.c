@@ -6,7 +6,7 @@
 /*   By: igrousso <igrousso@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/08 21:44:50 by igrousso          #+#    #+#             */
-/*   Updated: 2025/09/09 23:49:55 by igrousso         ###   ########.fr       */
+/*   Updated: 2025/09/13 21:45:16 by igrousso         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,7 +54,7 @@ int	convert_xpm(char *str)
 	return (0);
 }
 
-int easter_egg_img2(t_data *data, t_image *newimg)
+int	easter_egg_img2(t_data *data, t_image *newimg)
 {
 	if (data->map->c_rgb == -13)
 	{

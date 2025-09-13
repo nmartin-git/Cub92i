@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minimap.h                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: nmartin <nmartin@student.42.fr>            +#+  +:+       +#+        */
+/*   By: igrousso <igrousso@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/05 14:23:42 by nmartin           #+#    #+#             */
-/*   Updated: 2025/09/12 18:25:16 by nmartin          ###   ########.fr       */
+/*   Updated: 2025/09/13 22:16:11 by igrousso         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -66,6 +66,17 @@ typedef struct s_tmp3
 	int						draw;
 }							t_tmp3;
 
+typedef struct s_wall
+{
+	t_pos					pixel;
+	float					hauteur;
+	int						j;
+	int						start;
+	int						tex_y;
+	int						tex_x;
+	int						invert;
+}							t_wall;
+
 enum						e_input
 {
 	W,
@@ -85,6 +96,11 @@ void						minimap_create(t_minimap *minimap, t_data *data);
 void						pixel_put_square(t_minimap *minimap, t_pos pixel,
 								int color);
 int							load_image(t_minimap *minimap, t_data *data);
+void						pixel_put(t_image *raycasting, t_pos pixel,
+								int color);
+int							get_pixel_color(t_image *texture, int x, int y);
+void						set_order_texture(t_image *texture, t_ray *ray,
+								t_wall *tmp);
 
 /*---cursor.c---*/
 void						put_cursor_direction(t_minimap *minimap,
@@ -114,8 +130,6 @@ void						backward_step(t_data *data, __uint64_t step);
 void						diag_step(t_data *data, __uint64_t step, int state);
 
 /*---raycasting.c---*/
-void						pixel_put(t_image *raycasting, t_pos pixel,
-								int color);
 void						small_angle(t_image *raycasting, t_pos pixel,
 								int dx, int dy);
 void						big_angle(t_image *raycasting, t_pos pixel, int dx,

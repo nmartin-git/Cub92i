@@ -6,7 +6,7 @@
 /*   By: igrousso <igrousso@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/02 14:55:19 by nmartin           #+#    #+#             */
-/*   Updated: 2025/09/09 00:37:39 by igrousso         ###   ########.fr       */
+/*   Updated: 2025/09/13 21:51:34 by igrousso         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,12 +49,16 @@ __uint64_t	get_time_ms(void);
 int			init_textures(t_data *data);
 int			close_window(t_data *data);
 void		cub_exit(int err, char *str, t_data *data);
+void		set_image_to_null(t_data *data);
 
 /*---key_handling.c---*/
 int			key_press(int keycode, t_data *data);
 int			key_release(int keycode, t_data *data);
 int			update(t_data *data, __uint64_t delta_time);
+
+/*---door_handling.c---*/
 void		open_close_door(t_data *data);
+void		open_close_door2(t_data *data);
 
 /*---key_handling_utils.c---*/
 void		check_items(t_data *data, t_minimap *minimap);

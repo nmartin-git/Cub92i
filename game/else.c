@@ -6,7 +6,7 @@
 /*   By: igrousso <igrousso@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/08 23:40:01 by igrousso          #+#    #+#             */
-/*   Updated: 2025/09/09 23:49:21 by igrousso         ###   ########.fr       */
+/*   Updated: 2025/09/13 21:46:05 by igrousso         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,13 +15,13 @@
 int	texture(t_data *data, const char *str)
 {
 	if (ft_strnstr(data->map->n_t, str, ft_strlen(data->map->n_t)))
-		return (1);		
+		return (1);
 	if (ft_strnstr(data->map->s_t, str, ft_strlen(data->map->s_t)))
-		return (1);		
+		return (1);
 	if (ft_strnstr(data->map->w_t, str, ft_strlen(data->map->w_t)))
-		return (1);		
+		return (1);
 	if (ft_strnstr(data->map->e_t, str, ft_strlen(data->map->e_t)))
-		return (1);		
+		return (1);
 	return (0);
 }
 
@@ -67,7 +67,7 @@ void	loading_screen2(t_data *data, t_image *tmp, int i)
 				"tloading_screen/5.xpm", &tmp->tab_x, &tmp->tab_y);
 	if (i == 6)
 		tmp->image = mlx_xpm_file_to_image(data->display,
-				"tloading_screen/golem.xpm", &tmp->tab_x, &tmp->tab_y);	
+				"tloading_screen/golem.xpm", &tmp->tab_x, &tmp->tab_y);
 	if (!tmp->image)
 		cub_exit(1, "loading screen failed to load", data);
 	mlx_put_image_to_window(data->display, data->window, tmp->image, (TAB_X
@@ -84,18 +84,17 @@ void	loading_screen(t_data *data)
 	i = (rand() % 6) + 1;
 	if (texture(data, "bassem"))
 	{
-		tmp.image = mlx_xpm_file_to_image(data->display, 
-			"tloading_screen/bassem.xpm", &tmp.tab_x, &tmp.tab_y);
+		tmp.image = mlx_xpm_file_to_image(data->display,
+				"tloading_screen/bassem.xpm", &tmp.tab_x, &tmp.tab_y);
 		i = 0;
 	}
 	else if (texture(data, "metro"))
 	{
 		tmp.image = mlx_xpm_file_to_image(data->display,
-			"tloading_screen/metro.xpm", &tmp.tab_x, &tmp.tab_y);
+				"tloading_screen/metro.xpm", &tmp.tab_x, &tmp.tab_y);
 		data->map->c_rgb = -13;
 		data->map->d_t = ft_strdup("textures/metrodoors.xpm");
-		i = 0;		
+		i = 0;
 	}
-	
 	loading_screen2(data, &tmp, i);
 }

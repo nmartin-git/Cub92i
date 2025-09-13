@@ -6,7 +6,7 @@
 /*   By: igrousso <igrousso@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/02 18:33:29 by nmartin           #+#    #+#             */
-/*   Updated: 2025/09/08 21:56:23 by igrousso         ###   ########.fr       */
+/*   Updated: 2025/09/13 21:51:23 by igrousso         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -59,4 +59,16 @@ __uint64_t	get_time_ms(void)
 
 	gettimeofday(&tv, NULL);
 	return ((__uint64_t)(tv.tv_sec * 1000 + tv.tv_usec / 1000));
+}
+
+void	set_image_to_null(t_data *data)
+{
+	data->background->image = NULL;
+	data->texture_n->image = NULL;
+	data->texture_s->image = NULL;
+	data->texture_e->image = NULL;
+	data->texture_w->image = NULL;
+	if (data->map->doors)
+		data->texture_door->image = NULL;
+	data->pv = NULL;
 }

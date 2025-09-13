@@ -3,29 +3,14 @@
 /*                                                        :::      ::::::::   */
 /*   raycasting.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: nmartin <nmartin@student.42.fr>            +#+  +:+       +#+        */
+/*   By: igrousso <igrousso@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/10 15:59:29 by nmartin           #+#    #+#             */
-/*   Updated: 2025/09/10 16:35:02 by nmartin          ###   ########.fr       */
+/*   Updated: 2025/09/13 22:15:58 by igrousso         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minimap.h"
-
-void	pixel_put(t_image *raycasting, t_pos pixel, int color)
-{
-	char	*pxl;
-	int		b;
-
-	b = raycasting->bpp;
-	if (pixel.x >= 0 && pixel.x <= raycasting->tab_x && pixel.y >= 0 && \
-		pixel.y <= raycasting->tab_y)
-	{
-		pxl = raycasting->adress + (pixel.y * raycasting->l_len + pixel.x * \
-			(b / 8));
-		*(unsigned int *)pxl = color;
-	}
-}
 
 void	small_angle(t_image *minimap, t_pos pixel, int dx, int dy)
 {
@@ -83,91 +68,57 @@ void	big_angle(t_image *raycasting, t_pos pixel, int dx, int dy)
 	}
 }
 
-int	get_pixel_color(t_image *texture, int x, int y)
+void	set_texture(t_data *data, t_image **texture, t_ray *ray, t_wall *tmp)
 {
-	int				bpp;
-	int				offset;
-	unsigned int	*pixel;
-	char			*addr;
-
-	if (x < 0)
-		x = 0;
-	if (x >= texture->tab_x)
-		x = texture->tab_x - 1;
-	if (y < 0)
-		y = 0;
-	if (y >= texture->tab_y)
-		y = texture->tab_y - 1;
-	bpp = texture->bpp / 8;
-	offset = y * texture->l_len + x * bpp;
-	addr = texture->adress;
-	pixel = (unsigned int *)(addr + offset);
-	return (*pixel);
-}
-
-/*voir comment diviser cette fonction*/
-
-void	draw_wall(t_data *data, t_ray *ray, int i)
-{
-	t_pos	pixel;
-	float	hauteur;
-	int		j;
-	t_image	*texture;
-	int		start;
-	int		tex_y;
-	int		tex_x;
-	float	invert_hauteur;
-	int		invert;
-
-	invert = 0;
-	pixel.x = i;
-	if (ray->dst <= 0)
-		ray->dst = 1;
-	hauteur = TAB_Y * (MINIMAP_SIZE / data->scale) / ray->dst;
-	if (hauteur < 0)
-		hauteur = 0;
 	if (ray->door)
-		texture = data->texture_door;
+		(*texture) = data->texture_door;
 	else if (ray->x_y == 1)
 	{
 		if (sin(ray->angle) > 0)
 		{
-			invert = 1;
-			texture = data->texture_s;
+			tmp->invert = 1;
+			(*texture) = data->texture_s;
 		}
 		else
-			texture = data->texture_n;
-	}	
+			(*texture) = data->texture_n;
+	}
 	else
 	{
 		if (cos(ray->angle) > 0)
-			texture = data->texture_e;
+			(*texture) = data->texture_e;
 		else
 		{
-			invert = 1;
-			texture = data->texture_w;
+			tmp->invert = 1;
+			(*texture) = data->texture_w;
 		}
 	}
-	start = (TAB_Y - hauteur) / 2;
-	tex_x = ray->percent * texture->tab_x / 100;
-	if (invert == 1)
-		tex_x = texture->tab_x - 1 - tex_x;
-	if (tex_x < 0)
-		tex_x = 0;
-	if (tex_x >= texture->tab_x)
-		tex_x = texture->tab_x - 1;
-	invert_hauteur = 1 / hauteur;
-	j = start;
-	while (j < TAB_Y && j < start + hauteur)
+}
+
+void	draw_wall(t_data *data, t_ray *ray, int i)
+{
+	t_image	*texture;
+	t_wall	tmp;
+
+	tmp.invert = 0;
+	tmp.pixel.x = i;
+	if (ray->dst <= 0)
+		ray->dst = 1;
+	tmp.hauteur = TAB_Y * (MINIMAP_SIZE / data->scale) / ray->dst;
+	if (tmp.hauteur < 0)
+		tmp.hauteur = 0;
+	set_texture(data, &texture, ray, &tmp);
+	set_order_texture(texture, ray, &tmp);
+	while (tmp.j < TAB_Y && tmp.j < tmp.start + tmp.hauteur)
 	{
-		pixel.y = j;
-		tex_y = (int)((j - start) * (texture->tab_y) * invert_hauteur);
-		if (tex_y >= texture->tab_y)
-			tex_y = texture->tab_y - 1;
-		if (tex_y < 0)
-			tex_y = 0;
-		pixel_put(data->image, pixel, get_pixel_color(texture, tex_x, tex_y));
-		j++;
+		tmp.pixel.y = tmp.j;
+		tmp.tex_y = (int)((tmp.j - tmp.start) * (texture->tab_y) / tmp.hauteur);
+		if (tmp.tex_y >= texture->tab_y)
+			tmp.tex_y = texture->tab_y - 1;
+		if (tmp.tex_y < 0)
+			tmp.tex_y = 0;
+		pixel_put(data->image, tmp.pixel, get_pixel_color(texture, tmp.tex_x,
+				tmp.tex_y));
+		(tmp.j)++;
 	}
 }
 
@@ -187,7 +138,7 @@ void	put_raycasting(t_minimap *minimap, float fov, int ray_nb, t_data *data)
 	{
 		ray.angle = minimap->p_angle - fov / 2.0 + i * diff;
 		if (!raycast(minimap, &ray, data, &point_b))
-			i = i - 1 + 1;//gerer tan err
+			i = i - 1 + 1; // gerer tan err
 		ray.dst = sqrt(ray.dst) * cos(ray.angle - minimap->p_angle);
 		draw_wall(data, &ray, i);
 		i++;

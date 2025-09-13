@@ -6,7 +6,7 @@
 /*   By: igrousso <igrousso@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/07 17:35:41 by igrousso          #+#    #+#             */
-/*   Updated: 2025/07/13 18:02:55 by igrousso         ###   ########.fr       */
+/*   Updated: 2025/09/13 21:45:31 by igrousso         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,5 +54,6 @@ void					fill_command(char **command, char *str, char *xlen,
 int						convert_xpm(char *str);
 int						easter_egg_img(t_data *data, t_image *newimg);
 int						easter_egg(t_image *img, t_data *data);
+int						easter_egg_img2(t_data *data, t_image *newimg);
 
 #endif

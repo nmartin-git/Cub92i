@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parsing.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: nmartin <nmartin@student.42.fr>            +#+  +:+       +#+        */
+/*   By: igrousso <igrousso@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/02 11:45:35 by nmartin           #+#    #+#             */
-/*   Updated: 2025/09/08 16:38:41 by nmartin          ###   ########.fr       */
+/*   Updated: 2025/09/13 21:44:42 by igrousso         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -116,7 +116,7 @@ int	parsing(char *av, t_map *map)
 	if (check_map(map))
 		return (free_map(map), 1);
 	if (resize_map(map))
-		return (free_infos(map), 1);//TODO pourquoi free_infos et pas free_map
+		return (free_infos(map), 1);
 	set_pos_spawn(map);
 	if (map->doors)
 	{

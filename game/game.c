@@ -3,26 +3,14 @@
 /*                                                        :::      ::::::::   */
 /*   game.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: nmartin <nmartin@student.42.fr>            +#+  +:+       +#+        */
+/*   By: igrousso <igrousso@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/02 11:45:56 by nmartin           #+#    #+#             */
-/*   Updated: 2025/09/10 16:33:25 by nmartin          ###   ########.fr       */
+/*   Updated: 2025/09/13 21:59:05 by igrousso         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "game.h"
-
-void	set_image_to_null(t_data *data)
-{
-	data->background->image = NULL;
-	data->texture_n->image = NULL;
-	data->texture_s->image = NULL;
-	data->texture_e->image = NULL;
-	data->texture_w->image = NULL;
-	if (data->map->doors)
-		data->texture_door->image = NULL;
-	data->pv = NULL;
-}
 
 void	set_data(t_data *data, t_map *map)
 {
@@ -62,6 +50,25 @@ int	minimap(t_data *data)
 	return (0);
 }
 
+void	render_image(t_data *data)
+{
+	put_cursor_direction(data->sc_mmap, data->mmap->p_angle);
+	put_img_to_img(data->image, data->background, 0, 0);
+	put_raycasting(data->mmap, FOV, TAB_X, data);
+	put_img_to_img(data->image, data->crosshair->cross_img, \
+		data->crosshair->pos_c_x, data->crosshair->pos_c_y);
+	put_img_to_img(data->image, data->sc_mmap->minimap, \
+		data->sc_mmap->sb15, data->sc_mmap->sb15);
+	put_img_to_img(data->image, data->sc_mmap->direction, \
+		data->sc_mmap->cursor_x - data->sc_mmap->pxl_size / 1.5, \
+		data->sc_mmap->cursor_y - data->sc_mmap->pxl_size / 1.5);
+	put_img_to_img(data->image, data->sc_mmap->cursor, \
+		data->sc_mmap->cursor_x, data->sc_mmap->cursor_y);
+	put_img_to_img(data->image, data->pv, TAB_X / 4, TAB_Y - TAB_Y / 6);
+	mlx_put_image_to_window(data->display, data->window, \
+		data->image->image, 0, 0);
+}
+
 int	render(t_data *data)
 {
 	static __uint64_t	last_time = 0;
@@ -77,23 +84,9 @@ int	render(t_data *data)
 		delta_time = now - last_time;
 	}
 	last_time = now;
-	if (delta_time < 200 && delta_time > 0)
+	if (delta_time < 1000 && delta_time > 0)
 		update(data, delta_time);
-	put_cursor_direction(data->sc_mmap, data->mmap->p_angle);
-	put_img_to_img(data->image, data->background, 0, 0);
-	put_raycasting(data->mmap, FOV, TAB_X, data);
-	put_img_to_img(data->image, data->crosshair->cross_img, \
-		data->crosshair->pos_c_x, data->crosshair->pos_c_y);
-	put_img_to_img(data->image, data->sc_mmap->minimap, \
-		SCREEN_MINIMAP_SIZE / 15, SCREEN_MINIMAP_SIZE / 15);
-	put_img_to_img(data->image, data->sc_mmap->direction, \
-		data->sc_mmap->cursor_x - data->sc_mmap->pxl_size / 1.5, \
-		data->sc_mmap->cursor_y - data->sc_mmap->pxl_size / 1.5);
-	put_img_to_img(data->image, data->sc_mmap->cursor, \
-		data->sc_mmap->cursor_x, data->sc_mmap->cursor_y);
-	put_img_to_img(data->image, data->pv, TAB_X / 4, TAB_Y - TAB_Y / 6);
-	mlx_put_image_to_window(data->display, data->window, \
-		data->image->image, 0, 0);
+	render_image(data);
 	return (0);
 }
 
