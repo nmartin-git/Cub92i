@@ -6,7 +6,7 @@
 /*   By: igrousso <igrousso@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/02 11:45:56 by nmartin           #+#    #+#             */
-/*   Updated: 2025/09/15 15:24:41 by igrousso         ###   ########.fr       */
+/*   Updated: 2025/09/15 16:46:05 by igrousso         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -77,8 +77,6 @@ int	render(t_data *data)
 	static __uint64_t	last_time = 0;
 	__uint64_t			now;
 	__uint64_t			delta_time;
-	// static int			frame_count = 0;
-	// static __uint64_t	last_fps_time = 0;
 
 	now = get_time_ms();
 	data->bounce_y = AMP * sin(2 * PI * FREQ * ((now - data->start_time)
@@ -90,17 +88,9 @@ int	render(t_data *data)
 		now = get_time_ms();
 		delta_time = now - last_time;
 	}
-	// last_time = now;
 	if (delta_time < 1000 && delta_time > 0)
 		update(data, delta_time);
 	render_image(data);
-	// frame_count++;
-	// if (now - last_fps_time >= 1000)
-	// {
-	// 	printf("FPS : %d\n", frame_count);
-	// 	frame_count = 0;
-	// 	last_fps_time = now;
-	// }
 	last_time = now;
 	return (0);
 }

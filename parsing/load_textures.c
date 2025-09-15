@@ -6,7 +6,7 @@
 /*   By: igrousso <igrousso@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/13 15:24:31 by igrousso          #+#    #+#             */
-/*   Updated: 2025/09/15 11:25:45 by igrousso         ###   ########.fr       */
+/*   Updated: 2025/09/15 16:45:45 by igrousso         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,7 @@
 
 static inline char	*get_path(t_data *data, int state)
 {
-	char *str;
+	char	*str;
 
 	str = NULL;
 	if (state == 1)
@@ -31,7 +31,7 @@ static inline char	*get_path(t_data *data, int state)
 		str = PATHMOR;
 	if (state == 7)
 		str = PATHPUFF;
-	return (str);		
+	return (str);
 }
 
 int	open_xpm(t_data *data, t_image *texture, int state)

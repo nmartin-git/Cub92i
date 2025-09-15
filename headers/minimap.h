@@ -6,7 +6,7 @@
 /*   By: igrousso <igrousso@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/05 14:23:42 by nmartin           #+#    #+#             */
-/*   Updated: 2025/09/15 11:45:53 by igrousso         ###   ########.fr       */
+/*   Updated: 2025/09/15 16:57:53 by igrousso         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -159,9 +159,13 @@ void						put_puff(t_minimap *minimap, t_pos pos, int width,
 								int height);
 
 /*---sprites.c---*/
-void						set_item_rayscast(t_data *data);
 int							small_cast(t_data *d, t_pos pxl, int dx, int dy);
 int							big_cast(t_data *d, t_pos pxl, int dx, int dy);
-void						item_raycast(t_data *d, t_pos p, double f, int i);
+void						item_raycast(t_data *d, t_pos pos, int item);
+
+/*---display_item.c---*/
+void						set_item_rayscast(t_data *data);
+void						item_on_map(t_data *data, int item, float pos,
+								double qlqchose);
 
 #endif
