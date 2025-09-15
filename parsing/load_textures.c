@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   load_textures.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: igrousso <igrousso@student.42.fr>          +#+  +:+       +#+        */
+/*   By: nmartin <nmartin@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/13 15:24:31 by igrousso          #+#    #+#             */
-/*   Updated: 2025/09/15 16:45:45 by igrousso         ###   ########.fr       */
+/*   Updated: 2025/09/15 18:39:22 by nmartin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -87,4 +87,8 @@ void	free_textures(t_data *data)
 		free_image(data->texture_w, data->display);
 	if (data->texture_door)
 		free_image(data->texture_door, data->display);
+	if (data->texture_mordjene)
+		free_image(data->texture_mordjene, data->display);
+	if (data->texture_puff)
+		free_image(data->texture_puff, data->display);
 }

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   raycasting.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: igrousso <igrousso@student.42.fr>          +#+  +:+       +#+        */
+/*   By: nmartin <nmartin@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/10 15:59:29 by nmartin           #+#    #+#             */
-/*   Updated: 2025/09/15 14:37:11 by igrousso         ###   ########.fr       */
+/*   Updated: 2025/09/15 18:26:07 by nmartin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -137,8 +137,7 @@ void	put_raycasting(t_minimap *minimap, float fov, int ray_nb, t_data *data)
 	while (i < ray_nb)
 	{
 		ray.angle = minimap->p_angle - fov / 2.0 + i * diff;
-		if (!raycast(minimap, &ray, data, &point_b))
-			i = i - 1 + 1; // gerer tan err
+		raycast(minimap, &ray, data, &point_b);
 		ray.dst = sqrt(ray.dst) * cos(ray.angle - minimap->p_angle);
 		draw_wall(data, &ray, i);
 		i++;

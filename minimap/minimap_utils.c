@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minimap_utils.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: igrousso <igrousso@student.42.fr>          +#+  +:+       +#+        */
+/*   By: nmartin <nmartin@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/07 21:33:29 by igrousso          #+#    #+#             */
-/*   Updated: 2025/09/15 14:17:17 by igrousso         ###   ########.fr       */
+/*   Updated: 2025/09/15 18:28:56 by nmartin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,17 +49,14 @@ int	load_image(t_minimap *minimap, t_data *data)
 		return (1);
 	minimap->cursor = new_image(data->display, minimap->pxl_size / 1.5,
 			minimap->pxl_size / 1.5);
-//TODO gerer la taille du cursuer (propotionnel)
 	if (!minimap->cursor)
 		return (1);
 	minimap->direction = new_image(data->display, minimap->pxl_size * 2,
 			minimap->pxl_size * 2);
-//TODO gerer la taille du cursuer (propotionnel)
 	if (!minimap->direction)
 		return (1);
 	minimap->raycasting = new_image(data->display, minimap->pxl_size
 			* minimap->x, minimap->pxl_size * minimap->y);
-//TODO gerer la taille du cursuer (propotionnel)
 	if (!minimap->raycasting)
 		return (1);
 	return (0);
