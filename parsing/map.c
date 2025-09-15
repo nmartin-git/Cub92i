@@ -6,7 +6,7 @@
 /*   By: igrousso <igrousso@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/04 12:42:56 by igrousso          #+#    #+#             */
-/*   Updated: 2025/09/07 20:07:59 by igrousso         ###   ########.fr       */
+/*   Updated: 2025/09/15 16:44:27 by igrousso         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,6 +48,8 @@ int	init_map(t_map *map, int fd, char *av)
 	map->row = count_size(fd, &map->col);
 	if (map->row < 1)
 		return (1);
+	if (map->row > 175 || map->col > 175)
+		return (write(2, "Error\nMap too large\n", 20));
 	map->map = ft_calloc((map->row + 3), sizeof(int *));
 	if (!(map->map))
 		return (write(2, "Error\nMalloc map fail\n", 22));
