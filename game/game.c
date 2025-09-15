@@ -6,7 +6,7 @@
 /*   By: igrousso <igrousso@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/02 11:45:56 by nmartin           #+#    #+#             */
-/*   Updated: 2025/09/13 21:59:05 by igrousso         ###   ########.fr       */
+/*   Updated: 2025/09/15 15:24:41 by igrousso         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,13 +37,14 @@ void	set_data(t_data *data, t_map *map)
 	set_image_to_null(data);
 	while (++i < 10)
 		data->keys[i] = 0;
+	data->start_time = get_time_ms();
 }
 
 int	minimap(t_data *data)
 {
 	data->mmap = malloc(sizeof(t_minimap));
-	data->sc_mmap = malloc(sizeof(t_minimap));
 	minimap_data(data->mmap, data, MINIMAP_SIZE);
+	data->sc_mmap = malloc(sizeof(t_minimap));
 	minimap_data(data->sc_mmap, data, SCREEN_MINIMAP_SIZE);
 	minimap_create(data->mmap, data);
 	minimap_create(data->sc_mmap, data);
@@ -55,18 +56,20 @@ void	render_image(t_data *data)
 	put_cursor_direction(data->sc_mmap, data->mmap->p_angle);
 	put_img_to_img(data->image, data->background, 0, 0);
 	put_raycasting(data->mmap, FOV, TAB_X, data);
-	put_img_to_img(data->image, data->crosshair->cross_img, \
+	if (data->map->puff || data->map->el_mordjene)
+		set_item_rayscast(data);
+	put_img_to_img(data->image, data->crosshair->cross_img,
 		data->crosshair->pos_c_x, data->crosshair->pos_c_y);
-	put_img_to_img(data->image, data->sc_mmap->minimap, \
-		data->sc_mmap->sb15, data->sc_mmap->sb15);
-	put_img_to_img(data->image, data->sc_mmap->direction, \
-		data->sc_mmap->cursor_x - data->sc_mmap->pxl_size / 1.5, \
+	put_img_to_img(data->image, data->sc_mmap->minimap, data->sc_mmap->sb15,
+		data->sc_mmap->sb15);
+	put_img_to_img(data->image, data->sc_mmap->direction,
+		data->sc_mmap->cursor_x - data->sc_mmap->pxl_size / 1.5,
 		data->sc_mmap->cursor_y - data->sc_mmap->pxl_size / 1.5);
-	put_img_to_img(data->image, data->sc_mmap->cursor, \
-		data->sc_mmap->cursor_x, data->sc_mmap->cursor_y);
+	put_img_to_img(data->image, data->sc_mmap->cursor, data->sc_mmap->cursor_x,
+		data->sc_mmap->cursor_y);
 	put_img_to_img(data->image, data->pv, TAB_X / 4, TAB_Y - TAB_Y / 6);
-	mlx_put_image_to_window(data->display, data->window, \
-		data->image->image, 0, 0);
+	mlx_put_image_to_window(data->display, data->window, data->image->image, 0,
+		0);
 }
 
 int	render(t_data *data)
@@ -74,8 +77,12 @@ int	render(t_data *data)
 	static __uint64_t	last_time = 0;
 	__uint64_t			now;
 	__uint64_t			delta_time;
+	// static int			frame_count = 0;
+	// static __uint64_t	last_fps_time = 0;
 
 	now = get_time_ms();
+	data->bounce_y = AMP * sin(2 * PI * FREQ * ((now - data->start_time)
+				/ 1000.0f));
 	delta_time = now - last_time;
 	if (delta_time < 16)
 	{
@@ -83,10 +90,18 @@ int	render(t_data *data)
 		now = get_time_ms();
 		delta_time = now - last_time;
 	}
-	last_time = now;
+	// last_time = now;
 	if (delta_time < 1000 && delta_time > 0)
 		update(data, delta_time);
 	render_image(data);
+	// frame_count++;
+	// if (now - last_fps_time >= 1000)
+	// {
+	// 	printf("FPS : %d\n", frame_count);
+	// 	frame_count = 0;
+	// 	last_fps_time = now;
+	// }
+	last_time = now;
 	return (0);
 }
 
@@ -106,8 +121,8 @@ void	game(t_data *data, t_map *map)
 	// mlx_mouse_hide_no_leak(data->display, data->window);
 	if (paint_floor_and_ceiling(data->background, data))
 		cub_exit(1, "", data);
-	mlx_put_image_to_window(data->display, data->window, \
-		data->image->image, 0, 0);
+	mlx_put_image_to_window(data->display, data->window, data->image->image, 0,
+		0);
 	mlx_hook(data->window, 6, (1L << 6), &mouse_move, data);
 	mlx_hook(data->window, 2, 1L << 0, key_press, data);
 	mlx_hook(data->window, 3, 1L << 1, key_release, data);

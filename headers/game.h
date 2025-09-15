@@ -6,7 +6,7 @@
 /*   By: igrousso <igrousso@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/02 14:55:19 by nmartin           #+#    #+#             */
-/*   Updated: 2025/09/13 21:51:34 by igrousso         ###   ########.fr       */
+/*   Updated: 2025/09/15 11:36:49 by igrousso         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,6 +28,8 @@
 # define HEALTH 100
 # define HEALTH_COLOR 123456
 # define HEALTH_BG_COLOR 12345678
+# define AMP 20.0f
+# define FREQ 0.8f
 
 # define CONGRATS "Bien joué, toutes les puffs de Paquetta ont été récupérées"
 
@@ -37,6 +39,8 @@ void		loading_screen(t_data *data);
 
 /*---free.c---*/
 void		free_data(t_data *data);
+int			close_window(t_data *data);
+void		cub_exit(int err, char *str, t_data *data);
 
 /*---game.c---*/
 void		set_data(t_data *data, t_map *map);
@@ -47,8 +51,6 @@ int			minimap(t_data *data);
 /*---game_utils.c---*/
 __uint64_t	get_time_ms(void);
 int			init_textures(t_data *data);
-int			close_window(t_data *data);
-void		cub_exit(int err, char *str, t_data *data);
 void		set_image_to_null(t_data *data);
 
 /*---key_handling.c---*/

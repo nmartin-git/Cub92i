@@ -6,11 +6,25 @@
 /*   By: igrousso <igrousso@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/08 21:56:08 by igrousso          #+#    #+#             */
-/*   Updated: 2025/09/08 22:56:00 by igrousso         ###   ########.fr       */
+/*   Updated: 2025/09/15 11:19:40 by igrousso         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "game.h"
+
+int	close_window(t_data *data)
+{
+	cub_exit(0, "Window closed successfully", data);
+	return (0);
+}
+
+void	cub_exit(int err, char *str, t_data *data)
+{
+	ft_printf_fd(2, "cub92i: %s\n", str);
+	if (data)
+		free_data(data);
+	exit(err);
+}
 
 int	mouse_hook(int button, int x, int y, t_data *data)
 {
@@ -21,7 +35,7 @@ int	mouse_hook(int button, int x, int y, t_data *data)
 	return (0);
 }
 
-void	free_minimap(t_data *data, t_minimap *minimap)
+static void	free_minimap(t_data *data, t_minimap *minimap)
 {
 	free_image(minimap->minimap, data->display);
 	free_image(minimap->cursor, data->display);

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   sprites.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: nmartin <nmartin@student.42.fr>            +#+  +:+       +#+        */
+/*   By: igrousso <igrousso@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/10 13:07:59 by nmartin           #+#    #+#             */
-/*   Updated: 2025/09/12 18:28:17 by nmartin          ###   ########.fr       */
+/*   Updated: 2025/09/15 16:20:03 by igrousso         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -99,11 +99,49 @@ int	big_cast(t_data *data, t_pos pixel, int dx, int dy)
 	return (1);
 }
 
+void	item_on_map(t_data *data, int item, float pos, double qlqchose)
+{
+	t_image *texture;
+	t_wall	tmp;
+	int start_x;
+	int start_y;
+	float tmp_bounce;
+
+	if (item == MORDJENE)
+		texture = data->texture_mordjene;	
+	if (item == PUFF)
+		texture = data->texture_puff;
+	tmp.hauteur = (((TAB_X / 2.0f) / (float)texture->tab_x) * ((MINIMAP_SIZE / data->scale) / qlqchose)) / 4;
+	tmp.draw_w = texture->tab_x * tmp.hauteur;
+	tmp.draw_h = texture->tab_y * tmp.hauteur;
+	tmp_bounce = data->bounce_y * tmp.draw_h / 200.0 ;
+	start_x = TAB_X * pos / 100 - (tmp.draw_w / 2);
+	start_y = TAB_Y / 2 + tmp_bounce;
+	tmp.dx = -1;
+	while (++(tmp.dx) < tmp.draw_w)
+	{
+		tmp.dy = -1;
+		while (++(tmp.dy) < tmp.draw_h)
+		{
+			tmp.tex_x = tmp.dx / tmp.hauteur;
+			tmp.tex_y = tmp.dy / tmp.hauteur;
+			tmp.pixel.x = start_x + tmp.dx;
+			tmp.pixel.y = start_y + tmp.dy;
+			if (tmp.pixel.x < 0 || tmp.pixel.x >= TAB_X || tmp.pixel.y < 0 || tmp.pixel.y >= TAB_Y)
+				continue;
+			int color = get_pixel_color(texture, tmp.tex_x, tmp.tex_y);
+			if (color == (int)0xFF000000)
+				continue;
+			pixel_put(data->image, tmp.pixel, color);
+		}
+	}
+}
+
 void	item_raycast(t_data *d, t_pos pos, double fov, int item)
 {
 	t_pos	origin;
-	int		tmp;
-	float	dot;
+	float	tmp;
+	float	rel_angle;
 	t_float	is_fov;
 	t_pos	dst;
 
@@ -118,15 +156,16 @@ void	item_raycast(t_data *d, t_pos pos, double fov, int item)
 		return ;
 	is_fov.x = dst.x / tmp;
 	is_fov.y = dst.y / tmp;
-	dot = cos(d->mmap->p_angle) * is_fov.x + sin(d->mmap->p_angle) * is_fov.y;
-	if (dot <= cos(fov))
-		return ;
 	if (ft_abs(dst.x) > ft_abs(dst.y))
 		tmp = small_cast(d, origin, dst.x, dst.y);
 	else
 		tmp = big_cast(d, origin, dst.x, dst.y);
 	if (!tmp)
 		return ;
-	item = 0;
-	//item_on_map(d, item, dot, pow(dst.x, 2) + pow(dst.y, 2));
+	rel_angle = atan2(is_fov.y, is_fov.x) - d->mmap->p_angle;
+	while (rel_angle < -PI)
+		rel_angle += 2 * PI;
+	while (rel_angle > PI)
+		rel_angle -= 2 * PI;
+	item_on_map(d, item, (rel_angle + fov) / (2 * fov) * 100, sqrt(pow(dst.x, 2) + pow(dst.y, 2)));
 }

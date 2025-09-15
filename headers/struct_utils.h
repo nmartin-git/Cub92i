@@ -6,7 +6,7 @@
 /*   By: igrousso <igrousso@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/06 16:52:00 by nmartin           #+#    #+#             */
-/*   Updated: 2025/09/13 01:11:40 by igrousso         ###   ########.fr       */
+/*   Updated: 2025/09/15 11:34:27 by igrousso         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,6 +20,9 @@
 # include <X11/keysym.h>
 # include <stdlib.h>
 # include <unistd.h>
+
+# define PATHMOR "textures/heal_mordjene.xpm"
+# define PATHPUFF "textures/puff.xpm"
 
 typedef struct s_crosshair	t_crosshair;
 
@@ -102,7 +105,11 @@ typedef struct s_data
 	t_image					*texture_e;
 	t_image					*texture_w;
 	t_image					*texture_door;
+	t_image					*texture_puff;
+	t_image					*texture_mordjene;
 	t_crosshair				*crosshair;
+	__uint64_t				start_time;
+	float					bounce_y;
 	int						keys[10];
 	int						scale;
 }							t_data;

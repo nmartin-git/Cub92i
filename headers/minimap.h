@@ -6,7 +6,7 @@
 /*   By: igrousso <igrousso@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/05 14:23:42 by nmartin           #+#    #+#             */
-/*   Updated: 2025/09/13 22:16:11 by igrousso         ###   ########.fr       */
+/*   Updated: 2025/09/15 11:45:53 by igrousso         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,7 +21,7 @@
 # include <math.h>
 
 # define EMPTY_COLOR 0
-# define MINIMAP_SIZE 26000
+# define MINIMAP_SIZE 23100
 # define SCREEN_MINIMAP_SIZE 400
 # define QUALITY 100
 
@@ -31,7 +31,7 @@
 
 # define STEP 100
 # define ROTATION 0.15
-# define PI 3.1415926535
+# define PI 3.14159265358979323846
 # define FOV 60
 # define RAY_NBR 1920
 # define TAN_ERR 9999
@@ -75,6 +75,10 @@ typedef struct s_wall
 	int						tex_y;
 	int						tex_x;
 	int						invert;
+	int						dx;
+	int						dy;
+	int						draw_w;
+	int						draw_h;
 }							t_wall;
 
 enum						e_input

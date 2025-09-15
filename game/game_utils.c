@@ -6,11 +6,36 @@
 /*   By: igrousso <igrousso@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/02 18:33:29 by nmartin           #+#    #+#             */
-/*   Updated: 2025/09/13 21:51:23 by igrousso         ###   ########.fr       */
+/*   Updated: 2025/09/15 11:24:26 by igrousso         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "game.h"
+
+int	init_textures2(t_data *data)
+{
+	if (data->map->el_mordjene)
+	{
+		data->texture_mordjene = ft_calloc(sizeof(t_image), 1);
+		if (!data->texture_mordjene)
+			return (free(data->texture_n), free(data->texture_s), \
+					free(data->texture_e), free(data->texture_w), \
+					free(data->texture_door), 1);
+	}
+	else
+		data->texture_mordjene = NULL;
+	if (data->map->puff)
+	{
+		data->texture_puff = ft_calloc(sizeof(t_image), 1);
+		if (!data->texture_puff)
+			return (free(data->texture_n), free(data->texture_s), \
+					free(data->texture_e), free(data->texture_w), \
+					free(data->texture_door), free(data->texture_mordjene), 1);
+	}
+	else
+		data->texture_puff = NULL;
+	return (0);
+}
 
 int	init_textures(t_data *data)
 {
@@ -36,21 +61,7 @@ int	init_textures(t_data *data)
 	}
 	else
 		data->texture_door = NULL;
-	return (0);
-}
-
-int	close_window(t_data *data)
-{
-	cub_exit(0, "Window closed successfully", data);
-	return (0);
-}
-
-void	cub_exit(int err, char *str, t_data *data)
-{
-	ft_printf_fd(2, "cub92i: %s\n", str);
-	if (data)
-		free_data(data);
-	exit(err);
+	return (init_textures2(data));
 }
 
 __uint64_t	get_time_ms(void)
@@ -70,5 +81,9 @@ void	set_image_to_null(t_data *data)
 	data->texture_w->image = NULL;
 	if (data->map->doors)
 		data->texture_door->image = NULL;
+	if (data->map->el_mordjene)
+		data->texture_mordjene->image = NULL;
+	if (data->map->puff)
+		data->texture_puff->image = NULL;
 	data->pv = NULL;
 }

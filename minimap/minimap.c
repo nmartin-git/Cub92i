@@ -6,7 +6,7 @@
 /*   By: igrousso <igrousso@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/05 14:23:31 by nmartin           #+#    #+#             */
-/*   Updated: 2025/09/13 01:22:13 by igrousso         ###   ########.fr       */
+/*   Updated: 2025/09/15 10:57:59 by igrousso         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,19 +31,29 @@ int	get_minimap_color(t_minimap *minimap, int content)
 		return (minimap->f_color);
 }
 
+void	set_minimap_to_null(t_minimap *minimap)
+{
+	minimap->cursor = NULL;
+	minimap->direction = NULL;
+	minimap->display = NULL;
+	minimap->minimap = NULL;
+	minimap->raycasting = NULL;
+}
+
 void	minimap_data(t_minimap *minimap, t_data *data, int size)
 {
 	set_minimap_color(minimap);
+	set_minimap_to_null(minimap);
 	minimap->x = data->map->col;
 	minimap->y = data->map->row;
 	if (minimap->x > minimap->y)
 		minimap->pxl_size = size / minimap->x;
 	else
 		minimap->pxl_size = size / minimap->y;
-	minimap->cursor_x = data->map->x_spawn * minimap->pxl_size + size / 15 + \
-		minimap->pxl_size / 6;
-	minimap->cursor_y = data->map->y_spawn * minimap->pxl_size + size / 15 + \
-		minimap->pxl_size / 6;
+	minimap->cursor_x = data->map->x_spawn * minimap->pxl_size + size / 15
+		+ minimap->pxl_size / 6;
+	minimap->cursor_y = data->map->y_spawn * minimap->pxl_size + size / 15
+		+ minimap->pxl_size / 6;
 	if (data->map->map[data->map->y_spawn][data->map->x_spawn] == E_DIR)
 		minimap->p_angle = 0;
 	else if (data->map->map[data->map->y_spawn][data->map->x_spawn] == N_DIR)
@@ -70,19 +80,19 @@ void	minimap_create(t_minimap *minimap, t_data *data)
 		pixel.x = 0;
 		while (pixel.x < minimap->x)
 		{
-			color = get_minimap_color(minimap, \
-				data->map->map[pixel.y][pixel.x]);
+			color = get_minimap_color(minimap,
+					data->map->map[pixel.y][pixel.x]);
 			pixel_put_square(minimap, pixel, color);
 			if (data->map->map[pixel.y][pixel.x] == MORDJENE)
-				put_mordjene(minimap, pixel, minimap->pxl_size / 3, \
+				put_mordjene(minimap, pixel, minimap->pxl_size / 3,
 					minimap->pxl_size / 4);
 			else if (data->map->map[pixel.y][pixel.x] == PUFF)
-				put_puff(minimap, pixel, minimap->pxl_size / 3, \
+				put_puff(minimap, pixel, minimap->pxl_size / 3,
 					minimap->pxl_size * 3 / 4);
 			pixel.x++;
 		}
 		pixel.y++;
 	}
-	pixel_put_cursor(minimap->cursor, minimap->c_color, minimap->pxl_size / \
-		1.5, minimap->pxl_size / 3);
+	pixel_put_cursor(minimap->cursor, minimap->c_color, minimap->pxl_size / 1.5,
+		minimap->pxl_size / 3);
 }
