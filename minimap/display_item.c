@@ -6,7 +6,7 @@
 /*   By: igrousso <igrousso@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/15 16:49:26 by igrousso          #+#    #+#             */
-/*   Updated: 2025/09/15 16:58:38 by igrousso         ###   ########.fr       */
+/*   Updated: 2025/09/16 14:10:34 by igrousso         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -58,21 +58,37 @@ void	item_on_map(t_data *data, int item, float pos, double qlqchose)
 	display_item(data, tmp, start, texture);
 }
 
+static void	check_line(t_data *data, t_pos *tmp, t_pos *pos)
+{
+	pos->x = -1;
+	while (++pos->x < tmp->x)
+	{
+		if (data->map->map[pos->y][pos->x] == MORDJENE
+			|| data->map->map[pos->y][pos->x] == PUFF)
+			item_raycast(data, *pos, data->map->map[pos->y][pos->x]);
+	}
+	pos->x = data->mmap->x;
+	while (--pos->x >= tmp->x)
+	{
+		if (data->map->map[pos->y][pos->x] == MORDJENE
+			|| data->map->map[pos->y][pos->x] == PUFF)
+			item_raycast(data, *pos, data->map->map[pos->y][pos->x]);
+	}
+}
+
 void	set_item_rayscast(t_data *data)
 {
 	t_pos	pos;
+	t_pos	tmp;
 
-	pos.y = 0;
-	while (pos.y < data->mmap->y)
-	{
-		pos.x = 0;
-		while (pos.x < data->mmap->x)
-		{
-			if (data->map->map[pos.y][pos.x] == MORDJENE
-				|| data->map->map[pos.y][pos.x] == PUFF)
-				item_raycast(data, pos, data->map->map[pos.y][pos.x]);
-			pos.x++;
-		}
-		pos.y++;
-	}
+	tmp.x = (data->mmap->cursor_x - data->mmap->sb15 - (data->mmap->pxl_size
+				/ 6)) / data->mmap->pxl_size;
+	tmp.y = (data->mmap->cursor_y - data->mmap->sb15 - (data->mmap->pxl_size
+				/ 6)) / data->mmap->pxl_size;
+	pos.y = -1;
+	while (++pos.y < tmp.y)
+		check_line(data, &tmp, &pos);
+	pos.y = data->mmap->y;
+	while (--pos.y >= tmp.y)
+		check_line(data, &tmp, &pos);
 }
