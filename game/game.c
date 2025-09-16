@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   game.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: igrousso <igrousso@student.42.fr>          +#+  +:+       +#+        */
+/*   By: nmartin <nmartin@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/02 11:45:56 by nmartin           #+#    #+#             */
-/*   Updated: 2025/09/16 14:10:42 by igrousso         ###   ########.fr       */
+/*   Updated: 2025/09/16 15:14:25 by nmartin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -108,7 +108,6 @@ void	game(t_data *data, t_map *map)
 	if (!data->pv)
 		cub_exit(1, "", data);
 	pv_bar(data);
-	// mlx_mouse_hide_no_leak(data->display, data->window);
 	if (paint_floor_and_ceiling(data->background, data))
 		cub_exit(1, "", data);
 	mlx_put_image_to_window(data->display, data->window, data->image->image, 0,

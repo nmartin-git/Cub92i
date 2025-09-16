@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   key_handling.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: igrousso <igrousso@student.42.fr>          +#+  +:+       +#+        */
+/*   By: nmartin <nmartin@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/07 15:26:13 by nmartin           #+#    #+#             */
-/*   Updated: 2025/09/16 12:40:38 by igrousso         ###   ########.fr       */
+/*   Updated: 2025/09/16 15:15:17 by nmartin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -98,8 +98,6 @@ int	update(t_data *data, __uint64_t delta_time)
 		move_player(data, S, delta_time);
 	else if (data->keys[4] == 1)
 		move_player(data, D, delta_time);
-	// if (data->map->doors && data->keys[7] == 1)
-		// open_close_door(data);
 	update_2(data);
 	return (0);
 }
