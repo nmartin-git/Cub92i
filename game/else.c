@@ -6,7 +6,7 @@
 /*   By: igrousso <igrousso@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/08 23:40:01 by igrousso          #+#    #+#             */
-/*   Updated: 2025/09/13 21:46:05 by igrousso         ###   ########.fr       */
+/*   Updated: 2025/09/16 17:10:13 by igrousso         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -95,6 +95,11 @@ void	loading_screen(t_data *data)
 		data->map->c_rgb = -13;
 		data->map->d_t = ft_strdup("textures/metrodoors.xpm");
 		i = 0;
+	}
+	if (texture(data, "walid"))
+	{
+		data->map->c_rgb = -14;
+		data->map->f_rgb = -10;
 	}
 	loading_screen2(data, &tmp, i);
 }

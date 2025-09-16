@@ -6,7 +6,7 @@
 /*   By: igrousso <igrousso@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/07 17:35:41 by igrousso          #+#    #+#             */
-/*   Updated: 2025/09/13 21:45:31 by igrousso         ###   ########.fr       */
+/*   Updated: 2025/09/16 17:31:57 by igrousso         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,6 +31,7 @@ int						decode_r(int rgb);
 int						decode_g(int rgb);
 int						decode_b(int rgb);
 void					init_image(t_image *img);
+int						get_adress(t_data *data, t_image *new, t_image *new2);
 
 /* blackground */
 
@@ -52,8 +53,10 @@ void					put_img_to_img(t_image *dst, t_image *src, int x,
 void					fill_command(char **command, char *str, char *xlen,
 							char *ylen);
 int						convert_xpm(char *str);
-int						easter_egg_img(t_data *data, t_image *newimg);
+int						easter_egg_img(t_data *data, t_image *newimg,
+							t_image *new2);
 int						easter_egg(t_image *img, t_data *data);
-int						easter_egg_img2(t_data *data, t_image *newimg);
+int						easter_egg_img2(t_data *data, t_image *newimg,
+							t_image *new2);
 
 #endif

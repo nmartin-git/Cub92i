@@ -6,7 +6,7 @@
 /*   By: igrousso <igrousso@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/07 17:27:20 by igrousso          #+#    #+#             */
-/*   Updated: 2025/09/07 19:14:52 by igrousso         ###   ########.fr       */
+/*   Updated: 2025/09/16 17:04:40 by igrousso         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -59,7 +59,7 @@ void	gateway_paint(char *dst, t_image *img, t_data *data, int i)
 		dst = img->adress + (j * img->l_len + i * (img->bpp / 8));
 		if (data->map->c_rgb > 0 && j < TAB_Y / 2)
 			paint_ceiling(dst, data, j);
-		else if (j >= TAB_Y / 2)
+		else if (data->map->f_rgb > 0 && j >= TAB_Y / 2)
 			paint_floor(dst, data, j);
 	}
 }
