@@ -6,26 +6,11 @@
 /*   By: nmartin <nmartin@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/13 14:11:53 by nmartin           #+#    #+#             */
-/*   Updated: 2025/09/15 18:33:03 by nmartin          ###   ########.fr       */
+/*   Updated: 2025/09/16 16:47:19 by nmartin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minimap.h"
-
-double	normalize_angle(double angle)
-{
-	while (angle < 0)
-		angle += 2 * PI;
-	while (angle >= 2 * PI)
-		angle -= 2 * PI;
-	return (angle);
-}
-
-void	tan_err(t_pos *pos)
-{
-	pos->x = TAN_ERR;
-	pos->y = TAN_ERR;
-}
 
 int	vertical_wall(t_minimap *minimap, t_data *d, t_pos *pos, double angle)
 {
@@ -53,10 +38,7 @@ int	vertical_wall(t_minimap *minimap, t_data *d, t_pos *pos, double angle)
 		off.y = -off.x * n_tan;
 	}
 	else
-	{
-		tan_err(pos);
-		return (0);
-	}
+		return (tan_err(pos), 0);
 	while (depth_of_field < d->map->col)
 	{
 		map.x = (int)(r.x - MINIMAP_SIZE / 15) / minimap->pxl_size;
@@ -71,10 +53,7 @@ int	vertical_wall(t_minimap *minimap, t_data *d, t_pos *pos, double angle)
 			return (0);
 		}
 		else if (map.x < 0 || map.x >= d->map->col || map.y < 0 || map.y >= d->map->row)
-		{
-			tan_err(pos);
-			return (0);
-		}
+			return (tan_err(pos), 0);
 		else
 		{
 			r.x += off.x;
@@ -112,10 +91,7 @@ int	horizontal_wall(t_minimap *minimap, t_data *d, t_pos *pos, double angle)
 		off.x = -off.y * a_tan;
 	}
 	else
-	{
-		tan_err(pos);
-		return (0);
-	}
+		return (tan_err(pos), 0);
 	while (depth_of_field < d->map->row)
 	{
 		map.x = (int)(r.x - MINIMAP_SIZE / 15) / minimap->pxl_size;
@@ -130,10 +106,7 @@ int	horizontal_wall(t_minimap *minimap, t_data *d, t_pos *pos, double angle)
 			return (0);
 		}
 		else if (map.x < 0 || map.x >= d->map->col || map.y < 0 || map.y >= d->map->row)
-		{
-			tan_err(pos);
-			return (0);
-		}
+			return (tan_err(pos), 0);
 		else
 		{
 			r.x += off.x;
@@ -141,56 +114,58 @@ int	horizontal_wall(t_minimap *minimap, t_data *d, t_pos *pos, double angle)
 			depth_of_field++;
 		}
 	}
-	tan_err(pos);
-	return (0);
+	return (tan_err(pos), 0);
 }
 
-t_ray	*raycast(t_minimap *minimap, t_ray *ray, t_data *data, t_pos *result)
+void	ray_percent(t_ray *ray, int result, t_minimap *minimap, long dst)
+{
+	float	percent;
+	float	tmp;
+
+	tmp = ((result - minimap->sb15) / minimap->pxl_size) * minimap->pxl_size;
+	percent = (((result - minimap->sb15) - tmp) * QUALITY) / minimap->pxl_size;
+	ray->percent = percent;
+	ray->dst = dst;
+}
+
+void	ray_h_v(t_pos *result, t_pos *p, int h_v, t_ray *ray)
+{
+	result->x = p->x;
+	result->y = p->y;
+	ray->x_y = h_v;
+}
+
+void	raycast(t_minimap *minimap, t_ray *ray, t_data *data, t_pos *result)
 {
 	t_pos	ph;
 	t_pos	pv;
-	long	dst1;
-	long	dst2;
+	t_long	dst;
 	t_pos	origin;
-	int		h_door;
-	int		v_door;
+	t_pos	door;
 
 	ray->angle = normalize_angle(ray->angle);
-	h_door = horizontal_wall(minimap, data, &ph, ray->angle);
-	v_door = vertical_wall(minimap, data, &pv, ray->angle);
+	door.x = horizontal_wall(minimap, data, &ph, ray->angle);
+	door.y = vertical_wall(minimap, data, &pv, ray->angle);
 	origin.x = minimap->cursor_x + minimap->pxl_size / 3;
 	origin.y = minimap->cursor_y + minimap->pxl_size / 3;
 	if (ph.x == TAN_ERR || ph.y == TAN_ERR)
-		dst1 = LONG_MAX;
+		dst.x = LONG_MAX;
 	else
-		dst1 = pow(ph.x - origin.x, 2) + pow(ph.y - origin.y, 2);
+		dst.x = pow(ph.x - origin.x, 2) + pow(ph.y - origin.y, 2);
 	if (pv.x == TAN_ERR || pv.y == TAN_ERR)
-		dst2 = LONG_MAX;
+		dst.y = LONG_MAX;
 	else
-		dst2 = pow(pv.x - origin.x, 2) + pow(pv.y - origin.y, 2);
-	if (dst1 <= dst2)
+		dst.y = pow(pv.x - origin.x, 2) + pow(pv.y - origin.y, 2);
+	if (dst.x <= dst.y)
 	{
-		result->x = ph.x;
-		result->y = ph.y;
-		ray->dst = dst1;
-		ray->x_y = HORIZONTAL;
-		ray->door = h_door;
-		ray->percent = (result->x - minimap->sb15) / minimap->pxl_size;
-		ray->percent = (result->x - minimap->sb15) - (ray->percent * minimap->pxl_size);
-		ray->percent = (ray->percent * QUALITY) / minimap->pxl_size;
+		ray_h_v(result, &ph, HORIZONTAL, ray);
+		ray->door = door.x;
+		ray_percent(ray, result->x, minimap, dst.x);
 	}
 	else
 	{
-		result->x = pv.x;
-		result->y = pv.y;
-		ray->dst = dst2;
-		ray->x_y = VERTICAL;
-		ray->door = v_door;
-		ray->percent = (result->y - minimap->sb15) / minimap->pxl_size;
-		ray->percent = (result->y - minimap->sb15) - (ray->percent * minimap->pxl_size);
-		ray->percent = (ray->percent * QUALITY) / minimap->pxl_size;
+		ray_h_v(result, &pv, VERTICAL, ray);
+		ray->door = door.y;
+		ray_percent(ray, result->y, minimap, dst.y);
 	}
-	result->x -= minimap->sb15;
-	result->y -= minimap->sb15;
-	return (ray);
 }

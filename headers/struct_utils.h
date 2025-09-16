@@ -6,7 +6,7 @@
 /*   By: nmartin <nmartin@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/06 16:52:00 by nmartin           #+#    #+#             */
-/*   Updated: 2025/09/15 18:29:53 by nmartin          ###   ########.fr       */
+/*   Updated: 2025/09/16 16:25:04 by nmartin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -71,6 +71,13 @@ typedef struct s_pos
 	int						x;
 	int						y;
 }							t_pos;
+
+typedef struct s_long
+{
+	long					x;
+	long					y;
+}							t_long;
+
 
 typedef struct s_float
 {

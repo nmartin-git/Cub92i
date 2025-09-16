@@ -6,7 +6,7 @@
 /*   By: nmartin <nmartin@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/10 15:59:29 by nmartin           #+#    #+#             */
-/*   Updated: 2025/09/15 18:26:07 by nmartin          ###   ########.fr       */
+/*   Updated: 2025/09/16 16:28:48 by nmartin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -138,6 +138,8 @@ void	put_raycasting(t_minimap *minimap, float fov, int ray_nb, t_data *data)
 	{
 		ray.angle = minimap->p_angle - fov / 2.0 + i * diff;
 		raycast(minimap, &ray, data, &point_b);
+		point_b.x -= minimap->sb15;
+		point_b.y -= minimap->sb15;
 		ray.dst = sqrt(ray.dst) * cos(ray.angle - minimap->p_angle);
 		draw_wall(data, &ray, i);
 		i++;

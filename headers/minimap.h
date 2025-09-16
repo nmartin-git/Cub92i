@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minimap.h                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: igrousso <igrousso@student.42.fr>          +#+  +:+       +#+        */
+/*   By: nmartin <nmartin@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/05 14:23:42 by nmartin           #+#    #+#             */
-/*   Updated: 2025/09/15 16:57:53 by igrousso         ###   ########.fr       */
+/*   Updated: 2025/09/16 16:31:45 by nmartin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -147,9 +147,13 @@ int							vertical_wall(t_minimap *minimap, t_data *d,
 								t_pos *pos, double angle);
 int							horizontal_wall(t_minimap *minimap, t_data *data,
 								t_pos *pos, double angle);
-t_ray						*raycast(t_minimap *minimap, t_ray *ray,
+void						raycast(t_minimap *minimap, t_ray *ray,
 								t_data *data, t_pos *result);
 
+/*---rays_norm.c---*/
+double						normalize_angle(double angle);
+void						tan_err(t_pos *pos);
+								
 /*---items.c---*/
 void						put_pxl(t_image *image, int x, int y,
 								unsigned int color);
