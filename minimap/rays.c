@@ -6,44 +6,34 @@
 /*   By: nmartin <nmartin@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/13 14:11:53 by nmartin           #+#    #+#             */
-/*   Updated: 2025/09/17 17:26:55 by nmartin          ###   ########.fr       */
+/*   Updated: 2025/09/17 18:20:22 by nmartin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minimap.h"
 
-int	vertical_wall(t_minimap *minimap, t_data *d, t_pos *pos, double angle)
+int	vertical_wall(t_minimap *m, t_data *d, t_pos *pos, double a)
 {
 	double		n_tan;
 	t_double	off;
 	t_double	r;
-	t_pos		map;
+	t_pos		p;
 	int			depth_of_field;
 
-	depth_of_field = 0;
-	n_tan = -tan(angle);
-	if (angle > PI / 2 && angle < 3 * PI / 2)
-	{
-		r.x = (((int)(minimap->cursor_x + minimap->pxl_size / 3 - MINIMAP_SIZE / 15) / minimap->pxl_size) * minimap->pxl_size) - 1 + MINIMAP_SIZE / 15;
-		r.y = (minimap->cursor_x + minimap->pxl_size / 3 - r.x) * n_tan + minimap->cursor_y + minimap->pxl_size / 3;
-		off_norm(&off, -minimap->pxl_size, minimap->pxl_size * n_tan);
-	}
-	else if ((angle >= 0 && angle < PI / 2) || (angle > 3 * PI / 2 && angle < 2 * PI))
-	{
-		r.x = (((int)(minimap->cursor_x + minimap->pxl_size / 3 - MINIMAP_SIZE / 15) / minimap->pxl_size) * minimap->pxl_size) + minimap->pxl_size + MINIMAP_SIZE / 15;
-		r.y = (minimap->cursor_x + minimap->pxl_size / 3 - r.x) * n_tan + minimap->cursor_y + minimap->pxl_size / 3;
-		off_norm(&off, minimap->pxl_size, -minimap->pxl_size * n_tan);
-	}
+	gagner_5lignes(a, &r, m, &n_tan);
+	if (a > PI / 2 && a < 3 * PI / 2)
+		off_norm(&off, -m->pxl_size, m->pxl_size * n_tan, &depth_of_field);
+	else if ((a >= 0 && a < PI / 2) || (a > 3 * PI / 2 && a < 2 * PI))
+		off_norm(&off, m->pxl_size, -m->pxl_size * n_tan, &depth_of_field);
 	else
 		return (tan_err(pos), 0);
 	while (depth_of_field < d->map->col)
 	{
-		map.x = (int)(r.x - MINIMAP_SIZE / 15) / minimap->pxl_size;
-		map.y = (int)(r.y - MINIMAP_SIZE / 15) / minimap->pxl_size;
-		if (map.x >= 0 && map.x < d->map->col && map.y >= 0 && map.y < d->map->row 
-			&& (d->map->map[map.y][map.x] == WALL || d->map->map[map.y][map.x] == C_DOOR))
-			return (wall_norm_de_neuille(&r, pos, d->map->map[map.y][map.x]));
-		else if (map.x < 0 || map.x >= d->map->col || map.y < 0 || map.y >= d->map->row)
+		juste_pour_1ligne(&p, &r, m->pxl_size);
+		if (p.x >= 0 && p.x < d->map->col && p.y >= 0 && p.y < d->map->row
+			&& (d->map->map[p.y][p.x] == 1 || d->map->map[p.y][p.x] == C_DOOR))
+			return (wall_norm_de_neuille(&r, pos, d->map->map[p.y][p.x]));
+		else if (p.x < 0 || p.x >= d->map->col || p.y < 0 || p.y >= d->map->row)
 			return (tan_err(pos), 0);
 		else
 			wall_norm(&r, &off, &depth_of_field);
@@ -51,38 +41,28 @@ int	vertical_wall(t_minimap *minimap, t_data *d, t_pos *pos, double angle)
 	return (tan_err(pos), 0);
 }
 
-int	horizontal_wall(t_minimap *minimap, t_data *d, t_pos *pos, double angle)
+int	horizontal_wall(t_minimap *m, t_data *d, t_pos *pos, double a)
 {
 	double		a_tan;
 	t_double	off;
 	t_double	r;
-	t_pos		map;
+	t_pos		p;
 	int			depth_of_field;
 
-	depth_of_field = 0;
-	a_tan = -1 / tan(angle);
-	if (angle > PI)
-	{
-		r.y = (((int)(minimap->cursor_y + minimap->pxl_size / 3 - MINIMAP_SIZE / 15) / minimap->pxl_size) * minimap->pxl_size) - 1 + MINIMAP_SIZE / 15;
-		r.x = (minimap->cursor_y + minimap->pxl_size / 3 - r.y) * a_tan + minimap->cursor_x + minimap->pxl_size / 3;
-		off_norm(&off, minimap->pxl_size * a_tan, -minimap->pxl_size);
-	}
-	else if (angle < PI && angle != 0)
-	{
-		r.y = (((int)(minimap->cursor_y + minimap->pxl_size / 3 - MINIMAP_SIZE / 15) / minimap->pxl_size) * minimap->pxl_size) + minimap->pxl_size + MINIMAP_SIZE / 15;
-		r.x = (minimap->cursor_y + minimap->pxl_size / 3 - r.y) * a_tan + minimap->cursor_x + minimap->pxl_size / 3;
-		off_norm(&off, -minimap->pxl_size * a_tan, minimap->pxl_size);
-	}
+	gagner_4lignes(a, &r, m, &a_tan);
+	if (a > PI)
+		off_norm(&off, m->pxl_size * a_tan, -m->pxl_size, &depth_of_field);
+	else if (a < PI && a != 0)
+		off_norm(&off, -m->pxl_size * a_tan, m->pxl_size, &depth_of_field);
 	else
 		return (tan_err(pos), 0);
 	while (depth_of_field < d->map->row)
 	{
-		map.x = (int)(r.x - MINIMAP_SIZE / 15) / minimap->pxl_size;
-		map.y = (int)(r.y - MINIMAP_SIZE / 15) / minimap->pxl_size;
-		if (map.x >= 0 && map.x < d->map->col && map.y >= 0 && map.y < d->map->row 
-			&& (d->map->map[map.y][map.x] == WALL || d->map->map[map.y][map.x] == C_DOOR))
-			return (wall_norm_de_neuille(&r, pos, d->map->map[map.y][map.x]));
-		else if (map.x < 0 || map.x >= d->map->col || map.y < 0 || map.y >= d->map->row)
+		juste_pour_1ligne(&p, &r, m->pxl_size);
+		if (p.x >= 0 && p.x < d->map->col && p.y >= 0 && p.y < d->map->row
+			&& (d->map->map[p.y][p.x] == 1 || d->map->map[p.y][p.x] == C_DOOR))
+			return (wall_norm_de_neuille(&r, pos, d->map->map[p.y][p.x]));
+		else if (p.x < 0 || p.x >= d->map->col || p.y < 0 || p.y >= d->map->row)
 			return (tan_err(pos), 0);
 		else
 			wall_norm(&r, &off, &depth_of_field);
