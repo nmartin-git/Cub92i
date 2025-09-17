@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   struct_utils.h                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: nmartin <nmartin@student.42.fr>            +#+  +:+       +#+        */
+/*   By: igrousso <igrousso@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/06 16:52:00 by nmartin           #+#    #+#             */
-/*   Updated: 2025/09/16 16:25:04 by nmartin          ###   ########.fr       */
+/*   Updated: 2025/09/17 16:08:31 by igrousso         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,6 +23,7 @@
 
 # define PATHMOR "textures/heal_mordjene.xpm"
 # define PATHPUFF "textures/puff.xpm"
+# define PUFFWALID "textures/puffwalid.xpm"
 
 typedef struct s_crosshair	t_crosshair;
 

@@ -6,7 +6,7 @@
 /*   By: igrousso <igrousso@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/02 11:45:35 by nmartin           #+#    #+#             */
-/*   Updated: 2025/09/13 21:44:42 by igrousso         ###   ########.fr       */
+/*   Updated: 2025/09/17 15:54:49 by igrousso         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,6 +24,8 @@ int	fill_infos(int fd, t_map *map)
 		line = get_next_line(fd, &is_empty);
 		if (!line && is_empty == 0)
 			return (write(2, "Error\nget_next_line fill_infos error\n", 37));
+		if (!line && count == 6)
+			return (write(2, "Error\nFile is empty\n", 20));
 		if (ft_strchr("NSFWEC", line[0]))
 		{
 			if (gateway_textures(line, map, &count))

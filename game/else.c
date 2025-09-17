@@ -6,7 +6,7 @@
 /*   By: igrousso <igrousso@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/08 23:40:01 by igrousso          #+#    #+#             */
-/*   Updated: 2025/09/17 15:34:59 by igrousso         ###   ########.fr       */
+/*   Updated: 2025/09/17 15:58:52 by igrousso         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -72,7 +72,7 @@ void	loading_screen2(t_data *data, t_image *tmp, int i)
 	if (i == 5)
 		load_img(data, tmp, "tloading_screen/5.xpm");
 	if (i == 6)
-		load_img(data, tmp, "tloading_screen/6.xpm");
+		load_img(data, tmp, "tloading_screen/golem.xpm");
 	if (!tmp->image)
 		cub_exit(1, "loading screen failed to load", data);
 	mlx_put_image_to_window(data->display, data->window, tmp->image, (TAB_X

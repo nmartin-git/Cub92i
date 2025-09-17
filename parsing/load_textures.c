@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   load_textures.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: nmartin <nmartin@student.42.fr>            +#+  +:+       +#+        */
+/*   By: igrousso <igrousso@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/13 15:24:31 by igrousso          #+#    #+#             */
-/*   Updated: 2025/09/15 18:39:22 by nmartin          ###   ########.fr       */
+/*   Updated: 2025/09/17 15:42:53 by igrousso         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,7 +30,12 @@ static inline char	*get_path(t_data *data, int state)
 	if (state == 6)
 		str = PATHMOR;
 	if (state == 7)
-		str = PATHPUFF;
+	{
+		if (data->map->f_rgb == -10)
+			str = PUFFWALID;
+		else
+			str = PATHPUFF;
+	}
 	return (str);
 }
 

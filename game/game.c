@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   game.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: nmartin <nmartin@student.42.fr>            +#+  +:+       +#+        */
+/*   By: igrousso <igrousso@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/02 11:45:56 by nmartin           #+#    #+#             */
-/*   Updated: 2025/09/16 15:14:25 by nmartin          ###   ########.fr       */
+/*   Updated: 2025/09/17 16:02:05 by igrousso         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,6 +19,7 @@ void	set_data(t_data *data, t_map *map)
 	i = -1;
 	data->health = HEALTH - 40;
 	data->map = map;
+	data->crosshair = NULL;
 	data->display = mlx_init();
 	if (!data->display)
 		cub_exit(1, "Display initialization failed", data);

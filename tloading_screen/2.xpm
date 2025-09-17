@@ -254,7 +254,7 @@ static char *_[] = {
 "HX c #D5EBE6",
 "JX c #D4F1ED",
 "KX c #E7EAE8",
-"LX c #FCFCFC",
+"LX c gray99",
 "PX c #F5F7F5",
 "IX c #F0F6EB",
 "UX c #E3D9D2",
