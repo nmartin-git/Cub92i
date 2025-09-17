@@ -6,7 +6,7 @@
 /*   By: igrousso <igrousso@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/08 23:40:01 by igrousso          #+#    #+#             */
-/*   Updated: 2025/09/16 17:10:13 by igrousso         ###   ########.fr       */
+/*   Updated: 2025/09/17 15:34:59 by igrousso         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,26 +48,31 @@ void	pv_bar(t_data *data)
 	}
 }
 
+static inline void	load_img(t_data *data, t_image *tmp, char *path)
+{
+	if (convert_xpm(path, TAB_X, TAB_Y))
+	{
+		tmp->image = NULL;
+		return ;
+	}
+	tmp->image = mlx_xpm_file_to_image(data->display, path, &tmp->tab_x,
+			&tmp->tab_y);
+}
+
 void	loading_screen2(t_data *data, t_image *tmp, int i)
 {
 	if (i == 1)
-		tmp->image = mlx_xpm_file_to_image(data->display,
-				"tloading_screen/1.xpm", &tmp->tab_x, &tmp->tab_y);
+		load_img(data, tmp, "tloading_screen/1.xpm");
 	if (i == 2)
-		tmp->image = mlx_xpm_file_to_image(data->display,
-				"tloading_screen/2.xpm", &tmp->tab_x, &tmp->tab_y);
+		load_img(data, tmp, "tloading_screen/2.xpm");
 	if (i == 3)
-		tmp->image = mlx_xpm_file_to_image(data->display,
-				"tloading_screen/3.xpm", &tmp->tab_x, &tmp->tab_y);
+		load_img(data, tmp, "tloading_screen/3.xpm");		
 	if (i == 4)
-		tmp->image = mlx_xpm_file_to_image(data->display,
-				"tloading_screen/4.xpm", &tmp->tab_x, &tmp->tab_y);
+		load_img(data, tmp, "tloading_screen/4.xpm");
 	if (i == 5)
-		tmp->image = mlx_xpm_file_to_image(data->display,
-				"tloading_screen/5.xpm", &tmp->tab_x, &tmp->tab_y);
+		load_img(data, tmp, "tloading_screen/5.xpm");
 	if (i == 6)
-		tmp->image = mlx_xpm_file_to_image(data->display,
-				"tloading_screen/golem.xpm", &tmp->tab_x, &tmp->tab_y);
+		load_img(data, tmp, "tloading_screen/6.xpm");
 	if (!tmp->image)
 		cub_exit(1, "loading screen failed to load", data);
 	mlx_put_image_to_window(data->display, data->window, tmp->image, (TAB_X
@@ -84,22 +89,22 @@ void	loading_screen(t_data *data)
 	i = (rand() % 6) + 1;
 	if (texture(data, "bassem"))
 	{
-		tmp.image = mlx_xpm_file_to_image(data->display,
-				"tloading_screen/bassem.xpm", &tmp.tab_x, &tmp.tab_y);
+		load_img(data, &tmp, "tloading_screen/bassem.xpm");
 		i = 0;
 	}
 	else if (texture(data, "metro"))
 	{
-		tmp.image = mlx_xpm_file_to_image(data->display,
-				"tloading_screen/metro.xpm", &tmp.tab_x, &tmp.tab_y);
+		load_img(data, &tmp, "tloading_screen/metro.xpm");
 		data->map->c_rgb = -13;
 		data->map->d_t = ft_strdup("textures/metrodoors.xpm");
 		i = 0;
 	}
-	if (texture(data, "walid"))
+	else if (texture(data, "walid"))
 	{
+		load_img(data, &tmp, "tloading_screen/walid_screen.xpm");
 		data->map->c_rgb = -14;
 		data->map->f_rgb = -10;
+		i = 0;
 	}
 	loading_screen2(data, &tmp, i);
 }

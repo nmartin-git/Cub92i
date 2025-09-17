@@ -6,7 +6,7 @@
 /*   By: igrousso <igrousso@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/07 17:35:41 by igrousso          #+#    #+#             */
-/*   Updated: 2025/09/16 17:31:57 by igrousso         ###   ########.fr       */
+/*   Updated: 2025/09/17 15:26:37 by igrousso         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,7 +52,7 @@ void					put_img_to_img(t_image *dst, t_image *src, int x,
 
 void					fill_command(char **command, char *str, char *xlen,
 							char *ylen);
-int						convert_xpm(char *str);
+int						convert_xpm(char *str, int x, int y);
 int						easter_egg_img(t_data *data, t_image *newimg,
 							t_image *new2);
 int						easter_egg(t_image *img, t_data *data);

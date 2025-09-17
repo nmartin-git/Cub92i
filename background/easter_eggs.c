@@ -6,7 +6,7 @@
 /*   By: igrousso <igrousso@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/08 21:44:50 by igrousso          #+#    #+#             */
-/*   Updated: 2025/09/16 17:31:40 by igrousso         ###   ########.fr       */
+/*   Updated: 2025/09/17 15:27:22 by igrousso         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,17 +28,17 @@ void	fill_command(char **command, char *str, char *xlen, char *ylen)
 	ft_strlcat((*command), str, len);
 }
 
-int	convert_xpm(char *str)
+int	convert_xpm(char *str, int x, int y)
 {
 	char	*command;
 	int		len;
 	char	*xlen;
 	char	*ylen;
 
-	xlen = ft_itoa(TAB_X);
+	xlen = ft_itoa(x);
 	if (!xlen)
 		return (write(2, "Error\nMalloc fail\n", 18));
-	ylen = ft_itoa(TAB_Y / 2);
+	ylen = ft_itoa(y);
 	if (!ylen)
 		return (free(xlen), write(2, "Error\nMalloc fail\n", 18));
 	len = 21 + strlen(xlen) + strlen(ylen) + (strlen(str) * 2);
@@ -58,18 +58,18 @@ int	easter_egg_img2(t_data *data, t_image *newimg, t_image *new2)
 {
 	if (data->map->c_rgb == -13)
 	{
-		if (convert_xpm("tloading_screen/leon.xpm"))
+		if (convert_xpm("tloading_screen/leon.xpm", TAB_X, TAB_Y / 2))
 			return (1);
 		newimg->image = mlx_xpm_file_to_image(data->display,
 				"tloading_screen/leon.xpm", &newimg->tab_x, &newimg->tab_y);
 	}
 	if (data->map->c_rgb == -14)
 	{
-		if (convert_xpm("textures/walidC.xpm"))
+		if (convert_xpm("textures/walidC.xpm", TAB_X, TAB_Y / 2))
 			return (1);
 		newimg->image = mlx_xpm_file_to_image(data->display,
 				"textures/walidC.xpm", &newimg->tab_x, &newimg->tab_y);
-		if (convert_xpm("textures/walidF.xpm"))
+		if (convert_xpm("textures/walidF.xpm", TAB_X, TAB_Y / 2))
 			return (1);
 		new2->image = mlx_xpm_file_to_image(data->display,
 				"textures/walidF.xpm", &new2->tab_x, &new2->tab_y);
@@ -81,21 +81,21 @@ int	easter_egg_img(t_data *data, t_image *newimg, t_image *new2)
 {
 	if (data->map->c_rgb == -10)
 	{
-		if (convert_xpm("background/.ceiling.xpm"))
+		if (convert_xpm("background/.ceiling.xpm", TAB_X, TAB_Y / 2))
 			return (1);
 		newimg->image = mlx_xpm_file_to_image(data->display,
 				"background/.ceiling.xpm", &newimg->tab_x, &newimg->tab_y);
 	}
 	else if (data->map->c_rgb == -11)
 	{
-		if (convert_xpm("background/.ceiling2.xpm"))
+		if (convert_xpm("background/.ceiling2.xpm", TAB_X, TAB_Y / 2))
 			return (1);
 		newimg->image = mlx_xpm_file_to_image(data->display,
 				"background/.ceiling2.xpm", &newimg->tab_x, &newimg->tab_y);
 	}
 	else if (data->map->c_rgb == -12)
 	{
-		if (convert_xpm("background/.ceiling3.xpm"))
+		if (convert_xpm("background/.ceiling3.xpm", TAB_X, TAB_Y / 2))
 			return (1);
 		newimg->image = mlx_xpm_file_to_image(data->display,
 				"background/.ceiling3.xpm", &newimg->tab_x, &newimg->tab_y);
