@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   else.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: igrousso <igrousso@student.42.fr>          +#+  +:+       +#+        */
+/*   By: nmartin <nmartin@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/08 23:40:01 by igrousso          #+#    #+#             */
-/*   Updated: 2025/09/17 15:58:52 by igrousso         ###   ########.fr       */
+/*   Updated: 2025/09/17 16:37:13 by nmartin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -66,7 +66,7 @@ void	loading_screen2(t_data *data, t_image *tmp, int i)
 	if (i == 2)
 		load_img(data, tmp, "tloading_screen/2.xpm");
 	if (i == 3)
-		load_img(data, tmp, "tloading_screen/3.xpm");		
+		load_img(data, tmp, "tloading_screen/3.xpm");
 	if (i == 4)
 		load_img(data, tmp, "tloading_screen/4.xpm");
 	if (i == 5)

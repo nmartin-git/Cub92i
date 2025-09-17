@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minimap.h                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: igrousso <igrousso@student.42.fr>          +#+  +:+       +#+        */
+/*   By: nmartin <nmartin@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/05 14:23:42 by nmartin           #+#    #+#             */
-/*   Updated: 2025/09/17 10:53:07 by igrousso         ###   ########.fr       */
+/*   Updated: 2025/09/17 17:15:27 by nmartin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -151,9 +151,12 @@ void						raycast(t_minimap *minimap, t_ray *ray,
 								t_data *data, t_pos *result);
 
 /*---rays_norm.c---*/
+void						raycast_norm(t_pos *ph, t_pos *pv, t_pos *origin, t_long *dst);
 double						normalize_angle(double angle);
 void						tan_err(t_pos *pos);
-								
+void						wall_norm(t_double *r, t_double *off, int *depth_of_field);
+int							wall_norm_de_neuille(t_double *r, t_pos *pos, int wall_door);
+
 /*---items.c---*/
 void						put_pxl(t_image *image, int x, int y,
 								unsigned int color);
@@ -171,5 +174,8 @@ void						item_raycast(t_data *d, t_pos pos, int item);
 void						set_item_rayscast(t_data *data);
 void						item_on_map(t_data *data, int item, float pos,
 								double qlqchose);
+
+/*---rays_pitie_norminette---*/
+void						off_norm(t_double *off, double x, double y);
 
 #endif
